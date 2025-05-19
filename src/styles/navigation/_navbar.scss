@@ -8,6 +8,7 @@ header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  box-shadow: inset colours.$red_accent_dark 0px -2px 10px 0px;
   
   input {
     height: variables.$colour_wheel_size;

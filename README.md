@@ -1,0 +1,36 @@
+## Web Mindmap Thingymajigy
+
+It might make mindmaps. It might be a glorified notepad. Who knows
+
+---
+
+## Getting Started
+
+To get the project up and running locally, follow these steps:
+
+#### 1. Install Dependencies
+
+Run the following command to install the required dependencies:
+
+```bash
+npm install
+```
+#### 2. Run the Development Server
+To start the development server, use the command:
+
+```bash
+npm run dev
+```
+
+> [!note]    
+> By default, it will expose the application over your network. Meaning it probably isn't safe to use in a public café, etc.
+> To disable, comment out the following lines in **vite.config.js**:
+> ```js  
+> server: {
+>    host: '0.0.0.0',
+>    port: 5173, 
+> },
+> ```
+---
+## Thanks to:
+Adam, who has done all the hard work, purely because I was complaining I couldn't find mindmapping software I liked on iOS. Love you 💜

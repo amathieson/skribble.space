@@ -4,7 +4,7 @@ import '@scss/themes/_dark.scss'
 import '@scss/themes/_light.scss'
 import {useState} from "react";
 function App() {
-    const [penColor, setPenColor] = useState('#000000');
+    const [penColor, setPenColor] = useState('#ffffff');
 
     return (
     <>

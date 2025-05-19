@@ -1,0 +1,43 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    width: 100dvw;
+    height: 100dvh;
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+    background: #3f3f3f;
+}
+canvas, svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+canvas {
+    z-index: 9999;
+}
+#debug {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 10vw;
+    background: #3f3f3f;
+    opacity: 0.7;
+}
+input {
+    position: absolute;
+
+    z-index: 99999999;
+}

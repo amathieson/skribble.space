@@ -12,6 +12,9 @@ const WebMindMap = ({ penColor }) => {
         tool: 'PEN',
         pointerType: 'mouse',
         isPrimary: true,
+        touchPoints: 0,
+        viewPort: [0,0,0,0],
+        zoom: 100
     });
 
     useEffect(() => {
@@ -41,6 +44,9 @@ const WebMindMap = ({ penColor }) => {
         let penID = '';
         let penSupported = false;
         let tool = "PEN";
+        let touchPoints = [];
+        let lastVector = null;
+        let zoom = 1;
 
         // Helper for path conversion
         function catmullRomToBezier(points) {
@@ -66,6 +72,13 @@ const WebMindMap = ({ penColor }) => {
 
             return d;
         }
+        function coordinatesVector(point1, point2) {
+            return {
+                length: Math.sqrt((point1.offsetX - point2.offsetX)**2 + (point1.offsetY - point2.offsetY)**2),
+                angle: Math.atan2(point2.offsetX - point1.offsetX, point2.offsetY - point1.offsetY) * 180 / Math.PI,
+                center: [(point1.offsetX + point2.offsetX)/2, (point1.offsetY + point2.offsetY)/2],
+            };
+        }
 
         const updateDebug = (e) => {
             setDebug({
@@ -76,6 +89,9 @@ const WebMindMap = ({ penColor }) => {
                 tool,
                 pointerType: e.pointerType,
                 isPrimary: e.isPrimary,
+                touchPoints: touchPoints.length,
+                viewPort: [],
+                zoom: zoom*100
             });
         };
 
@@ -86,6 +102,8 @@ const WebMindMap = ({ penColor }) => {
 
         const handlePointerDown = (e) => {
             penSupported ||= e.pointerType === 'pen';
+            if (e.pointerType === 'touch')
+                touchPoints.push(e);
 
             if (penID !== e.pointerId && penID !== '') return;
             if (e.pointerType === 'pen') tool = 'PEN';
@@ -110,6 +128,24 @@ const WebMindMap = ({ penColor }) => {
         };
 
         const handlePointerMove = (e) => {
+            penSupported ||= e.pointerType === 'pen';
+            if (e.pointerType === 'touch') {
+                const ind = touchPoints.findIndex(e1 => e1.pointerId === e.pointerId);
+                touchPoints[ind] = e;
+                updateDebug(e);
+            }
+
+            if (touchPoints.length >= 2) {
+                let vec = coordinatesVector(touchPoints[0], touchPoints[1]);
+                if (lastVector !== null) {
+                    zoom += -(1-(vec.length / lastVector.length));
+                    zoom = Math.max(0.2, Math.min(5, zoom));
+                }
+                lastVector = vec;
+                updateDebug(e);
+                return;
+            }
+
             if (penID !== e.pointerId) return;
 
             if (penDown && e.isPrimary && tool === 'PEN') {
@@ -138,6 +174,14 @@ const WebMindMap = ({ penColor }) => {
         };
 
         const handlePointerUp = (e) => {
+
+            if (e.pointerType === 'touch') {
+                const ind = touchPoints.findIndex(e1 => e1.pointerId === e.pointerId);
+                touchPoints.splice(ind, 1);
+                if (touchPoints.length < 2)
+                    lastVector = null;
+            }
+
             if (penID !== e.pointerId) return;
 
             penID = '';
@@ -193,15 +237,18 @@ const WebMindMap = ({ penColor }) => {
     return (
         <div>
             <div id="debug">
-                <label>Pen Support: <code>{String(debug.penSupport)}</code></label>
-                <label>Pen Down: <code>{String(debug.penDown)}</code></label>
-                <label>Pressure: <code>{debug.pressure}</code></label>
-                <label>Coordinates: <code>{debug.coordinates.join(',')}</code></label>
-                <label>Tool: <code>{debug.tool}</code></label>
-                <label>Viewport: <code>0,0,1920,1080</code></label>
-                <label>Viewport Rotation: <code>0&deg;</code></label>
-                <label>Pointer Type: <code>{debug.pointerType}</code></label>
-                <label>Primary Pointer: <code>{String(debug.isPrimary)}</code></label>
+                {Object.entries(debug).map(([key, value]) => (
+                    <label key={key}>
+                        {key.charAt(0).toUpperCase() + key.slice(1)}:{' '}
+                        <code>
+                            {Array.isArray(value)
+                                ? value.join(', ')
+                                : typeof value === 'boolean'
+                                    ? String(value)
+                                    : value}
+                        </code>
+                    </label>
+                ))}
             </div>
             <canvas id="canvas" ref={canvasRef}></canvas>
             <svg id="vector" ref={svgRef}></svg>

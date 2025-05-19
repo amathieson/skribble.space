@@ -4,9 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta charset="UTF-8">
     <title>Webmindmap</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/styles/_style.scss">
 </head>
 <body>
+<div id="root"></div>
+<script type="module" src="/src/main.jsx"></script>
 <div id="debug">
     <label>Pen Support: <code>false</code></label>
     <label>Pen Down: <code>false</code></label>
@@ -17,9 +19,5 @@
     <label>Viewport Rotation: <code>0&deg;</code></label>
     <label>Pointer Type: <code>mouse</code></label>
 </div>
-<!--<input type="color" id="pencolor">-->
-<canvas id="canvas"></canvas>
-<svg id="vector"/>
-<script src="script.js"></script>
 </body>
 </html>

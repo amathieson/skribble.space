@@ -1,15 +1,3 @@
-body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 14px;
-    padding: 0;
-    margin: 0;
-    width: 100dvw;
-    height: 100dvh;
-    overflow: hidden;
-    touch-action: none;
-    overscroll-behavior: none;
-    background: #3f3f3f;
-}
 canvas, svg {
     position: absolute;
     top: 0;
@@ -40,4 +28,15 @@ input {
     position: absolute;
 
     z-index: 99999999;
+}
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    width: 100dvw;
+    height: 100dvh;
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
 }

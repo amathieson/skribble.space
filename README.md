@@ -58,3 +58,5 @@ Adam, who has done all the hard work, purely because I was complaining I couldn'
 - [ ] **Offline Storage**
   - [ ] Document storage and organisation
   - [ ] Settings Storage (Such as pen support)
+- [x] **Strokes**
+  - [ ] Cleaner variable width strokes

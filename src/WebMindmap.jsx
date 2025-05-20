@@ -98,20 +98,22 @@ const WebMindMap = ({ penColor }) => {
         }
 
         const updateDebug = (e) => {
-            /*setDebug({
-                penSupport: penSupported,
-                penDown,
-                pressure: e.pressure,
-                coordinates: [e.offsetX, e.offsetY],
-                tool,
-                pointerType: e.pointerType,
-                isPrimary: e.isPrimary,
-                touchPoints: touchPoints.length,
-                viewPort: viewPort.join(' '),
-                zoom: zoom*100,
-                center: center,
-                rotation: rotation,
-            });*/
+            requestAnimationFrame(()=>{
+                setDebug({
+                    penSupport: penSupported,
+                    penDown,
+                    pressure: e.pressure,
+                    coordinates: [e.offsetX, e.offsetY],
+                    tool,
+                    pointerType: e.pointerType,
+                    isPrimary: e.isPrimary,
+                    touchPoints: touchPoints.length,
+                    viewPort: viewPort.join(' '),
+                    zoom: zoom*100,
+                    center: center,
+                    rotation: rotation,
+                });
+            })
         };
 
         // Event handlers
@@ -242,6 +244,11 @@ const WebMindMap = ({ penColor }) => {
                 points = [];
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+                penID = '';
+                penDown = false;
+            }
+
+            if (tool === 'ERASE') {
                 penID = '';
                 penDown = false;
             }

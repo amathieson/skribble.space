@@ -1,0 +1,18 @@
+@use '@scss/mixins/colours';
+@use '@scss/mixins/variables';
+
+header {
+  background-color: colours.$purple_primary_dark;
+  height: variables.$nav_height;
+  padding: 0 20px 0 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  box-shadow: inset colours.$red_accent_dark 0px -2px 10px 0px;
+  
+  input {
+    height: variables.$colour_wheel_size;
+    width: variables.$colour_wheel_size;
+    background-color: black;
+  }
+}

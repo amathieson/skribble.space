@@ -1,0 +1,8 @@
+@use '@scss/mixins/colours';
+
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: colours.$dark_background_colour;
+  }
+}

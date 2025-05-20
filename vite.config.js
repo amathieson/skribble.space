@@ -11,7 +11,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@scss': path.resolve(__dirname, 'src/styles')
+      '@scss': path.resolve(__dirname, 'src/styles'),
+      '@lang': path.resolve(__dirname, 'src/locales')
     }
   }
 })

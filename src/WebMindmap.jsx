@@ -13,7 +13,7 @@ const WebMindMap = ({ penColor }) => {
         pointerType: 'mouse',
         isPrimary: true,
         touchPoints: 0,
-        viewPort: [0,0,0,0],
+        viewPort: "0 0 0 0",
         zoom: 100
     });
 
@@ -28,7 +28,6 @@ const WebMindMap = ({ penColor }) => {
 
         canvas.width = width * 2;
         canvas.height = height * 2;
-        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
         svg.setAttribute('width', width * 5);
         svg.setAttribute('height', height * 5);
 
@@ -47,6 +46,9 @@ const WebMindMap = ({ penColor }) => {
         let touchPoints = [];
         let lastVector = null;
         let zoom = 1;
+        let center = [width/2,height/2];
+        let rotation = 0;
+        let viewPort = [];
 
         // Helper for path conversion
         function catmullRomToBezier(points) {
@@ -80,8 +82,23 @@ const WebMindMap = ({ penColor }) => {
             };
         }
 
+        function computeViewport(c, z) {
+            let vW = width *.5 / z;
+            let vH = height * .5 / z;
+            let vp = [c[0]-vW ,c[1]-vH , vW*2, vH*2];
+            viewPort = vp;
+            svg.setAttribute('viewBox', vp.join(' '));
+        }
+        computeViewport(center, zoom);
+        function projectViewPort(point) {
+            return [
+                point[0]/width*viewPort[2] + (center[0]-viewPort[2]/2),
+                point[1]/height*viewPort[3] + (center[1]-viewPort[3]/2),
+            ]
+        }
+
         const updateDebug = (e) => {
-            setDebug({
+            /*setDebug({
                 penSupport: penSupported,
                 penDown,
                 pressure: e.pressure,
@@ -90,9 +107,11 @@ const WebMindMap = ({ penColor }) => {
                 pointerType: e.pointerType,
                 isPrimary: e.isPrimary,
                 touchPoints: touchPoints.length,
-                viewPort: [],
-                zoom: zoom*100
-            });
+                viewPort: viewPort.join(' '),
+                zoom: zoom*100,
+                center: center,
+                rotation: rotation,
+            });*/
         };
 
         // Event handlers
@@ -116,13 +135,15 @@ const WebMindMap = ({ penColor }) => {
             penDown = true;
             ctx.beginPath();
             ctx.moveTo(e.offsetX * 2, e.offsetY * 2);
-            ctx.lineWidth = size;
+            ctx.lineWidth = size*zoom;
 
             penID = e.pointerId;
             size = 5 * 2 ** (3 * e.pressure);
+            const pnt = projectViewPort([e.offsetX, e.offsetY]);
+
             points = [{
-                x: e.offsetX,
-                y: e.offsetY,
+                x: pnt[0],
+                y: pnt[1],
                 w: size / 2,
             }];
         };
@@ -138,10 +159,18 @@ const WebMindMap = ({ penColor }) => {
             if (touchPoints.length >= 2) {
                 let vec = coordinatesVector(touchPoints[0], touchPoints[1]);
                 if (lastVector !== null) {
-                    zoom += -(1-(vec.length / lastVector.length));
-                    zoom = Math.max(0.2, Math.min(5, zoom));
+                    let zoomFactor = 1 - (vec.length / lastVector.length);
+                    let nonlinearZoom = Math.exp(zoomFactor) - 1;
+                    zoom = Math.max(0.2, Math.min(5, zoom - nonlinearZoom));
+                    center = [center[0] - (vec.center[0]-lastVector.center[0])/zoom, center[1] - (vec.center[1]-lastVector.center[1])/zoom];
+                    computeViewport(center, zoom);
                 }
                 lastVector = vec;
+
+                penDown = false;
+                penID = '';
+                points = [];
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 updateDebug(e);
                 return;
             }
@@ -150,13 +179,14 @@ const WebMindMap = ({ penColor }) => {
 
             if (penDown && e.isPrimary && tool === 'PEN') {
                 size = 5 * 2 ** (3 * e.pressure);
-                ctx.lineWidth = size;
+                ctx.lineWidth = size*zoom;
                 ctx.lineTo(e.offsetX * 2, e.offsetY * 2);
                 ctx.stroke();
 
+                const pnt = projectViewPort([e.offsetX, e.offsetY]);
                 points.push({
-                    x: e.offsetX,
-                    y: e.offsetY,
+                    x: pnt[0],
+                    y: pnt[1],
                     w: size / 2,
                 });
             }
@@ -184,10 +214,7 @@ const WebMindMap = ({ penColor }) => {
 
             if (penID !== e.pointerId) return;
 
-            penID = '';
-            penDown = false;
-
-            if (tool === 'PEN') {
+            if (tool === 'PEN' && penDown) {
                 ctx.stroke();
 
                 let segments = '';
@@ -214,6 +241,9 @@ const WebMindMap = ({ penColor }) => {
                 svg.innerHTML += `<g>${segments}</g>`;
                 points = [];
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                penID = '';
+                penDown = false;
             }
 
             updateDebug(e);
@@ -251,7 +281,8 @@ const WebMindMap = ({ penColor }) => {
                 ))}
             </div>
             <canvas id="canvas" ref={canvasRef}></canvas>
-            <svg id="vector" ref={svgRef}></svg>
+            <svg id="vector" ref={svgRef}>
+            </svg>
         </div>
     );
 };

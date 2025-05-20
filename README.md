@@ -40,9 +40,9 @@ Adam, who has done all the hard work, purely because I was complaining I couldn'
 ## ✅ TODOs:
 
 - [x] **Gesture Control**
-    - [ ] Zoom Canvas
+    - [x] Zoom Canvas
     - [ ] Rotate Canvas
-    - [ ] Move Canvas
+    - [x] Move Canvas
 - [ ] **Undo Redo**
 - [ ] **Text Boxes**
 - [ ] **Shapes**

@@ -14,7 +14,8 @@ const WebMindMap = ({ penColor }) => {
         isPrimary: true,
         touchPoints: 0,
         viewPort: "0 0 0 0",
-        zoom: 100
+        zoom: 100,
+        actionButton: ""
     });
 
     useEffect(() => {
@@ -112,6 +113,7 @@ const WebMindMap = ({ penColor }) => {
                     zoom: zoom*100,
                     center: center,
                     rotation: rotation,
+                    actionButton: lastButton
                 });
             })
         };
@@ -120,9 +122,10 @@ const WebMindMap = ({ penColor }) => {
         const handlePointerEnter = (e) => {
             penSupported ||= e.pointerType === 'pen';
         };
-
+        let lastButton = "";
         const handlePointerDown = (e) => {
             penSupported ||= e.pointerType === 'pen';
+            lastButton = (e.button);
             if (e.pointerType === 'touch')
                 touchPoints.push(e);
 

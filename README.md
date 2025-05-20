@@ -53,6 +53,8 @@ Adam, who has done all the hard work, purely because I was complaining I couldn'
   - [ ] Character recognition for text
 - [ ] **Images**
 - [ ] **PDFs**
+  - [ ] Import
+  - [ ] Export
 - [ ] **Full Text Search**
 - [ ] **PWA**
 - [ ] **Offline Storage**

@@ -1,10 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import Icons from 'unplugin-icons/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+      react(),
+    Icons({autoInstall: true, compiler: 'jsx', jsx: 'react' }),
+  ],
   server: {
     host: '0.0.0.0',
     port: 5173, 

@@ -18,5 +18,26 @@ export default defineConfig({
       '@scss': path.resolve(__dirname, 'src/styles'),
       '@lang': path.resolve(__dirname, 'src/locales')
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: id => {
+          if (id.includes('.png'))
+            return null;
+          if (id.includes('iconify'))
+            return 'iconify'
+          if (id.includes('react') && id.includes('node_modules'))
+            return 'react'
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+          return null;
+        }
+      }
+    }
   }
 })

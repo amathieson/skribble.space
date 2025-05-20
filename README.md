@@ -1,4 +1,4 @@
-## Web Mindmap Thingymajigy
+## Skribble.Space
 
 It might make mindmaps. It might be a glorified notepad. Who knows
 

@@ -27,10 +27,36 @@ npm run dev
 > To disable, comment out the following lines in **vite.config.js**:
 > ```js  
 > server: {
->    host: '0.0.0.0',
->    port: 5173, 
-> },
+>    host: '0.0.0.0'
+>    port: 5173
+> }
 > ```
 ---
 ## Thanks to:
 Adam, who has done all the hard work, purely because I was complaining I couldn't find mindmapping software I liked on iOS. Love you 💜
+
+---
+
+## ✅ TODOs:
+
+- [x] **Gesture Control**
+    - [x] Zoom Canvas
+    - [ ] Rotate Canvas
+    - [x] Move Canvas
+- [ ] **Undo Redo**
+- [ ] **Text Boxes**
+- [ ] **Shapes**
+  - [ ] Snap Arrows to Shapes
+- [x] **Handwriting**
+  - [ ] Snap Arrows to Text areas
+    - [ ] Cluster text into zones for snapping
+  - [ ] Character recognition for text
+- [ ] **Images**
+- [ ] **PDFs**
+- [ ] **Full Text Search**
+- [ ] **PWA**
+- [ ] **Offline Storage**
+  - [ ] Document storage and organisation
+  - [ ] Settings Storage (Such as pen support)
+- [x] **Strokes**
+  - [ ] Cleaner variable width strokes

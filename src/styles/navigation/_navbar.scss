@@ -3,33 +3,54 @@
 
 header {
   background-color: colours.$purple_primary_dark;
+  width: 100%;
   height: variables.$nav_height;
-  padding: 0 20px 0 20px;
-  display: flex;
-  align-items: center;
-  box-shadow: inset colours.$red_accent_dark 0px -2px 10px 0px;
 
-  h1 {
+  .toolbar {
+    display: flex;
+    width: 100%;
+    
+    h1 {
+      color: red;
+      text-align: left; 
+    }
+    
+    .nav_icons_bar {
+      display: flex;
+      flex-direction: row-reverse;
+      width: 100%;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    
+  }
+
+  .nav_icons {
+    height: variables.$nav_icon_size;
+    width: variables.$nav_icon_size;
     color: red;
   }
-  
-  .toolbar {
+
+  #pencolor {
+    height: variables.$nav_icon_size;
+    width: variables.$nav_icon_size;
+    background-color: red;
+  }
+
+  .toolbar_sub {
+    background-color: red;
+    height: 30px;
     width: 100%;
-    justify-content: flex-end;
+    align-content: center;
     display: flex;
-    flex-grow: initial;
-    gap: 20px;
-
-    .nav_icons {
-      height: variables.$nav_icon_size;
-      width: variables.$nav_icon_size;
-      color: red;
-    }
-
-    #pencolor {
-      height: variables.$nav_icon_size;
-      width: variables.$nav_icon_size;
-      background-color: red;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    
+    svg {
+      height: 20px;
+      width: 20px;
     }
   }
 }

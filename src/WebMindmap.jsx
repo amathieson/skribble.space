@@ -137,6 +137,8 @@ const WebMindMap = ({ penColor }) => {
                 return;
             }
 
+            if (lastButton !== 0) return;
+
             penDown = true;
             ctx.beginPath();
             ctx.moveTo(e.offsetX * 2, e.offsetY * 2);

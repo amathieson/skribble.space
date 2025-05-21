@@ -1,5 +1,7 @@
 .floating-button {
-  position: relative;
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -13,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible; /* Allow child circles to overflow the parent button */
+  overflow: visible;
 }
 
 .floating-button:hover {
@@ -31,7 +33,37 @@
 }
 
 .main {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  position: relative;
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%;
+  overflow: visible;
+}
+
+// Orbit parameters
+$circle-size: 60px; // Size of smaller circles
+$num-circles: 5;    // Number of smaller circles around the main button (-1)
+
+$orbit-radius: 90px;  // How big a gap from main button
+
+// Loop through the number of smaller circles and calculate their position in a circular orbit
+@for $i from 0 through $num-circles - 1 {
+  $angle: (-260deg / $num-circles) * $i; 
+  $x: $orbit-radius * cos($angle); 
+  $y: $orbit-radius * sin($angle); 
+
+  .smaller-circle:nth-child(#{$i + 1}) {
+    position: absolute;
+    width: $circle-size;
+    height: $circle-size;
+    border-radius: 50%;
+    background-color: #e74c3c;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translate($x, $y);
+    transition: transform 0.3s ease;
+  }
 }

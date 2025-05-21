@@ -2,12 +2,14 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import Icons from 'unplugin-icons/vite'
+import {webfontDownload} from "vite-plugin-webfont-dl";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
       react(),
     Icons({autoInstall: true, compiler: 'jsx', jsx: 'react' }),
+    webfontDownload(),
   ],
   server: {
     host: '0.0.0.0',

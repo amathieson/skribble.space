@@ -1,5 +1,15 @@
 /**
+* ---------------------------------------
 * Navbar Stuffs
- */
-$nav_height: 12vh;
-$nav_icon_size: $nav_height * 0.6;
+* ---------------------------------------
+*/
+
+//Header
+$nav_height: 11vh;
+
+//Main Tool Bar
+$tool_bar_height: $nav_height * 0.7;
+$toolbar_icon_size: $tool_bar_height * 0.6;
+
+//Sub Tool Bar
+$sub_toolbar_height: $nav_height * 0.3

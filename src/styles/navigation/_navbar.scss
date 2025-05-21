@@ -3,51 +3,43 @@
 
 header {
   background-color: colours.$purple_primary_dark;
-  width: 100%;
   height: variables.$nav_height;
-
+  
   .toolbar {
     display: flex;
     width: 100%;
+    height: variables.$tool_bar_height;
     
     h1 {
-      color: red;
-      text-align: left; 
+      color: colours.$purple_primary_dark_foreground;
+      align-self: center;
+      margin-left: 10px;
     }
     
     .nav_icons_bar {
       display: flex;
       flex-direction: row-reverse;
       width: 100%;
-      align-items: center;
       gap: 1rem;
     }
-    
-    
   }
 
-  .nav_icons {
-    height: variables.$nav_icon_size;
-    width: variables.$nav_icon_size;
-    color: red;
-  }
-
-  #pencolor {
-    height: variables.$nav_icon_size;
-    width: variables.$nav_icon_size;
-    background-color: red;
+  .nav_icons, #pencolor {
+    height: variables.$toolbar_icon_size;
+    width: variables.$toolbar_icon_size;
+    color: colours.$purple_primary_dark_highlight_light;
+    align-self: center;
   }
 
   .toolbar_sub {
-    background-color: red;
-    height: 30px;
-    width: 100%;
+    background-color: colours.$purple_secondary_dark;
     align-content: center;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    
+    height: variables.$sub_toolbar_height;
+
+
     svg {
       height: 20px;
       width: 20px;

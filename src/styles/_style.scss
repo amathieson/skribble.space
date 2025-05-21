@@ -26,11 +26,15 @@ canvas {
 }
 input {
     position: absolute;
-
     z-index: 99999999;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: ADLaM Display, Verdana, Geneva, Tahoma, sans-serif;
+}
+
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: abeezee-regular, Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
     padding: 0;
     margin: 0;

@@ -1,11 +1,14 @@
+@use '@scss/mixins/colours';
+@use '@scss/mixins/variables';
+
 .floating-button {
   position: fixed;
   bottom: 30px;
   right: 40px;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background-color: #3498db;
+  background-color: colours.$purple_primary_dark;
   color: white;
   font-size: 30px;
   border: none;
@@ -19,36 +22,43 @@
 }
 
 .floating-button:hover {
-  background-color: #2980b9;
+  background-color: colours.$purple_primary_dark_highlight;
 }
 
 .floating-button:focus {
   outline: none;
 }
 
-.floating-button svg {
-  height: 60px;
-  width: 60px;
+/**
+* ---------------------------------------
+* Icons
+* ---------------------------------------
+*/
+
+.fab_main_icon {
+  height: 50px;
+  width: 50px;
   transform: rotate(180deg);
+  color: colours.$purple_primary_dark_foreground;
+  padding: 15px;
 }
 
-.main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  position: relative;
-  width: 100px; 
-  height: 100px;
-  border-radius: 50%;
-  overflow: visible;
-}
+
+
+
+/**
+* ---------------------------------------
+* FAB Circle Orbiting 
+* ---------------------------------------
+*/
 
 // Orbit parameters
-$circle-size: 60px; // Size of smaller circles
+//TODO: make this properly scale
+//TODO: actually parameterise this
+$circle-size: 45px; // Size of smaller circles
 $num-circles: 5;    // Number of smaller circles around the main button (-1)
 
-$orbit-radius: 90px;  // How big a gap from main button
+$orbit-radius: 80px;  // How big a gap from main button
 
 // Loop through the number of smaller circles and calculate their position in a circular orbit
 @for $i from 0 through $num-circles - 1 {
@@ -61,9 +71,18 @@ $orbit-radius: 90px;  // How big a gap from main button
     width: $circle-size;
     height: $circle-size;
     border-radius: 50%;
-    background-color: #e74c3c;
+    background-color: colours.$purple_tertiary_dark;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transform: translate($x, $y);
     transition: transform 0.3s ease;
+
+    align-content: center;
+
+    svg {
+      height: $circle-size * 0.60;
+      width: $circle-size * 0.60;
+      color: #31194f;
+      padding: 8px;
+    }
   }
 }

@@ -2,6 +2,11 @@
 
 
 @media (prefers-color-scheme: dark) {
+
+  :root, input, input::placeholder {
+    color: colours.$foreground_dark;
+  }
+  
   body {
     background: colours.$dark_background_colour;
   }

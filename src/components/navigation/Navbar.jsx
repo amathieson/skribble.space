@@ -11,7 +11,8 @@ const Header = ({ penColor, setPenColor }) => {
     return (
         <header>
             <div className="toolbar">
-                <h1>{t('nav.title')}</h1>
+                <LeftArrow className="nav_icons"/>
+                <h1>{t('title')}</h1>
                 <div className="nav_icons_bar">
                     <SettingsDots className="nav_icons"/>
                     <div className="nav_icons">

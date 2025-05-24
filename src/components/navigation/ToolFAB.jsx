@@ -15,15 +15,13 @@ const ToolFAB = () => {
     };
 
     return (
-        <div className="main">
-            <button className="floating_button" onClick={handleClick}>
-                <Paintbrush className="fab_main_icon"/>
-                <div className="smaller_circle"><Text/></div>
-                <div className="smaller_circle"><Image/></div>
-                <div className="smaller_circle"><Square/></div>
-                <div className="smaller_circle"><Pen/></div>
-            </button>
-        </div>
+        <button className="floating_button" onClick={handleClick}>
+            <Paintbrush className="fab_main_icon"/>
+            <div className="smaller_circle"><Text/></div>
+            <div className="smaller_circle"><Image/></div>
+            <div className="smaller_circle"><Square/></div>
+            <div className="smaller_circle"><Pen/></div>
+        </button>
     );
 };
 

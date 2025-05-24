@@ -8,8 +8,9 @@ header {
 
   .toolbar {
     display: flex;
-    width: 100%;
+    width: calc(100% - 2em);
     height: variables.$tool_bar_height;
+    padding: 0 1em;
 
     h1 {
       color: colours.$purple_primary_dark_foreground;
@@ -39,6 +40,7 @@ header {
     justify-content: space-between;
     align-items: center;
     height: variables.$sub_toolbar_height;
+    padding: 0 1em;
 
 
     svg {

@@ -6,7 +6,7 @@ canvas, #vector {
     left: 0;
     display: block;
     width: 100%;
-    height: calc(100% - variables.$nav_height);
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -24,6 +24,9 @@ canvas {
     flex-direction: column;
     width: 10vw;
     opacity: 0.7;
+    background-color: #000;
+    padding: 0.5em;
+    margin: 0.5em;
 }
 input {
     position: absolute;
@@ -34,7 +37,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: ADLaM Display, Verdana, Geneva, Tahoma, sans-serif;
 }
 
-body {
+body, #root {
     font-family: abeezee-regular, Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
     padding: 0;
@@ -44,4 +47,11 @@ body {
     overflow: hidden;
     touch-action: none;
     overscroll-behavior: none;
+}
+.canvas {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: calc(100% - #{variables.$nav_height});
+    display: block;
 }

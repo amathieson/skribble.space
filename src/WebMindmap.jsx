@@ -4,6 +4,7 @@ import '@scss/_style.scss';
 const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
+    const svgBackRef = useRef(null);
     const [debug, setDebug] = useState({
         penSupport: false,
         penDown: false,
@@ -21,6 +22,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const svg = svgRef.current;
+        const svgBack = svgBackRef.current;
         const ctx = canvas.getContext('2d');
         const dpr    = window.devicePixelRatio || 1;
         
@@ -34,6 +36,9 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
         ctx.scale(dpr, dpr);
         svg.setAttribute('width', rect.width * 5);
         svg.setAttribute('height', rect.height * 5);
+        svgBack.setAttribute('width', rect.width * 5);
+        svgBack.setAttribute('height', rect.height * 5);
+
        
         ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
        
@@ -275,10 +280,10 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
             canvas.removeEventListener('pointermove', handlePointerMove);
             canvas.removeEventListener('pointerup', handlePointerUp);
         };
-    },  [penColor, backgroundColour]); 
+    },  [penColor, backgroundColour]);
     
     return (
-        <div>
+        <div className="canvas">
             <div id="debug">
                 {Object.entries(debug).map(([key, value]) => (
                     <label key={key}>
@@ -300,6 +305,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
             ></canvas>
             
             <svg id="vector" ref={svgRef}>
+                <rect x={0} y={0} ref={svgBackRef} fill={backgroundColour} />
             </svg>
         </div>
     );

@@ -3,6 +3,7 @@
 
 .floating_button {
   position: fixed;
+  z-index: 10;
   bottom: 30px;
   right: 40px;
   width: 80px;
@@ -57,9 +58,9 @@
 
 // Loop through the number of smaller circles and calculate their position in a circular orbit
 @for $i from 0 through variables.$num_circles {
-  $angle:  calc(-200deg / variables.$num-circles) * $i; 
-  $x: variables.$orbit_radius * cos($angle); 
-  $y: variables.$orbit_radius * sin($angle); 
+  $angle:  calc(-200deg / #{variables.$num-circles} * $i);
+  $x: calc(#{variables.$orbit_radius} * cos($angle));
+  $y: calc(#{variables.$orbit_radius} * sin($angle));
 
   .smaller_circle:nth-child(#{$i + 1}) {
     position: absolute;

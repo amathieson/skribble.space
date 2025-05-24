@@ -278,8 +278,8 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
             canvas.removeEventListener('pointermove', handlePointerMove);
             canvas.removeEventListener('pointerup', handlePointerUp);
         };
-    }, [penColor]); // Re-run the effect whenever `penColor` changes
-
+    },  [penColor, backgroundColour]); 
+    
     return (
         <div>
             <div id="debug">

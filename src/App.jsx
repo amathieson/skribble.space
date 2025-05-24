@@ -7,18 +7,20 @@ import '@scss/themes/_dark.scss';
 import '@scss/themes/_light.scss';
 
 function App() {
-    const [penColor, setPenColor] = useState('#000000'); // default black pen color
-    const [backgroundColour] = useState('#ffffff'); // default white background
+    const [penColor, setPenColor] = useState('#000000');
+    const [backgroundColour, setBackgroundColour] = useState('#ffffff');
 
     return (
         <>
             <DropdownProvider>
-                <Navbar
-                    penColor={penColor}
-                    setPenColor={setPenColor}
-                />
+                    <Navbar
+                        penColor={penColor}
+                        setPenColor={setPenColor}
+                        backgroundColour={backgroundColour}
+                        setBackgroundColour={setBackgroundColour}
+                    />
             </DropdownProvider>
-
+                
             <WebMindMap penColor={penColor} backgroundColour={backgroundColour} />
             <ToolFAB />
             <p>

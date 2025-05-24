@@ -7,7 +7,7 @@ import RightArrow from '~icons/ph/arrow-right-bold';
 import { useDropdown } from "@ctx/Dropdown";
 import SettingsDropdown from "./SettingsDropdown.jsx";
 
-const Navbar = ({ penColor, setPenColor }) => {
+const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }) => {
     const { t } = useTranslation("common");
     const { toggleDropdown, isDropdownOpen } = useDropdown();
 
@@ -27,7 +27,10 @@ const Navbar = ({ penColor, setPenColor }) => {
                         />
                         {isOpen && (
                             <div className="dropdown-container">
-                                <SettingsDropdown />
+                                <SettingsDropdown
+                                    backgroundColour={backgroundColour}
+                                    setBackgroundColour={setBackgroundColour}
+                                />
                             </div>
                         )}
                     </div>

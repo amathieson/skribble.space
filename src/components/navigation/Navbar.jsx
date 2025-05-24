@@ -5,7 +5,7 @@ import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import LeftArrow from '~icons/ph/arrow-left-bold';
 import RightArrow from '~icons/ph/arrow-right-bold';
 import { useDropdown } from "@ctx/Dropdown";
-import SettingsMenu from "./SettingsMenu.jsx";
+import SettingsDropdown from "./SettingsDropdown.jsx";
 
 const Navbar = ({ penColor, setPenColor }) => {
     const { t } = useTranslation("common");
@@ -27,7 +27,7 @@ const Navbar = ({ penColor, setPenColor }) => {
                         />
                         {isOpen && (
                             <div className="dropdown-container">
-                                <SettingsMenu />
+                                <SettingsDropdown />
                             </div>
                         )}
                     </div>

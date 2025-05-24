@@ -55,3 +55,17 @@ body, #root {
     height: calc(100% - #{variables.$nav_height});
     display: block;
 }
+
+input[type=color] {
+    border-radius: 50%;
+    aspect-ratio: 1;
+    width: 16pt;
+    height: 16pt;
+    padding: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    &::-webkit-color-swatch, &::-moz-color-swatch  {
+        border-radius: 50%;
+    }
+}

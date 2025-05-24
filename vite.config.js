@@ -18,7 +18,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@scss': path.resolve(__dirname, 'src/styles'),
-      '@lang': path.resolve(__dirname, 'src/locales')
+      '@lang': path.resolve(__dirname, 'src/locales'),
+      '@ctx': path.resolve(__dirname, 'src/components/contexts')
+
     }
   },
   build: {

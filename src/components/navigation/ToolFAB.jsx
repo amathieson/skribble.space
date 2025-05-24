@@ -16,12 +16,12 @@ const ToolFAB = () => {
 
     return (
         <div className="main">
-            <button className="floating-button" onClick={handleClick}>
+            <button className="floating_button" onClick={handleClick}>
                 <Paintbrush className="fab_main_icon"/>
-                <div className="smaller-circle"><Text/></div>
-                <div className="smaller-circle"><Image/></div>
-                <div className="smaller-circle"><Square/></div>
-                <div className="smaller-circle"><Pen/></div>
+                <div className="smaller_circle"><Text/></div>
+                <div className="smaller_circle"><Image/></div>
+                <div className="smaller_circle"><Square/></div>
+                <div className="smaller_circle"><Pen/></div>
             </button>
         </div>
     );

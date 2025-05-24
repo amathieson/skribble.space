@@ -1,7 +1,7 @@
 @use '@scss/mixins/colours';
 @use '@scss/mixins/variables';
 
-.floating-button {
+.floating_button {
   position: fixed;
   bottom: 30px;
   right: 40px;
@@ -21,11 +21,11 @@
   overflow: visible;
 }
 
-.floating-button:hover {
+.floating_button:hover {
   background-color: colours.$purple_primary_dark_highlight;
 }
 
-.floating-button:focus {
+.floating_button:focus {
   outline: none;
 }
 
@@ -41,6 +41,7 @@
   transform: rotate(180deg);
   color: colours.$purple_primary_dark_foreground;
   padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -54,22 +55,17 @@
 
 // Orbit parameters
 //TODO: make this properly scale
-//TODO: actually parameterise this
-$circle-size: 45px; // Size of smaller circles
-$num-circles: 5;    // Number of smaller circles around the main button (-1)
-
-$orbit-radius: 80px;  // How big a gap from main button
 
 // Loop through the number of smaller circles and calculate their position in a circular orbit
-@for $i from 0 through $num-circles - 1 {
-  $angle: (-260deg / $num-circles) * $i; 
-  $x: $orbit-radius * cos($angle); 
-  $y: $orbit-radius * sin($angle); 
+@for $i from 0 through variables.$num_circles {
+  $angle:  calc(-200deg / variables.$num-circles) * $i; 
+  $x: variables.$orbit_radius * cos($angle); 
+  $y: variables.$orbit_radius * sin($angle); 
 
-  .smaller-circle:nth-child(#{$i + 1}) {
+  .smaller_circle:nth-child(#{$i + 1}) {
     position: absolute;
-    width: $circle-size;
-    height: $circle-size;
+    width: variables.$circle_size;
+    height: variables.$circle_size;
     border-radius: 50%;
     background-color: colours.$purple_tertiary_dark;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -79,9 +75,9 @@ $orbit-radius: 80px;  // How big a gap from main button
     align-content: center;
 
     svg {
-      height: $circle-size * 0.60;
-      width: $circle-size * 0.60;
-      color: #31194f;
+      height: variables.$circle_size_icons;
+      width: variables.$circle_size_icons;
+      color: colours.$circle_colour;
       padding: 8px;
     }
   }

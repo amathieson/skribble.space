@@ -4,12 +4,13 @@
 header {
   background-color: colours.$purple_primary_dark;
   height: variables.$nav_height;
-  
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
   .toolbar {
     display: flex;
     width: 100%;
     height: variables.$tool_bar_height;
-    
+
     h1 {
       color: colours.$purple_primary_dark_foreground;
       align-self: center;
@@ -44,5 +45,18 @@ header {
       height: 20px;
       width: 20px;
     }
+  }
+}
+
+.nav_icon_with_dropdown {
+  position: relative;
+  display: inline-block;
+  align-content: center;
+
+  .dropdown-container {
+    position: absolute;
+    top: 80%;        
+    right: 0;
+    z-index: 10;
   }
 }

@@ -35,8 +35,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
         svg.setAttribute('width', rect.width * 5);
         svg.setAttribute('height', rect.height * 5);
        
-        ctx.fillStyle = backgroundColour;
-        ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+        ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
        
         // Set strokeStyle to penColor whenever it changes
         ctx.strokeStyle = penColor;
@@ -178,8 +177,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
                 penDown = false;
                 penID = '';
                 points = [];
-                ctx.fillStyle = backgroundColour;
-                ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+                ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
                 updateDebug(e);
                 return;
             }
@@ -249,8 +247,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
 
                 svg.innerHTML += `<g>${segments}</g>`;
                 points = [];
-                ctx.fillStyle = backgroundColour;
-                ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+                ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
 
 
                 penID = '';
@@ -300,8 +297,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
             <canvas
                 id="canvas"
                 ref={canvasRef}
-                style={{ backgroundColour }}
-            ></canvas>            
+            ></canvas>
             
             <svg id="vector" ref={svgRef}>
             </svg>

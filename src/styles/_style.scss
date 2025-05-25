@@ -62,10 +62,16 @@ input[type=color] {
     width: 16pt;
     height: 16pt;
     padding: 0;
+    margin: 0 0.5em;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    &::-webkit-color-swatch, &::-moz-color-swatch  {
+    display: inline-block;
+    &::-webkit-color-swatch-wrapper  {
+        margin: 0;
+        padding: 10%;
+    }
+    &::-webkit-color-swatch {
         border-radius: 50%;
     }
 }

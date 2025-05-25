@@ -26,7 +26,16 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
         const ctx = canvas.getContext('2d');
         const dpr    = window.devicePixelRatio || 1;
         
-        const rect = canvas.getBoundingClientRect();
+        let rect = canvas.getBoundingClientRect();
+        document.onresize = () => {
+            rect = canvas.getBoundingClientRect();
+            canvas.width  = rect.width  * dpr;
+            canvas.height = rect.height * dpr;
+
+            canvas.style.width  = `${rect.width}px`;
+            canvas.style.height = `${rect.height}px`;
+
+        }
 
         canvas.width  = rect.width  * dpr;
         canvas.height = rect.height * dpr;

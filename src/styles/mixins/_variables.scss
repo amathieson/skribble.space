@@ -1,5 +1,33 @@
 /**
+* ---------------------------------------
 * Navbar Stuffs
- */
-$nav_height: 8vh;
-$nav_icon_size: $nav_height * 0.6;
+* ---------------------------------------
+*/
+
+//Header
+$nav_height: 11vh;
+
+//Main Tool Bar
+$tool_bar_height: $nav_height * 0.7;
+$toolbar_icon_size: $tool_bar_height * 0.6;
+
+//Sub Tool Bar
+$sub_toolbar_height: $nav_height * 0.3;
+
+/**
+* ---------------------------------------
+* Tool FAB Stuff
+* ---------------------------------------
+*/
+
+// Size of Surrounding Circles in the FAB
+$circle_size: 45px;
+
+// The icons within the Surrounding Circles
+$circle_size_icons: $circle_size * 0.60;
+
+// The number of surrounding circles
+$num_circles: 4;
+
+// How far away the surrounding circles orbit
+$orbit_radius: 80px

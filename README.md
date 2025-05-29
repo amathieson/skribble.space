@@ -62,7 +62,7 @@ Adam, who has done all the hard work, purely because I was complaining I couldn'
   - [ ] Settings Storage (Such as pen support)
 - [x] **Strokes**
   - [ ] Cleaner variable width strokes
-- [ ] **Background Customisation**
+- [ ] **Background Customisation** - in prog by Cait
   - [ ] Grid
   - [ ] Lines
   - [ ] Solid Colour

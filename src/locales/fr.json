@@ -1,5 +1,12 @@
 {
-  "nav": {
-    "title": "Skribble.Space"
+  "title": "Skribble.Space",
+  "settings_dropdown": {
+    "title": "Settings",
+    "page_settings": {
+      "title":"Page Settings",
+      "background_colour": "Background Colour",
+      "grid_display": "Grid Display",
+      "snap_to_grid": "Snap to Grid"
+    }
   }
 }

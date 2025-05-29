@@ -1,0 +1,84 @@
+@use '@scss/mixins/colours';
+@use '@scss/mixins/variables';
+
+.floating_button {
+  position: fixed;
+  z-index: 10;
+  bottom: 30px;
+  right: 40px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: colours.$purple_primary_dark;
+  color: white;
+  font-size: 30px;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+.floating_button:hover {
+  background-color: colours.$purple_primary_dark_highlight;
+}
+
+.floating_button:focus {
+  outline: none;
+}
+
+/**
+* ---------------------------------------
+* Icons
+* ---------------------------------------
+*/
+
+.fab_main_icon {
+  height: 50px;
+  width: 50px;
+  transform: rotate(180deg);
+  color: colours.$purple_primary_dark_foreground;
+  padding: 15px;
+}
+
+
+
+
+/**
+* ---------------------------------------
+* FAB Circle Orbiting 
+* ---------------------------------------
+*/
+
+// Orbit parameters
+//TODO: make this properly scale
+
+// Loop through the number of smaller circles and calculate their position in a circular orbit
+@for $i from 0 through variables.$num_circles {
+  $angle:  calc(-200deg / #{variables.$num-circles} * $i);
+  $x: calc(#{variables.$orbit_radius} * cos($angle));
+  $y: calc(#{variables.$orbit_radius} * sin($angle));
+
+  .smaller_circle:nth-child(#{$i + 1}) {
+    position: absolute;
+    width: variables.$circle_size;
+    height: variables.$circle_size;
+    border-radius: 50%;
+    background-color: colours.$purple_tertiary_dark;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translate($x, $y);
+    transition: transform 0.3s ease;
+
+    align-content: center;
+
+    svg {
+      height: variables.$circle_size_icons;
+      width: variables.$circle_size_icons;
+      color: colours.$circle_colour;
+      padding: 8px;
+    }
+  }
+}

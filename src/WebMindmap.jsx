@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '@scss/_style.scss';
 
-const WebMindMap = ({ penColor }) => {
+const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
+    const svgBackRef = useRef(null);
     const [debug, setDebug] = useState({
         penSupport: false,
         penDown: false,
@@ -21,19 +22,35 @@ const WebMindMap = ({ penColor }) => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const svg = svgRef.current;
+        const svgBack = svgBackRef.current;
         const ctx = canvas.getContext('2d');
+        const dpr    = window.devicePixelRatio || 1;
+        
+        let rect = canvas.getBoundingClientRect();
+        document.onresize = () => {
+            rect = canvas.getBoundingClientRect();
+            canvas.width  = rect.width  * dpr;
+            canvas.height = rect.height * dpr;
 
-        // Set canvas and SVG dimensions
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+            canvas.style.width  = `${rect.width}px`;
+            canvas.style.height = `${rect.height}px`;
 
-        canvas.width = width * 2;
-        canvas.height = height * 2;
-        svg.setAttribute('width', width * 5);
-        svg.setAttribute('height', height * 5);
+        }
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.width  = rect.width  * dpr;
+        canvas.height = rect.height * dpr;
 
+        canvas.style.width  = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+        ctx.scale(dpr, dpr);
+        svg.setAttribute('width', rect.width * 5);
+        svg.setAttribute('height', rect.height * 5);
+        svgBack.setAttribute('width', rect.width * 5);
+        svgBack.setAttribute('height', rect.height * 5);
+
+       
+        ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+       
         // Set strokeStyle to penColor whenever it changes
         ctx.strokeStyle = penColor;
 
@@ -47,34 +64,33 @@ const WebMindMap = ({ penColor }) => {
         let touchPoints = [];
         let lastVector = null;
         let zoom = 1;
-        let center = [width/2,height/2];
+        let center = [rect.width / 2, rect.height / 2];
         let rotation = 0;
         let viewPort = [];
 
         // Helper for path conversion
         function catmullRomToBezier(points) {
             if (points.length < 2) return '';
-            if (points[0] == null) points = points.slice(1);
+            if (points.some(p => p == null || typeof p.x !== 'number' || typeof p.y !== 'number')) return '';
 
-            const padded = [points[0], ...points, points[points.length - 1]];
-            let d = `M${padded[1].x} ${padded[1].y}`;
-
-            for (let i = 1; i < padded.length - 2; i++) {
-                const p0 = padded[i - 1];
-                const p1 = padded[i];
-                const p2 = padded[i + 1];
-                const p3 = padded[i + 2];
+            let d = `M${points[0].x},${points[0].y}`;
+            for (let i = 0; i < points.length - 1; i++) {
+                const p0 = points[i - 1] || points[i];
+                const p1 = points[i];
+                const p2 = points[i + 1] || p1;
+                const p3 = points[i + 2] || p2;
 
                 const cp1x = p1.x + (p2.x - p0.x) / 6;
                 const cp1y = p1.y + (p2.y - p0.y) / 6;
+
                 const cp2x = p2.x - (p3.x - p1.x) / 6;
                 const cp2y = p2.y - (p3.y - p1.y) / 6;
 
-                d += ` C${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+                d += ` C${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
             }
-
             return d;
         }
+
         function coordinatesVector(point1, point2) {
             return {
                 length: Math.sqrt((point1.offsetX - point2.offsetX)**2 + (point1.offsetY - point2.offsetY)**2),
@@ -84,17 +100,17 @@ const WebMindMap = ({ penColor }) => {
         }
 
         function computeViewport(c, z) {
-            let vW = width *.5 / z;
-            let vH = height * .5 / z;
-            let vp = [c[0]-vW ,c[1]-vH , vW*2, vH*2];
+            let vW = rect.width * 0.5 / z;
+            let vH = rect.height * 0.5 / z;
+            let vp = [c[0] - vW, c[1] - vH, vW * 2, vH * 2];
             viewPort = vp;
             svg.setAttribute('viewBox', vp.join(' '));
         }
         computeViewport(center, zoom);
         function projectViewPort(point) {
             return [
-                point[0]/width*viewPort[2] + (center[0]-viewPort[2]/2),
-                point[1]/height*viewPort[3] + (center[1]-viewPort[3]/2),
+                point[0]/rect.width*viewPort[2] + (center[0]-viewPort[2]/2),
+                point[1]/rect.height*viewPort[3] + (center[1]-viewPort[3]/2),
             ]
         }
 
@@ -141,7 +157,7 @@ const WebMindMap = ({ penColor }) => {
 
             penDown = true;
             ctx.beginPath();
-            ctx.moveTo(e.offsetX * 2, e.offsetY * 2);
+            ctx.moveTo(e.offsetX, e.offsetY);
             ctx.lineWidth = size*zoom;
 
             penID = e.pointerId;
@@ -177,7 +193,7 @@ const WebMindMap = ({ penColor }) => {
                 penDown = false;
                 penID = '';
                 points = [];
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
                 updateDebug(e);
                 return;
             }
@@ -187,7 +203,7 @@ const WebMindMap = ({ penColor }) => {
             if (penDown && e.isPrimary && tool === 'PEN') {
                 size = 5 * 2 ** (3 * e.pressure);
                 ctx.lineWidth = size*zoom;
-                ctx.lineTo(e.offsetX * 2, e.offsetY * 2);
+                ctx.lineTo(e.offsetX, e.offsetY);
                 ctx.stroke();
 
                 const pnt = projectViewPort([e.offsetX, e.offsetY]);
@@ -247,7 +263,8 @@ const WebMindMap = ({ penColor }) => {
 
                 svg.innerHTML += `<g>${segments}</g>`;
                 points = [];
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
 
                 penID = '';
                 penDown = false;
@@ -274,10 +291,10 @@ const WebMindMap = ({ penColor }) => {
             canvas.removeEventListener('pointermove', handlePointerMove);
             canvas.removeEventListener('pointerup', handlePointerUp);
         };
-    }, [penColor]); // Re-run the effect whenever `penColor` changes
-
+    },  [penColor, backgroundColour]);
+    
     return (
-        <div>
+        <div className="canvas">
             <div id="debug">
                 {Object.entries(debug).map(([key, value]) => (
                     <label key={key}>
@@ -292,8 +309,14 @@ const WebMindMap = ({ penColor }) => {
                     </label>
                 ))}
             </div>
-            <canvas id="canvas" ref={canvasRef}></canvas>
+            {/*todo: change to use user set colour upon mindmap creation*/}
+            <canvas
+                id="canvas"
+                ref={canvasRef}
+            ></canvas>
+            
             <svg id="vector" ref={svgRef}>
+                <rect x={0} y={0} ref={svgBackRef} fill={backgroundColour} />
             </svg>
         </div>
     );

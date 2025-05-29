@@ -4,32 +4,61 @@
 header {
   background-color: colours.$purple_primary_dark;
   height: variables.$nav_height;
-  padding: 0 20px 0 20px;
-  display: flex;
-  align-items: center;
-  box-shadow: inset colours.$red_accent_dark 0px -2px 10px 0px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
-  h1 {
-    color: red;
-  }
-  
   .toolbar {
-    width: 100%;
-    justify-content: flex-end;
     display: flex;
-    flex-grow: initial;
-    gap: 20px;
+    width: calc(100% - 2em);
+    height: variables.$tool_bar_height;
+    padding: 0 1em;
 
-    .nav_icons {
-      height: variables.$nav_icon_size;
-      width: variables.$nav_icon_size;
-      color: red;
+    h1 {
+      color: colours.$purple_primary_dark_foreground;
+      align-self: center;
+      margin-left: 10px;
     }
+    
+    .nav_icons_bar {
+      display: flex;
+      flex-direction: row-reverse;
+      width: 100%;
+      gap: 1rem;
+    }
+  }
 
-    #pencolor {
-      height: variables.$nav_icon_size;
-      width: variables.$nav_icon_size;
-      background-color: red;
+  .nav_icons, #pencolor {
+    height: variables.$toolbar_icon_size;
+    width: variables.$toolbar_icon_size;
+    color: colours.$purple_primary_dark_highlight_light;
+    align-self: center;
+  }
+
+  .toolbar_sub {
+    background-color: colours.$purple_secondary_dark;
+    align-content: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: variables.$sub_toolbar_height;
+    padding: 0 1em;
+
+
+    svg {
+      height: 20px;
+      width: 20px;
     }
+  }
+}
+
+.nav_icon_with_dropdown {
+  position: relative;
+  display: inline-block;
+  align-content: center;
+
+  .dropdown-container {
+    position: absolute;
+    top: 80%;        
+    right: 0;
+    z-index: 10;
   }
 }

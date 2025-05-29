@@ -1,6 +1,8 @@
+@use '@scss/mixins/variables';
+
 canvas, #vector {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     display: block;
     width: 100%;
@@ -21,16 +23,22 @@ canvas {
     display: flex;
     flex-direction: column;
     width: 10vw;
-    background: #3f3f3f;
     opacity: 0.7;
+    background-color: #000;
+    padding: 0.5em;
+    margin: 0.5em;
 }
 input {
     position: absolute;
-
-    z-index: 99999999;
+    z-index: 9999;
 }
-body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: ADLaM Display, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body, #root {
+    font-family: abeezee-regular, Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
     padding: 0;
     margin: 0;
@@ -39,4 +47,31 @@ body {
     overflow: hidden;
     touch-action: none;
     overscroll-behavior: none;
+}
+.canvas {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: calc(100% - #{variables.$nav_height});
+    display: block;
+}
+
+input[type=color] {
+    border-radius: 50%;
+    aspect-ratio: 1;
+    width: 16pt;
+    height: 16pt;
+    padding: 0;
+    margin: 0 0.5em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    &::-webkit-color-swatch-wrapper  {
+        margin: 0;
+        padding: 10%;
+    }
+    &::-webkit-color-swatch {
+        border-radius: 50%;
+    }
 }

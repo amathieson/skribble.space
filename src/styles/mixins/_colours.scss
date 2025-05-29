@@ -1,8 +1,14 @@
 /**
 * Dark Colours
 */
-$purple_primary_dark: rgb(15, 1, 28);
-$red_accent_dark: #3f091f;
+$purple_primary_dark: #3d245a;
+$purple_primary_dark_foreground: #71499f;
+$purple_primary_dark_highlight: #7647ad;
+$purple_primary_dark_highlight_light: #a575e5;
+$purple_secondary_dark: #6d538b;
+$purple_tertiary_dark: #632E9F;
+$red_error_dark: #FFB4AB;
+$foreground_dark: #3d245a;
 
 /**
 * Light Colours
@@ -11,4 +17,14 @@ $red_accent_dark: #3f091f;
 /**
 * Background Colours
 */
-$dark_background_colour: rgb(26, 9, 45);
+$background_dark: #1e1a20;
+
+
+/**
+* ---------------------------------------
+* Tool FAB Stuff
+* ---------------------------------------
+*/
+
+//Colour of the Centre FAB Circle
+$circle_colour: #31194f;

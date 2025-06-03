@@ -19,7 +19,8 @@ export default defineConfig({
     alias: {
       '@scss': path.resolve(__dirname, 'src/styles'),
       '@lang': path.resolve(__dirname, 'src/locales'),
-      '@ctx': path.resolve(__dirname, 'src/components/contexts')
+      '@ctx': path.resolve(__dirname, 'src/components/contexts'),
+      '@pages': path.resolve(__dirname, 'src/pages')
 
     }
   },

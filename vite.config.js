@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import Icons from 'unplugin-icons/vite'
 import {webfontDownload} from "vite-plugin-webfont-dl";
+import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,6 +11,9 @@ export default defineConfig({
       react(),
     Icons({autoInstall: true, compiler: 'jsx', jsx: 'react' }),
     webfontDownload(),
+    VitePWA({ registerType: 'autoUpdate',devOptions: {
+        enabled: true
+      } })
   ],
   server: {
     host: '0.0.0.0',
@@ -19,7 +23,8 @@ export default defineConfig({
     alias: {
       '@scss': path.resolve(__dirname, 'src/styles'),
       '@lang': path.resolve(__dirname, 'src/locales'),
-      '@ctx': path.resolve(__dirname, 'src/components/contexts')
+      '@ctx': path.resolve(__dirname, 'src/components/contexts'),
+      '@pages': path.resolve(__dirname, 'src/pages')
 
     }
   },

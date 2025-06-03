@@ -6,6 +6,7 @@ import LeftArrow from '~icons/ph/arrow-left-bold';
 import RightArrow from '~icons/ph/arrow-right-bold';
 import { useDropdown } from "@ctx/Dropdown";
 import SettingsDropdown from "./SettingsDropdown.jsx";
+import {Link} from "react-router-dom";
 
 const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }) => {
     const { t } = useTranslation("common");
@@ -16,7 +17,7 @@ const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }
     return (
         <header>
             <div className="toolbar">
-                <LeftArrow className="nav_icons"/>
+                <Link to="/home" className="nav_icons"><LeftArrow className="nav_icons"/></Link>
                 <h1>{t('title')}</h1>
 
                 <div className="nav_icons_bar">

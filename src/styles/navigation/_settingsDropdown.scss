@@ -5,13 +5,12 @@
   background-color: colours.$purple_primary_dark;
   border-radius: 0 0 6px 6px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  max-width: 260px;
   padding: 0.8rem 1rem;
   font-size: 14px;
   color: #ddd;
   align-content: center;
-  margin-top: 15px;
   z-index: 9999;
+  width: min(100vw, 256pt);
 
   .dropdown_title {
     margin-bottom: 0.6rem;
@@ -40,6 +39,7 @@
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.15s ease;
+        margin: 8pt 0;
 
         &:hover,
         &:focus {

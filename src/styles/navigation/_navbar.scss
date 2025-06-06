@@ -57,7 +57,7 @@ header {
 
   .dropdown-container {
     position: absolute;
-    top: 80%;        
+    top: variables.$tool_bar_height;
     right: 0;
     z-index: 10;
   }

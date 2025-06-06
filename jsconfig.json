@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@scss/*": ["src/styles/*"],
+      "@lang/*": ["src/locales/*"],
+      "@ctx/*": ["src/components/contexts/*"],
+      "@pages/*": ["src/pages/*"]
+    }
+  }
+}

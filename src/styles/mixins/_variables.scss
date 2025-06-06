@@ -4,15 +4,15 @@
 * ---------------------------------------
 */
 
-//Header
-$nav_height: 11vh;
-
 //Main Tool Bar
-$tool_bar_height: $nav_height * 0.7;
+$tool_bar_height: 48pt;
 $toolbar_icon_size: $tool_bar_height * 0.6;
 
 //Sub Tool Bar
-$sub_toolbar_height: $nav_height * 0.3;
+$sub_toolbar_height: 36pt;
+
+//Header
+$nav_height: $sub_toolbar_height + $tool_bar_height;
 
 /**
 * ---------------------------------------

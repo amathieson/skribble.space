@@ -242,24 +242,27 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
 
                 let segments = '';
                 let cur_segment = [];
-                let lastW = Number.NaN;
+                // let lastW = Number.NaN;
+                cur_segment = GeneratePathPointsPen(points)
+                segments += `<path fill="${ctx.strokeStyle}" stroke-linecap="round" stroke="" stroke-width="1" d="`;
+                segments += catmullRomToBezier(cur_segment[0]) + catmullRomToBezier(cur_segment[1]) + '"/>';
 
-                for (let i = 0; i < points.length; i++) {
-                    if (points[i].w !== lastW) {
-                        if (cur_segment.length > 0) {
-                            segments += catmullRomToBezier(cur_segment) + '"/>';
-                        }
-                        segments += `<path fill="none" stroke-linecap="round" stroke="${ctx.strokeStyle}" stroke-width="${points[i].w}" d="`;
-                        lastW = points[i].w;
-                        cur_segment = [points[i - 1] ?? null, points[i]];
-                    } else {
-                        cur_segment.push(points[i]);
-                    }
-                }
-
-                if (cur_segment.length > 0) {
-                    segments += catmullRomToBezier(cur_segment) + '"/>';
-                }
+                // for (let i = 0; i < points.length; i++) {
+                //     if (points[i].w !== lastW) {
+                //         if (cur_segment.length > 0) {
+                //             segments += catmullRomToBezier(cur_segment) + '"/>';
+                //         }
+                //         segments += `<path fill="red" stroke-linecap="round" stroke="${ctx.strokeStyle}" stroke-width="1" d="`;
+                //         lastW = points[i].w;
+                //         cur_segment = [points[i - 1] ?? null, points[i]];
+                //     } else {
+                //         cur_segment.push(points[i]);
+                //     }
+                // }
+                //
+                // if (cur_segment.length > 0) {
+                //     segments += catmullRomToBezier(cur_segment) + '"/>';
+                // }
 
                 svg.innerHTML += `<g>${segments}</g>`;
                 points = [];
@@ -321,5 +324,39 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
         </div>
     );
 };
+
+function GeneratePathPointsPen(pnts) {
+
+    const W = 1;
+
+    let shapeA = [];
+    let shapeB = [];
+    shapeA.push(pnts[0]);
+    shapeB.unshift(pnts[0]);
+    for (let i = 1; i < pnts.length-1; i++) {
+        const A = pnts[i];
+        const B = pnts[i + 1];
+        const dx = B.x - A.x;
+        const dy = B.y - A.y;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        if (length === 0) continue;
+
+        const ux = dx / length;
+        const uy = dy / length;
+
+        shapeA.push({
+            x: A.x + pnts[i].w * -uy,
+            y: A.y + pnts[i].w * ux
+        });
+        shapeB.unshift({
+            x: A.x + W * pnts[i].w * uy,
+            y: A.y + W * pnts[i].w * -ux
+        });
+    }
+    shapeA.push(pnts[pnts.length-1]);
+    shapeB.unshift(pnts[pnts.length-1]);
+
+    return [shapeA, shapeB];
+}
 
 export default WebMindMap;

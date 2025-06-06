@@ -7,8 +7,21 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
 
     return (
         <div className="settings_dropdown" role="menu" aria-label="Settings">
-            <h3>Settings</h3>
-
+            <div className="settings_section" role="group" aria-labelledby="page-settings">
+                <h4 id="page-settings">Skribble Settings</h4>
+                <ul>
+                    <li onClick={()=>{document.getElementById('debugoverlaycheck').click()}}>
+                        <label htmlFor="background-color-picker">Debug Overlay</label>
+                        <input
+                            id="debugoverlaycheck"
+                            type="checkbox"
+                            value={backgroundColour}
+                            onChange={(e) => setBackgroundColour(e.target.value)}
+                            aria-label="Background Colour Picker"
+                        />
+                    </li>
+                </ul>
+            </div>
             <div className="settings_section" role="group" aria-labelledby="page-settings">
                 <h4 id="page-settings">Page Settings</h4>
                 <ul>

@@ -34,13 +34,8 @@ function Mindmap() {
                     setBackgroundColour={setBackgroundColour}
                 />
             </DropdownProvider>
-
             <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction} />
             <ToolFAB />
-            <p>
-                lala the quick brown fox something lazy dog, lorem ipsum bla bla bla
-                un deux trois quatre cinq six
-            </p>
         </>
     );
 }

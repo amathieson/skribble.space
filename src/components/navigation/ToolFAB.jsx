@@ -18,15 +18,24 @@ const ToolFAB = () => {
             setFabState('open');
         }
     };
+    
+    const temp = () => {
+        console.log("We will do things soon!")
+    }
 
     return (
-        <button className={`floating_button ${fabState}`} onClick={toggleMenu}>
-            <Paintbrush className="fab_main_icon" />
-            <div className="smaller_circle"><Text /></div>
-            <div className="smaller_circle"><Image /></div>
-            <div className="smaller_circle"><Square /></div>
-            <div className="smaller_circle"><Pen /></div>
-        </button>
+        <div className={`fab_wrapper ${fabState}`}>
+            <button className="floating_button" onClick={toggleMenu}>
+                <Paintbrush className="fab_main_icon" />
+            </button>
+
+            <button className="smaller_circle" onClick={temp}><Text /></button>
+            <button className="smaller_circle" onClick={temp}><Image /></button>
+            <button className="smaller_circle" onClick={temp}><Square /></button>
+            <button className="smaller_circle" onClick={temp}><Pen /></button>
+        </div>
+      
+     
     );
 };
 

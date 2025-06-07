@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '@scss/_style.scss';
+import GridOverlay from "./components/canvas_functionality/GridOverlay.jsx";
 
 const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
     const svgBackRef = useRef(null);
+    const viewPortRef = useRef([0,0,0,0]);
+    const [viewPort, setViewPort] = useState([0,0,0,0]);
+
     const [debug, setDebug] = useState({
         penSupport: false,
         penDown: false,
@@ -66,7 +70,6 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone }) => {
         let zoom = 1;
         let center = [rect.width / 2, rect.height / 2];
         let rotation = 0;
-        let viewPort = [];
 
         // Helper for path conversion
         function catmullRomToBezier(points) {
@@ -103,15 +106,17 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone }) => {
             let vW = rect.width * 0.5 / z;
             let vH = rect.height * 0.5 / z;
             let vp = [c[0] - vW, c[1] - vH, vW * 2, vH * 2];
-            viewPort = vp;
+            viewPortRef.current = vp;
+            setViewPort(vp);
             svg.setAttribute('viewBox', vp.join(' '));
         }
         computeViewport(center, zoom);
         function projectViewPort(point) {
+            const vp = viewPortRef.current;
             return [
-                point[0]/rect.width*viewPort[2] + (center[0]-viewPort[2]/2),
-                point[1]/rect.height*viewPort[3] + (center[1]-viewPort[3]/2),
-            ]
+                (point[0] / rect.width) * vp[2] + vp[0],
+                (point[1] / rect.height) * vp[3] + vp[1],
+            ];
         }
 
         const updateDebug = (e) => {
@@ -301,6 +306,9 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone }) => {
             
             <svg id="vector" ref={svgRef}>
                 <rect x={0} y={0} ref={svgBackRef} fill={backgroundColour} />
+                <GridOverlay
+                    viewPort={viewPort}
+                />            
             </svg>
         </div>
     );

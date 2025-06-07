@@ -7,36 +7,45 @@
 * ---------------------------------------
 */
 
-//centre button of fab
-.floating_button {
+//Container for the FAB
+.fab_wrapper {
   position: fixed;
-  z-index: 10;
   bottom: 30px;
   right: 40px;
   width: 80px;
   height: 80px;
-  border-radius: 50%;
-  background-color: colours.$purple_primary_dark;
-  color: white;
-  font-size: 30px;
-  border: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: visible;
-}
+  z-index: 10;
 
-.floating_button:hover {
-  background-color: colours.$purple_primary_dark_highlight;
-}
 
-.floating_button:focus {
-  outline: none;
-}
+  //centre button of fab
+  .floating_button {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: colours.$purple_primary_dark;
+    color: white;
+    font-size: 30px;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+  }
+  
+  .floating_button:hover {
+    background-color: colours.$purple_primary_dark_highlight;
+  }
 
+  .floating_button:focus {
+    outline: none;
+  }
+
+}
 /**
 * ---------------------------------------
 * Icons
@@ -59,23 +68,21 @@
 
 // Base styles for smaller circles
 .smaller_circle {
+  all: unset;
   position: absolute;
+  top: 25%;
+  left: 30%;
   width: variables.$circle_size;
   height: variables.$circle_size;
   border-radius: 50%;
   background-color: colours.$purple_tertiary_dark;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
 
   transform-origin: center center;
   transform: scale(0) translate(0, 0);
-
-  transition-property: opacity, transform, visibility;
-  transition-duration: 0.8s;
-  transition-timing-function: ease-in-out;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out, visibility 0.8s ease-in-out;
 
   svg {
     height: variables.$circle_size_icons;
@@ -83,6 +90,16 @@
     color: colours.$circle_colour;
     padding: 8px;
   }
+
+}
+
+.smaller_circle:hover {
+  //todo: make a proper colour
+  background-color: colours.$purple_primary_dark_highlight;
+}
+
+.smaller_circle:focus {
+  outline: none;
 }
 
 // Positioning with CSS variables for orbit position
@@ -104,12 +121,12 @@ $num_steps: variables.$num_circles - 1;
 }
 
 // Open state: visible, scaled up and translated outward
-.floating_button.open {
+.fab_wrapper.open {
   .smaller_circle {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto;
     transform: scale(1) translate(var(--x), var(--y));
+    pointer-events: auto;
   }
 
   @for $i from 0 through $num_steps {
@@ -123,7 +140,7 @@ $num_steps: variables.$num_circles - 1;
 }
 
 // Closed state: scaled down and centered
-.floating_button:not(.open) {
+.fab_wrapper:not(.open) {
   .smaller_circle {
     opacity: 0;
     visibility: hidden;

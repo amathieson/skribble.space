@@ -18,11 +18,4 @@ initI18n('en').then(() => {
     );
 });
 StorageManager.ReadyCallBack(()=>{
-    StorageManager.ListDocuments().onsuccess = (e) => {
-        console.log(e.target.result);
-    }
-    StorageManager.GetSettings().onsuccess = (e) => {
-        console.log(e.target.result);
-    }
-    StorageManager.CreateDocument({});
 })

@@ -47,6 +47,7 @@ body, #root {
     overflow: hidden;
     touch-action: none;
     overscroll-behavior: none;
+    user-select: none;
 }
 .canvas {
     position: relative;

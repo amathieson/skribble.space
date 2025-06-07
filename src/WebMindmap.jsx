@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '@scss/_style.scss';
 
-const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
+const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
     const svgBackRef = useRef(null);
@@ -241,28 +241,9 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
                 ctx.stroke();
 
                 let segments = '';
-                let cur_segment = [];
-                // let lastW = Number.NaN;
-                cur_segment = GeneratePathPointsPen(points)
+                let cur_segment =  GeneratePathPointsPen(points)
                 segments += `<path fill="${ctx.strokeStyle}" stroke-linecap="round" stroke="" stroke-width="1" d="`;
                 segments += catmullRomToBezier(cur_segment[0]) + catmullRomToBezier(cur_segment[1]) + '"/>';
-
-                // for (let i = 0; i < points.length; i++) {
-                //     if (points[i].w !== lastW) {
-                //         if (cur_segment.length > 0) {
-                //             segments += catmullRomToBezier(cur_segment) + '"/>';
-                //         }
-                //         segments += `<path fill="red" stroke-linecap="round" stroke="${ctx.strokeStyle}" stroke-width="1" d="`;
-                //         lastW = points[i].w;
-                //         cur_segment = [points[i - 1] ?? null, points[i]];
-                //     } else {
-                //         cur_segment.push(points[i]);
-                //     }
-                // }
-                //
-                // if (cur_segment.length > 0) {
-                //     segments += catmullRomToBezier(cur_segment) + '"/>';
-                // }
 
                 svg.innerHTML += `<g>${segments}</g>`;
                 points = [];
@@ -279,6 +260,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
             }
 
             updateDebug(e);
+            actionDone(tool, svg.innerHTML);
         };
 
         // Attach event listeners
@@ -286,7 +268,6 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff' }) => {
         canvas.addEventListener('pointerdown', handlePointerDown);
         canvas.addEventListener('pointermove', handlePointerMove);
         canvas.addEventListener('pointerup', handlePointerUp);
-
         // Cleanup
         return () => {
             canvas.removeEventListener('pointerenter', handlePointerEnter);

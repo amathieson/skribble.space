@@ -1,6 +1,13 @@
 @use '@scss/mixins/colours';
 @use '@scss/mixins/variables';
 
+/**
+* ---------------------------------------
+* Generic Styling
+* ---------------------------------------
+*/
+
+//centre button of fab
 .floating_button {
   position: fixed;
   z-index: 10;
@@ -35,7 +42,6 @@
 * Icons
 * ---------------------------------------
 */
-
 .fab_main_icon {
   height: 50px;
   width: 50px;
@@ -44,41 +50,92 @@
   padding: 15px;
 }
 
-
-
-
 /**
-* ---------------------------------------
+* ----------------------------------------------------
 * FAB Circle Orbiting 
-* ---------------------------------------
+* Smaller orbiting circles - start hidden and centered
+* ----------------------------------------------------
 */
 
-// Orbit parameters
-//TODO: make this properly scale
+// Base styles for smaller circles
+.smaller_circle {
+  position: absolute;
+  width: variables.$circle_size;
+  height: variables.$circle_size;
+  border-radius: 50%;
+  background-color: colours.$purple_tertiary_dark;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform-origin: center center;
+  transform: scale(0) translate(0, 0);
+
+  transition-property: opacity, transform, visibility;
+  transition-duration: 0.8s;
+  transition-timing-function: ease-in-out;
+
+  svg {
+    height: variables.$circle_size_icons;
+    width: variables.$circle_size_icons;
+    color: colours.$circle_colour;
+    padding: 8px;
+  }
+}
+
+// Positioning with CSS variables for orbit position
+$start_angle: 300deg;
+$end_angle: 150deg;
+$total_angle: $end_angle - $start_angle;
+$num_steps: variables.$num_circles - 1;
 
 // Loop through the number of smaller circles and calculate their position in a circular orbit
-@for $i from 0 through variables.$num_circles {
-  $angle:  calc(-200deg / #{variables.$num-circles} * $i);
+@for $i from 0 through $num_steps {
+  $angle: calc(#{$start_angle} + #{$total_angle} * (#{$i} / #{$num_steps}));
   $x: calc(#{variables.$orbit_radius} * cos($angle));
   $y: calc(#{variables.$orbit_radius} * sin($angle));
 
-  .smaller_circle:nth-child(#{$i + 1}) {
-    position: absolute;
-    width: variables.$circle_size;
-    height: variables.$circle_size;
-    border-radius: 50%;
-    background-color: colours.$purple_tertiary_dark;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transform: translate($x, $y);
-    transition: transform 0.3s ease;
+  .smaller_circle:nth-child(#{$i + 2}) {
+    --x: #{$x};
+    --y: #{$y};
+  }
+}
 
-    align-content: center;
+// Open state: visible, scaled up and translated outward
+.floating_button.open {
+  .smaller_circle {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1) translate(var(--x), var(--y));
+  }
 
-    svg {
-      height: variables.$circle_size_icons;
-      width: variables.$circle_size_icons;
-      color: colours.$circle_colour;
-      padding: 8px;
+  @for $i from 0 through $num_steps {
+    $reverse_index: variables.$num_circles - $i;
+    $delay: $reverse_index * 0.12s;
+
+    .smaller_circle:nth-child(#{$i + 2}) {
+      transition-delay: $delay;
+    }
+  }
+}
+
+// Closed state: scaled down and centered
+.floating_button:not(.open) {
+  .smaller_circle {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0) translate(0, 0);
+  }
+
+  @for $i from 0 through $num_steps {
+    $delay: $i * 0.12s;
+
+    .smaller_circle:nth-child(#{$i + 2}) {
+      transition-delay: $delay;
     }
   }
 }

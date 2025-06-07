@@ -8,7 +8,7 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
     return (
         <div className="settings_dropdown" role="menu" aria-label="Settings">
             <div className="settings_section" role="group" aria-labelledby="page-settings">
-                <h4 id="page-settings">Skribble Settings</h4>
+                <h4 id="page-settings">{t('settings_dropdown.skribble_settings.title')}</h4>
                 <ul>
                     <li onClick={()=>{document.getElementById('debugoverlaycheck').click()}}>
                         <label htmlFor="background-color-picker">Debug Overlay</label>
@@ -23,10 +23,10 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                 </ul>
             </div>
             <div className="settings_section" role="group" aria-labelledby="page-settings">
-                <h4 id="page-settings">Page Settings</h4>
+                <h4 id="page-settings">{t('settings_dropdown.page_settings.title')}</h4>
                 <ul>
                     <li>
-                        <label htmlFor="background-color-picker">Background Colour</label>
+                        <label htmlFor="background-color-picker">{t('settings_dropdown.page_settings.background_colour')}</label>
                         <input
                             id="background-color-picker"
                             type="color"

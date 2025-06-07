@@ -2,6 +2,9 @@
   "title": "Skribble.Space",
   "settings_dropdown": {
     "title": "Settings",
+    "skribble_settings": {
+      "title": "Skribble Settings"
+    },
     "page_settings": {
       "title":"Page Settings",
       "background_colour": "Background Colour",

@@ -24,6 +24,7 @@ export default defineConfig({
       '@scss': path.resolve(__dirname, 'src/styles'),
       '@lang': path.resolve(__dirname, 'src/locales'),
       '@ctx': path.resolve(__dirname, 'src/components/contexts'),
+      '@nav': path.resolve(__dirname, 'src/components/navigation'),
       '@pages': path.resolve(__dirname, 'src/pages')
 
     }

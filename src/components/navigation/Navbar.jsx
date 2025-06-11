@@ -5,7 +5,7 @@ import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import LeftArrow from '~icons/ph/arrow-left-bold';
 import RightArrow from '~icons/ph/arrow-right-bold';
 import { useDropdown } from "@ctx/Dropdown";
-import SettingsDropdown from "./SettingsDropdown.jsx";
+import SettingsDropdown from "./dropdowns/SettingsDropdown.jsx";
 import {Link} from "react-router-dom";
 
 const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }) => {

@@ -1,4 +1,11 @@
 @use '@scss/mixins/colours';
 
 @media (prefers-color-scheme: light) {
+  :root, input, input::placeholder {
+    color: colours.$foreground_dark;
+  }
+
+  body {
+    background: colours.$background_light;
+  }
 }

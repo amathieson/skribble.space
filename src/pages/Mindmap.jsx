@@ -7,6 +7,7 @@ import '@scss/themes/_dark.scss';
 import '@scss/themes/_light.scss';
 import Storage_manager from "../storage_manager.js";
 import LZString from 'lz-string';
+import {ModalProvider} from "@ctx/Modal.jsx";
 
 function minifyXML(xmlString) {
     return xmlString
@@ -24,18 +25,19 @@ function Mindmap() {
         Storage_manager.SaveDocument(1, LZString.compressToBase64(minifyXML(document_content))).catch(err => {console.error(err)});
     }
     return (
-
         <>
             <DropdownProvider>
-                <Navbar
-                    penColor={penColor}
-                    setPenColor={setPenColor}
-                    backgroundColour={backgroundColour}
-                    setBackgroundColour={setBackgroundColour}
-                />
+                <ModalProvider>
+                    <Navbar
+                        penColor={penColor}
+                        setPenColor={setPenColor}
+                        backgroundColour={backgroundColour}
+                        setBackgroundColour={setBackgroundColour}
+                    />
+                    <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction} />
+                    <ToolFAB />
+                </ModalProvider>
             </DropdownProvider>
-            <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction} />
-            <ToolFAB />
         </>
     );
 }

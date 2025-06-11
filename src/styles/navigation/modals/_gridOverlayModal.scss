@@ -1,0 +1,108 @@
+.grid_overlay_modal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .modal_description {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  // So only the first instance displays in a grid like structure
+  .modal_options:first-of-type {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  // So every other instance doesn't follow that
+  .modal_options:not(:first-of-type) label {
+    flex-direction: column;
+    align-items: flex-start; 
+    margin-top: 0.5rem;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    //Generic styling for the inputs
+    input[type="checkbox"],
+    input[type="color"] {
+      width: 1.5rem;
+      height: 1.5rem;
+      flex-shrink: 0;
+      margin: 0;
+      border: none;
+      cursor: pointer;
+    }
+
+    //Attempt to make the colour wheel more in style with the check boxes
+    input[type="color"] {
+      appearance: none;
+      border: 1px solid rgb(118, 118, 118);
+      border-radius: 3px;
+      padding: 0;
+      background-color: transparent;
+
+      &::-webkit-color-swatch-wrapper {
+        padding: 0;
+      }
+
+      &::-webkit-color-swatch {
+        border: none;
+        border-radius: 3px;
+        background-color: inherit;
+      }
+
+      // For Firefox
+      &::-moz-color-swatch {
+        border: none;
+        border-radius: 3px;
+        background-color: inherit;
+      }
+    }
+  }
+}
+
+select {
+  width: 100%;
+}
+
+.size_of_grid {
+  display: grid;
+  grid-template-columns: 1fr 28px 1fr;
+  align-items: center; /* vertically centers all grid items */
+  gap: 1rem;
+}
+
+.input-group, .icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.icon-wrapper {
+  align-items: center;
+}
+
+.input-group input[type="number"] {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.icon-wrapper svg {
+  width: 24px; 
+  height: 24px;
+  display: block; 
+}
+
+
+

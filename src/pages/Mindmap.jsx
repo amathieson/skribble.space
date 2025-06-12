@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import WebMindMap from "/src/WebMindmap.jsx";
 import Navbar from "/src/components/navigation/Navbar.jsx";
 import ToolFAB from "/src/components/navigation/ToolFAB.jsx";
-import { DropdownProvider } from "@ctx/Dropdown";
 import '@scss/themes/_dark.scss';
 import '@scss/themes/_light.scss';
 import Storage_manager from "../storage_manager.js";
 import LZString from 'lz-string';
-import {ModalProvider} from "@ctx/Modal.jsx";
+import AppProviders from '@ctx/AppContext.jsx';
+import GridOverlay from "@ctx/GridOverlay.jsx";
 
 function minifyXML(xmlString) {
     return xmlString
@@ -24,20 +24,28 @@ function Mindmap() {
         console.log("MindMap Action:", e, document_content.length);
         Storage_manager.SaveDocument(1, LZString.compressToBase64(minifyXML(document_content))).catch(err => {console.error(err)});
     }
+
+    const [viewPort, setViewPort] = useState([0, 0, 0, 0]);  // add viewport state here
+
+    function handleViewPortChange(vp) {
+        setViewPort(vp);
+    }
+    
     return (
         <>
-            <DropdownProvider>
-                <ModalProvider>
-                    <Navbar
-                        penColor={penColor}
-                        setPenColor={setPenColor}
-                        backgroundColour={backgroundColour}
-                        setBackgroundColour={setBackgroundColour}
-                    />
-                    <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction} />
-                    <ToolFAB />
-                </ModalProvider>
-            </DropdownProvider>
+           <AppProviders>
+               <Navbar
+                   penColor={penColor}
+                   setPenColor={setPenColor}
+                   backgroundColour={backgroundColour}
+                   setBackgroundColour={setBackgroundColour}
+               />
+               <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction} onViewPortChange={handleViewPortChange}/>
+               <GridOverlay viewPort={viewPort} />
+               <ToolFAB />
+           </AppProviders>
+                  
+            
         </>
     );
 }

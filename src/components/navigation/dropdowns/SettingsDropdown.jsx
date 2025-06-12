@@ -4,6 +4,13 @@ import '@scss/navigation/_settingsDropdown.scss';
 import { useModal } from "@ctx/Modal";
 import GridOverlayModal from "../modals/GridOverlayModal.jsx";
 
+/**
+ * This is the dropdown menu shown by clicking on the three dots in the nav
+ * @param backgroundColour
+ * @param setBackgroundColour
+ * @returns {Element}
+ * @constructor
+ */
 const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
     const { t } = useTranslation("common");
     const { openModal } = useModal();

@@ -28,7 +28,11 @@
           "square": "Squares",
           "circle": "Circles",
           "triangle": "Triangles"
-        } 
+        },
+        "size_of_grid": {
+          "x": "X Axis:",
+          "y": "Y Axis:"
+        }
       }
     }
   }

@@ -4,6 +4,12 @@ const Dropdown = createContext();
 
 export const useDropdown = () => useContext(Dropdown);
 
+/**
+ * This provides the basic behaviour for dropdown menus
+ * @param children
+ * @returns {Element}
+ * @constructor
+ */
 export const DropdownProvider = ({ children }) => {
     const [openDropdowns, setOpenDropdowns] = useState({});
     const dropdownRefs = useRef({});

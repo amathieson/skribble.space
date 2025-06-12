@@ -3,9 +3,13 @@ import { useTranslation } from 'react-i18next';
 import '@scss/navigation/modals/_gridOverlayModal.scss';
 import BrokeChain from '~icons/ph/link-simple-break-bold';
 import LinkChain from '~icons/ph/link-simple-bold';
+import { useGridOverlay } from '@ctx/GridOverlay.jsx';
 
 const GridOverlayModal = () => {
     const { t } = useTranslation("common");
+    
+    //Props
+    const { gridEnabled, setGridEnabled} = useGridOverlay();
 
     // Mapped the translations for the style of line
     const styleOptions = [
@@ -29,7 +33,7 @@ const GridOverlayModal = () => {
             
             <div className="modal_options">
                 <label className="modal_option">
-                    <input type="checkbox"/>
+                    <input type="checkbox" checked={gridEnabled} onChange={(e) => setGridEnabled(e.target.checked)}/>
                     <span>{t("settings_dropdown.page_settings.grid_overlay_modal.enable_grid")}</span>
                 </label>
                 <label className="modal_option">
@@ -69,7 +73,7 @@ const GridOverlayModal = () => {
 
             <div className="size_of_grid">
                 <div className="input-group">
-                    <label htmlFor="xSize">X Size</label>
+                    <label htmlFor="xSize">{t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.x")}</label>
                     <input type="number" id="xSize" name="xbox" />
                 </div>
 
@@ -78,7 +82,7 @@ const GridOverlayModal = () => {
                 </div>
 
                 <div className="input-group">
-                    <label htmlFor="ySize">Y Size</label>
+                    <label htmlFor="ySize">{t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.y")}</label>
                     <input type="number" id="ySize" name="ySize" />
                 </div>
             </div>

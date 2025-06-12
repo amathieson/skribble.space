@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '@scss/_style.scss';
-import GridOverlay from "./components/canvas_functionality/GridOverlay.jsx";
+import GridOverlay from "@ctx/GridOverlay.jsx";
 
-const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone }) => {
+const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone, onViewPortChange }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
     const svgBackRef = useRef(null);
@@ -108,6 +108,9 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone }) => {
             let vp = [c[0] - vW, c[1] - vH, vW * 2, vH * 2];
             viewPortRef.current = vp;
             setViewPort(vp);
+            if (onViewPortChange) {
+                onViewPortChange(vp); 
+            }
             svg.setAttribute('viewBox', vp.join(' '));
         }
         computeViewport(center, zoom);

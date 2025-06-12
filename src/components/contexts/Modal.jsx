@@ -3,6 +3,12 @@ import ModalBase from '@nav/modals/ModalBase';
 
 const Modal = createContext();
 
+/**
+ * Contains all the basic behaviour for modals, including a basic styling
+ * @param children
+ * @returns {Element}
+ * @constructor
+ */
 export const ModalProvider = ({ children }) => {
     const [modalState, setModalState] = useState({
         isOpen: false,

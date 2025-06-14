@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, {createContext, useContext, useState, memo} from 'react';
 
 // --- Context Definition ---
 const GridOverlayContext = createContext();
@@ -12,16 +12,18 @@ export const useGridOverlay = () => useContext(GridOverlayContext);
  * @constructor
  */
 export const GridOverlayProvider = ({ children }) => {
-    //For controlling the state of grid
     const [gridEnabled, setGridEnabled] = useState(false);
-    // const [spacing, setSpacing] = useState(50);
-    // const [color, setColor] = useState("#000");
-    // const [lineWidth, setLineWidth] = useState(2);
+    const [gridSize, setGridSize] = useState(50);
+    const [viewPort, setViewPort] = useState([0, 0, 1000, 1000]);
 
     return (
         <GridOverlayContext.Provider value={{
             gridEnabled,
             setGridEnabled,
+            gridSize,
+            setGridSize,
+            viewPort,
+            setViewPort,
         }}>
             {children}
         </GridOverlayContext.Provider>
@@ -29,56 +31,41 @@ export const GridOverlayProvider = ({ children }) => {
 };
 
 //This is the component part of the overlay
-const GridOverlay = ({ viewPort, color = '#000', lineWidth = 1 }) => {
-    const { gridEnabled } = useGridOverlay();
+const GridOverlay = memo(({ viewPort }) => {
+    const { gridSize = 50, gridEnabled} = useGridOverlay();
 
-    if (!gridEnabled || !viewPort || viewPort.length !== 4) return ( <g/>);
-
+    if (!gridEnabled) return <></>;
     const [x, y, width, height] = viewPort;
-    let spacing = 50;
-
-    const startX = Math.floor(x / spacing) * spacing;
-    const endX = Math.ceil((x + width) / spacing) * spacing;
-    const startY = Math.floor(y / spacing) * spacing;
-    const endY = Math.ceil((y + height) / spacing) * spacing;
-
-    const verticalLines = [];
-    for (let gx = startX; gx <= endX; gx += spacing) {
-        verticalLines.push(
-            <line
-                key={`v${gx}`}
-                x1={gx}
-                y1={y}
-                x2={gx}
-                y2={y + height}
-                stroke={color}
-                strokeWidth={lineWidth}
-            />
-        );
-    }
-
-    const horizontalLines = [];
-    for (let gy = startY; gy <= endY; gy += spacing) {
-        horizontalLines.push(
-            <line
-                key={`h${gy}`}
-                x1={x}
-                y1={gy}
-                x2={x + width}
-                y2={gy}
-                stroke={color}
-                strokeWidth={lineWidth}
-            />
-        );
-    }
 
     return (
-        <g className="grid-lines">
-            {verticalLines}
-            {horizontalLines}
-        </g>
+        <>
+            <defs>
+                <pattern
+                    id="gridPattern"
+                    x="0"
+                    y="0"
+                    width={gridSize}
+                    height={gridSize}
+                    patternUnits="userSpaceOnUse"
+                >
+                    <path
+                        d={`M ${gridSize} 0 L 0 0 0 ${gridSize}`}
+                        fill="none"
+                        stroke="red"
+                        strokeWidth="0.5"
+                    />
+                </pattern>
+            </defs>
+            <rect
+                x={x}
+                y={y}
+                width={width}
+                height={height}
+                fill="url(#gridPattern)"
+                pointerEvents="none"
+            />
+        </>
     );
-};
-
+});
 
 export default GridOverlay;

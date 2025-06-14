@@ -41,7 +41,6 @@ function Mindmap() {
                    setBackgroundColour={setBackgroundColour}
                />
                <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction} onViewPortChange={handleViewPortChange}/>
-               <GridOverlay viewPort={viewPort} />
                <ToolFAB />
            </AppProviders>
                   

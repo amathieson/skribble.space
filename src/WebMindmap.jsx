@@ -225,7 +225,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone, onViewPor
             if (tool === 'ERASE' && e.isPrimary) {
                 canvas.style.pointerEvents = 'none';
                 const el = document.elementFromPoint(e.clientX, e.clientY);
-                if (el?.tagName?.toUpperCase() === 'PATH') {
+                if (el?.tagName?.toUpperCase() === 'PATH' && el.parentElement && el.parentElement.isConnected) {
                     el.parentElement.remove();
                 }
                 canvas.style.pointerEvents = 'auto';

@@ -24,13 +24,7 @@ function Mindmap() {
         console.log("MindMap Action:", e, document_content.length);
         Storage_manager.SaveDocument(1, LZString.compressToBase64(minifyXML(document_content))).catch(err => {console.error(err)});
     }
-
-    const [viewPort, setViewPort] = useState([0, 0, 0, 0]);  // add viewport state here
-
-    function handleViewPortChange(vp) {
-        setViewPort(vp);
-    }
-    
+  
     return (
         <>
            <AppProviders>
@@ -40,7 +34,7 @@ function Mindmap() {
                    backgroundColour={backgroundColour}
                    setBackgroundColour={setBackgroundColour}
                />
-               <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction} onViewPortChange={handleViewPortChange}/>
+               <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction}/>
                <ToolFAB />
            </AppProviders>
                   

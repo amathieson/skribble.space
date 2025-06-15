@@ -17,6 +17,7 @@ export const GridOverlayProvider = ({ children }) => {
     const [strokeColour, setStrokeColour] = useState("#000000");
     const [strokeWidth, setStrokeWidth] = useState("1");
     const [gridShape, setGridShape] = useState("square");
+    const [lineStyle, setLineStyle] = useState("solid");
 
     return (
         <GridOverlayContext.Provider value={{
@@ -29,7 +30,9 @@ export const GridOverlayProvider = ({ children }) => {
             strokeWidth,
             setStrokeWidth,
             gridShape,
-            setGridShape
+            setGridShape,
+            lineStyle,
+            setLineStyle
         }}>
             {children}
         </GridOverlayContext.Provider>
@@ -39,11 +42,28 @@ export const GridOverlayProvider = ({ children }) => {
 
 //This is the component part of the overlay
 const GridOverlay = memo(({ viewPort }) => {
-    const { gridSize, gridEnabled, strokeColour, strokeWidth, gridShape } = useGridOverlay();
+    const { gridSize, gridEnabled, strokeColour, strokeWidth, gridShape, lineStyle } = useGridOverlay();
 
     if (!gridEnabled) return <></>;
     const [x, y, width, height] = viewPort;
 
+
+    /**
+     *  Gets the line style, dotted, dashed, etc
+     *  TODO: make more of a distinction between dotted and dashed
+     */
+    const getLineStyle = (lineStyle) => {
+        switch (lineStyle) {
+            case 'dashed':
+                return '4, 4';
+            case 'dotted':
+                return '1, 3';
+            case 'solid':
+            default:
+                return null; 
+        }
+    };
+    
     /**
      * Controls the pattern for the grid
      * @returns pattern for the selected shape
@@ -144,6 +164,7 @@ const GridOverlay = memo(({ viewPort }) => {
                             fill="none"
                             stroke={strokeColour}
                             strokeWidth={strokeWidth}
+                            strokeDasharray={getLineStyle(lineStyle)}
                         />
                     </pattern>
                 </defs>

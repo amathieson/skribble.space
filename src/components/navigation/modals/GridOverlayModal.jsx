@@ -9,7 +9,7 @@ const GridOverlayModal = () => {
     const { t } = useTranslation("common");
     
     //Props
-    const { gridEnabled, setGridEnabled, setStrokeColour, setStrokeWidth, gridShape,setGridShape} = useGridOverlay();
+    const { gridEnabled, setGridEnabled, setStrokeColour, setStrokeWidth, gridShape,setGridShape,lineStyle,setLineStyle} = useGridOverlay();
 
     // Mapped the translations for the style of line
     const styleOptions = [
@@ -86,7 +86,7 @@ const GridOverlayModal = () => {
                 
                 <label className="modal_option" htmlFor="styleOfLine">
                     {t("settings_dropdown.page_settings.grid_overlay_modal.style_of_line.title")}
-                <select id="styleOfLine" name="styleOfLine">
+                <select id="styleOfLine" name="styleOfLine" value={lineStyle} onChange={(e) => setLineStyle(e.target.value)}>
                     {styleOptions.map(({ value, label }) => (
                         <option key={value} value={value}>
                             {label}

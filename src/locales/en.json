@@ -28,7 +28,8 @@
           "title": "Grid Shape:",
           "square": "Squares",
           "circle": "Circles",
-          "triangle": "Triangles"
+          "triangle": "Triangles",
+          "hexagon": "Hexagons"
         },
         "size_of_grid": {
           "x": "X Axis:",

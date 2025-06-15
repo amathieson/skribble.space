@@ -9,7 +9,7 @@ const GridOverlayModal = () => {
     const { t } = useTranslation("common");
     
     //Props
-    const { gridEnabled, setGridEnabled, setStrokeColour, strokeWidth, setStrokeWidth} = useGridOverlay();
+    const { gridEnabled, setGridEnabled, setStrokeColour, setStrokeWidth, gridShape,setGridShape} = useGridOverlay();
 
     // Mapped the translations for the style of line
     const styleOptions = [
@@ -20,9 +20,10 @@ const GridOverlayModal = () => {
 
     // Mapped the translations for the shape of line
     const shapeOptions = [
-        { value: "solid", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.circle") },
-        { value: "dashed", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.square") },
-        { value: "dotted", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.triangle") },
+        { value: "circle", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.circle") },
+        { value: "square", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.square") },
+        { value: "triangle", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.triangle") },
+        { value: "hexagon", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.hexagon") },
     ];
 
     
@@ -80,7 +81,7 @@ const GridOverlayModal = () => {
 
                 <label className="modal_option">
                     <span>{t("settings_dropdown.page_settings.grid_overlay_modal.line_width")}</span>
-                    <input type="number" id="lineWidth" defaultValue={strokeWidth} onChange={(e) => setStrokeWidth(e.target.value)}/>
+                    <input type="number" id="lineWidth" min={0} defaultValue="1" onChange={(e) => setStrokeWidth(e.target.value)}/>
                 </label>
                 
                 <label className="modal_option" htmlFor="styleOfLine">
@@ -96,7 +97,8 @@ const GridOverlayModal = () => {
 
                 <label className="modal_option" htmlFor="gridShape">
                     {t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.title")}
-                <select id="gridShape" name="gridShape">
+                <select id="gridShape" name="gridShape" value={gridShape}
+                        onChange={(e) => setGridShape(e.target.value)}>
                     {shapeOptions.map(({ value, label }) => (
                         <option key={value} value={value}>
                             {label}

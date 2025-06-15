@@ -23,12 +23,13 @@
           "dotted": "Dotted"
         },
         "line_colour": "Line Colour",
-        "line_width": "Line Width",
+        "line_width": "Line Width:",
         "grid_shape": {
           "title": "Grid Shape:",
           "square": "Squares",
           "circle": "Circles",
-          "triangle": "Triangles"
+          "triangle": "Triangles",
+          "hexagon": "Hexagons"
         },
         "size_of_grid": {
           "x": "X Axis:",

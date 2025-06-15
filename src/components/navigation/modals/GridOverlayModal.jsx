@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import { useTranslation } from 'react-i18next';
 import '@scss/navigation/modals/_gridOverlayModal.scss';
 import BrokeChain from '~icons/ph/link-simple-break-bold';
@@ -10,6 +10,7 @@ const GridOverlayModal = () => {
     
     //Props
     const { gridEnabled, setGridEnabled} = useGridOverlay();
+    const {setStrokeColour} = useGridOverlay();
 
     // Mapped the translations for the style of line
     const styleOptions = [
@@ -24,6 +25,35 @@ const GridOverlayModal = () => {
         { value: "dashed", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.square") },
         { value: "dotted", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.triangle") },
     ];
+
+    
+    function useDebouncedCallback(callback, delay) {
+        const timeoutRef = useRef(null);
+
+        /**
+         * To stop the colour wheel from firing tons of changes and lagging
+         * everything out, the below staggers it a bit so there's less lag
+         * 
+         * TODO: maybe there is a better way to do this
+         * TODO: should probs be implemented for the other wheels too
+         * @param args
+         */
+        const debouncedCallback = (...args) => {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(() => {
+                callback(...args);
+            }, delay);
+        };
+
+        useEffect(() => {
+            return () => clearTimeout(timeoutRef.current);
+        }, []);
+
+        return debouncedCallback;
+    }
+    const debouncedSetStrokeColour = useDebouncedCallback((color) => {
+        setStrokeColour(color);
+    }, 100);
     
     return (
         <div className="grid_overlay_modal">
@@ -42,7 +72,7 @@ const GridOverlayModal = () => {
                 </label>
                
                 <label className="modal_option color_picker">
-                    <input type="color" />
+                    <input type="color" onChange={(e) => debouncedSetStrokeColour(e.target.value)}/>
                     <span>{t("settings_dropdown.page_settings.grid_overlay_modal.line_colour")}</span>
                 </label>
             </div>

@@ -7,7 +7,6 @@ import '@scss/themes/_light.scss';
 import Storage_manager from "../storage_manager.js";
 import LZString from 'lz-string';
 import AppProviders from '@ctx/AppContext.jsx';
-import GridOverlay from "@ctx/GridOverlay.jsx";
 
 function minifyXML(xmlString) {
     return xmlString

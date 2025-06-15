@@ -1,7 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import '@scss/navigation/_settingsDropdown.scss';
 import { useModal } from "@ctx/Modal";
+
+import '@scss/navigation/_settingsDropdown.scss';
 import GridOverlayModal from "../modals/GridOverlayModal.jsx";
 
 /**
@@ -46,7 +47,6 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                         />
                     </li>
                     <li tabIndex={0} onClick={() => openModal(<GridOverlayModal />, t("settings_dropdown.page_settings.grid_overlay_modal.title"))}>{t("settings_dropdown.page_settings.grid_display")}</li>
-                    <li tabIndex={0}>{t("settings_dropdown.page_settings.snap_to_grid")}</li>
                 </ul>
             </div>
         </div>

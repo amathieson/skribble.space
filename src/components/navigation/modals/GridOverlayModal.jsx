@@ -9,8 +9,7 @@ const GridOverlayModal = () => {
     const { t } = useTranslation("common");
     
     //Props
-    const { gridEnabled, setGridEnabled} = useGridOverlay();
-    const {setStrokeColour} = useGridOverlay();
+    const { gridEnabled, setGridEnabled, setStrokeColour, strokeWidth, setStrokeWidth} = useGridOverlay();
 
     // Mapped the translations for the style of line
     const styleOptions = [
@@ -35,7 +34,7 @@ const GridOverlayModal = () => {
          * everything out, the below staggers it a bit so there's less lag
          * 
          * TODO: maybe there is a better way to do this
-         * TODO: should probs be implemented for the other wheels too
+         * TODO: should be implemented for the other wheels too
          * @param args
          */
         const debouncedCallback = (...args) => {
@@ -78,6 +77,12 @@ const GridOverlayModal = () => {
             </div>
 
             <div className="modal_options">
+
+                <label className="modal_option">
+                    <span>{t("settings_dropdown.page_settings.grid_overlay_modal.line_width")}</span>
+                    <input type="number" id="lineWidth" defaultValue={strokeWidth} onChange={(e) => setStrokeWidth(e.target.value)}/>
+                </label>
+                
                 <label className="modal_option" htmlFor="styleOfLine">
                     {t("settings_dropdown.page_settings.grid_overlay_modal.style_of_line.title")}
                 <select id="styleOfLine" name="styleOfLine">

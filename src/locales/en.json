@@ -23,6 +23,7 @@
             "dotted": "Dotted"
         },
         "line_colour": "Line Colour",
+        "line_width": "Line Width:",
         "grid_shape": {
           "title": "Grid Shape:",
           "square": "Squares",

@@ -14,8 +14,9 @@ export const useGridOverlay = () => useContext(GridOverlayContext);
 export const GridOverlayProvider = ({ children }) => {
     const [gridEnabled, setGridEnabled] = useState(false);
     const [gridSize, setGridSize] = useState(50);
-    const [strokeColour, setStrokeColour] = useState("#fff");
-    const [viewPort, setViewPort] = useState([0, 0, 1000, 1000]);
+    const [strokeColour, setStrokeColour] = useState("#000000");
+    const [strokeWidth, setStrokeWidth] = useState("0.5");
+
 
     return (
         <GridOverlayContext.Provider value={{
@@ -23,19 +24,20 @@ export const GridOverlayProvider = ({ children }) => {
             setGridEnabled,
             gridSize,
             setGridSize,
-            viewPort,
-            setViewPort,
             strokeColour,
-            setStrokeColour
+            setStrokeColour,
+            strokeWidth,
+            setStrokeWidth
         }}>
             {children}
         </GridOverlayContext.Provider>
     );
 };
 
+
 //This is the component part of the overlay
 const GridOverlay = memo(({ viewPort }) => {
-    const { gridSize, gridEnabled,strokeColour} = useGridOverlay();
+    const { gridSize, gridEnabled, strokeColour, strokeWidth } = useGridOverlay();
 
     if (!gridEnabled) return <></>;
     const [x, y, width, height] = viewPort;
@@ -55,7 +57,7 @@ const GridOverlay = memo(({ viewPort }) => {
                         d={`M ${gridSize} 0 L 0 0 0 ${gridSize}`}
                         fill="none"
                         stroke={strokeColour}
-                        strokeWidth="0.5"
+                        strokeWidth={strokeWidth}
                     />
                 </pattern>
             </defs>
@@ -70,5 +72,6 @@ const GridOverlay = memo(({ viewPort }) => {
         </>
     );
 });
+
 
 export default GridOverlay;

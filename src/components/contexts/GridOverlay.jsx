@@ -13,7 +13,8 @@ export const useGridOverlay = () => useContext(GridOverlayContext);
  */
 export const GridOverlayProvider = ({ children }) => {
     const [gridEnabled, setGridEnabled] = useState(false);
-    const [gridSize, setGridSize] = useState(50);
+    const [gridSizeX, setGridSizeX] = useState(50);
+    const [gridSizeY, setGridSizeY] = useState(50);
     const [strokeColour, setStrokeColour] = useState("#000000");
     const [strokeWidth, setStrokeWidth] = useState("1");
     const [gridShape, setGridShape] = useState("square");
@@ -23,8 +24,10 @@ export const GridOverlayProvider = ({ children }) => {
         <GridOverlayContext.Provider value={{
             gridEnabled,
             setGridEnabled,
-            gridSize,
-            setGridSize,
+            gridSizeX,
+            setGridSizeX,
+            gridSizeY,
+            setGridSizeY,
             strokeColour,
             setStrokeColour,
             strokeWidth,
@@ -42,7 +45,7 @@ export const GridOverlayProvider = ({ children }) => {
 
 //This is the component part of the overlay
 const GridOverlay = memo(({ viewPort }) => {
-    const { gridSize, gridEnabled, strokeColour, strokeWidth, gridShape, lineStyle } = useGridOverlay();
+    const { gridSizeX, gridSizeY, gridEnabled, strokeColour, strokeWidth, gridShape, lineStyle } = useGridOverlay();
 
     if (!gridEnabled) return <></>;
     const [x, y, width, height] = viewPort;
@@ -52,45 +55,36 @@ const GridOverlay = memo(({ viewPort }) => {
      *  Gets the line style, dotted, dashed, etc
      *  TODO: make more of a distinction between dotted and dashed
      */
-    const getLineStyle = (lineStyle) => {
-        switch (lineStyle) {
-            case 'dashed':
-                return '4, 4';
-            case 'dotted':
-                return '1, 3';
-            case 'solid':
-            default:
-                return null; 
-        }
+    const strokeStyles = {
+        dashed: '4, 4',
+        dotted: '1, 3',
+        solid: null
     };
     
     /**
      * Controls the pattern for the grid
      * @returns pattern for the selected shape
      */
-    const getPatternPath = (gridSize, gridShape) => {
+    const getPatternPath = (gridSizeX, gridSizeY, gridShape) => {
         let patternWidth, patternHeight;
 
-        /**
-         * Controls the pattern size for the different shapes
-         */
         switch (gridShape) {
             case 'hexagon':
-                patternWidth = gridSize * 3;
-                patternHeight = Math.sqrt(3) * gridSize;
+                patternWidth = gridSizeX * 1.5;
+                patternHeight = Math.sqrt(3) * gridSizeY;
                 break;
             case 'circle':
-                patternWidth = gridSize;
-                patternHeight = gridSize;
+                patternWidth = gridSizeX;
+                patternHeight = gridSizeY;
                 break;
             case 'triangle':
-                patternWidth = gridSize;
-                patternHeight = gridSize * Math.sqrt(3)/2;
+                patternWidth = gridSizeX;
+                patternHeight = Math.sqrt(3) / 2 * gridSizeY;
                 break;
             case 'square':
             default:
-                patternWidth = gridSize;
-                patternHeight = gridSize;
+                patternWidth = gridSizeX;
+                patternHeight = gridSizeY;
                 break;
         }
 
@@ -98,57 +92,86 @@ const GridOverlay = memo(({ viewPort }) => {
 
         /**
          * Controls the path for the different shapes
-         * TODO: fix the hexagon and triangle pathing
+         * TODO: fix the hexagon pathing
          */
         switch (gridShape) {
             case 'circle':
+                patternWidth = gridSizeX;
+                patternHeight = gridSizeY;
+
                 path = `
-                    M ${gridSize / 2},0
-                    A ${gridSize / 2},${gridSize / 2} 0 1,0 ${gridSize / 2},${gridSize}
-                    A ${gridSize / 2},${gridSize / 2} 0 1,0 ${gridSize / 2},0
-                  `;
+                    M ${gridSizeX / 2},0
+                    A ${gridSizeX / 2},${gridSizeY / 2} 0 1,0 ${gridSizeX / 2},${gridSizeY}
+                    A ${gridSizeX / 2},${gridSizeY / 2} 0 1,0 ${gridSizeX / 2},0
+                `;
                 break;
 
-            case 'triangle':
-                path = `
-                    M 0 0
-                    L ${gridSize} 0
-                    L ${gridSize / 2} ${Math.sqrt(3) / 2 * gridSize}
-                    Z
-                  `;
-                break;
+            case 'triangle': {
+                const s = gridSizeX;
+                const h = Math.sqrt(3) / 2 * gridSizeY;
 
-            case 'hexagon':
+                patternWidth = s;
+                patternHeight = h * 2;
+
                 path = `
-                    M ${gridSize * 0.5} 0
-                    L ${gridSize * 1.5} 0
-                    L ${gridSize * 2} ${Math.sqrt(3)/2 * gridSize}
-                    L ${gridSize * 1.5} ${Math.sqrt(3) * gridSize}
-                    L ${gridSize * 0.5} ${Math.sqrt(3) * gridSize}
-                    L 0 ${Math.sqrt(3)/2 * gridSize}
-                    Z
-                  `;
+                    M 0 ${h} L ${s / 2} 0 L ${s} ${h} Z
+                    M 0 ${h} L ${s} ${h} L ${s / 2} ${2 * h} Z
+                    M 0 0 L 0 ${2 * h}
+                    M ${s / 2} 0 L ${s / 2} ${2 * h}
+                    M 0 ${2 * h} L ${s} ${2 * h}
+                `;
                 break;
+            }
+
+            case 'hexagon': {
+                const sX = gridSizeX;
+                const sY = gridSizeY;
+                const h = Math.sqrt(3) * sY / 2;
+
+                patternWidth = sX * 1.5;
+                patternHeight = h * 2;
+
+                const p1 = [sX / 2, 0];
+                const p2 = [sX * 1.5, 0];
+                const p3 = [sX * 2, h];
+                const p4 = [sX * 1.5, h * 2];
+                const p5 = [sX / 2, h * 2];
+                const p6 = [0, h];
+
+                path = `
+                    M ${p1[0]} ${p1[1]} 
+                    L ${p2[0]} ${p2[1]} 
+                    L ${p3[0]} ${p3[1]} 
+                    L ${p4[0]} ${p4[1]} 
+                    L ${p5[0]} ${p5[1]} 
+                    L ${p6[0]} ${p6[1]} 
+                    Z
+                `;
+                break;
+            }
+
 
             case 'square':
             default:
+                patternWidth = gridSizeX;
+                patternHeight = gridSizeY;
+
                 path = `
                     M 0 0
-                    L ${gridSize} 0
-                    L ${gridSize} ${gridSize}
-                    L 0 ${gridSize}
+                    L ${gridSizeX} 0
+                    L ${gridSizeX} ${gridSizeY}
+                    L 0 ${gridSizeY}
                     Z
-                  `;
+                `;
                 break;
         }
 
         return { path, patternWidth, patternHeight };
     };
 
-    const { path, patternWidth, patternHeight } = getPatternPath(gridSize, gridShape);
+    const { path, patternWidth, patternHeight } = getPatternPath(gridSizeX, gridSizeY, gridShape);
 
     return (
-        <>
             <svg>
                 <defs>
                     <pattern
@@ -164,7 +187,7 @@ const GridOverlay = memo(({ viewPort }) => {
                             fill="none"
                             stroke={strokeColour}
                             strokeWidth={strokeWidth}
-                            strokeDasharray={getLineStyle(lineStyle)}
+                            strokeDasharray={strokeStyles[lineStyle]}
                         />
                     </pattern>
                 </defs>
@@ -177,7 +200,6 @@ const GridOverlay = memo(({ viewPort }) => {
                     pointerEvents="none"
                 />
             </svg>
-        </>
     );
 });
 

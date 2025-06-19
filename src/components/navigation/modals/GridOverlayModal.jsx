@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import '@scss/navigation/modals/_gridOverlayModal.scss';
 import BrokeChain from '~icons/ph/link-simple-break-bold';
@@ -9,7 +9,14 @@ const GridOverlayModal = () => {
     const { t } = useTranslation("common");
     
     //Props
-    const { gridEnabled, setGridEnabled, setStrokeColour, setStrokeWidth, gridShape,setGridShape,lineStyle,setLineStyle} = useGridOverlay();
+    const { gridEnabled, setGridEnabled, setStrokeColour, setStrokeWidth, gridShape,setGridShape,lineStyle,setLineStyle,gridSizeX,
+        setGridSizeX,
+        gridSizeY,
+        setGridSizeY} = useGridOverlay();
+    
+    // Linked - True -> Values increment in a synchronised way, 
+    // Linked - False -> Values increment independently of one another 
+    const [linked, setLinked] = useState(false);
 
     // Mapped the translations for the style of line
     const styleOptions = [
@@ -25,8 +32,10 @@ const GridOverlayModal = () => {
         { value: "triangle", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.triangle") },
         { value: "hexagon", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.hexagon") },
     ];
-
     
+    
+    const toggleLink = () => setLinked(prev => !prev);
+
     function useDebouncedCallback(callback, delay) {
         const timeoutRef = useRef(null);
 
@@ -54,6 +63,48 @@ const GridOverlayModal = () => {
     const debouncedSetStrokeColour = useDebouncedCallback((color) => {
         setStrokeColour(color);
     }, 100);
+
+    /**
+     * Event handler function for handling changes to the X-axis grid size.
+     *
+     * This function processes an event, extracts the target value,
+     * and adjusts the grid size for the X-axis. If the `linked` variable
+     * is `true`, it synchronises the Y-axis grid size by applying the
+     * difference (`delta`) between the new and previous X-axis grid sizes.
+     *
+     * @param {Event} e - The event object containing the new value for the X-axis grid size.
+     */
+    const handleXChange = (e) => {
+        const newX = Number(e.target.value);
+        if (linked) {
+            const delta = newX - gridSizeX;
+            setGridSizeX(newX);
+            setGridSizeY(gridSizeY + delta);
+        } else {
+            setGridSizeX(newX);
+        }
+    };
+
+    /**
+     * Event handler function for handling changes to the Y-axis grid size.
+     *
+     * This function processes an event, extracts the target value,
+     * and adjusts the grid size for the Y-axis. If the `linked` variable
+     * is `true`, it synchronises the X-axis grid size by applying the
+     * difference (`delta`) between the new and previous Y-axis grid sizes.
+     *
+     * @param {Event} e - The event object containing the new value for the Y-axis grid size.
+     */
+    const handleYChange = (e) => {
+        const newY = Number(e.target.value);
+        if (linked) {
+            const delta = newY - gridSizeY;
+            setGridSizeY(newY);
+            setGridSizeX(gridSizeX + delta);
+        } else {
+            setGridSizeY(newY);
+        }
+    };
     
     return (
         <div className="grid_overlay_modal">
@@ -110,17 +161,33 @@ const GridOverlayModal = () => {
 
             <div className="size_of_grid">
                 <div className="input-group">
-                    <label htmlFor="xSize">{t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.x")}</label>
-                    <input type="number" id="xSize" name="xbox" />
+                    <label htmlFor="xSize">
+                        {t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.x")}
+                    </label>
+                    <input
+                        type="number"
+                        id="xSize"
+                        name="xbox"
+                        value={gridSizeX}
+                        onChange={handleXChange}
+                    />
                 </div>
 
-                <div className="icon-wrapper">
-                    <LinkChain />
+                <div className="icon-wrapper" onClick={toggleLink}>
+                    {linked ? <LinkChain /> : <BrokeChain />}
                 </div>
 
                 <div className="input-group">
-                    <label htmlFor="ySize">{t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.y")}</label>
-                    <input type="number" id="ySize" name="ySize" />
+                    <label htmlFor="ySize">
+                        {t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.y")}
+                    </label>
+                    <input
+                        type="number"
+                        id="ySize"
+                        name="ySize"
+                        value={gridSizeY}
+                        onChange={handleYChange}
+                    />
                 </div>
             </div>
         </div>

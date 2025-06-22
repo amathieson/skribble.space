@@ -1,18 +1,24 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import '@scss/navigation/modals/_gridOverlayModal.scss';
 import BrokeChain from '~icons/ph/link-simple-break-bold';
 import LinkChain from '~icons/ph/link-simple-bold';
 import { useGridOverlay } from '@ctx/GridOverlay.jsx';
+import ColourPicker from '@util/ColourPicker.jsx';
 
 const GridOverlayModal = () => {
     const { t } = useTranslation("common");
     
     //Props
-    const { gridEnabled, setGridEnabled, setStrokeColour, setStrokeWidth, gridShape,setGridShape,lineStyle,setLineStyle,gridSizeX,
-        setGridSizeX,
-        gridSizeY,
-        setGridSizeY} = useGridOverlay();
+    const {
+        gridEnabled, setGridEnabled,
+        strokeColour, setStrokeColour, 
+        setStrokeWidth,
+        gridShape, setGridShape,
+        lineStyle, setLineStyle,
+        gridSizeX, setGridSizeX,
+        gridSizeY, setGridSizeY
+    } = useGridOverlay();
     
     // Linked - True -> Values increment in a synchronised way, 
     // Linked - False -> Values increment independently of one another 
@@ -35,35 +41,7 @@ const GridOverlayModal = () => {
     
     
     const toggleLink = () => setLinked(prev => !prev);
-
-    function useDebouncedCallback(callback, delay) {
-        const timeoutRef = useRef(null);
-
-        /**
-         * To stop the colour wheel from firing tons of changes and lagging
-         * everything out, the below staggers it a bit so there's less lag
-         * 
-         * TODO: maybe there is a better way to do this
-         * TODO: should be implemented for the other wheels too
-         * @param args
-         */
-        const debouncedCallback = (...args) => {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(() => {
-                callback(...args);
-            }, delay);
-        };
-
-        useEffect(() => {
-            return () => clearTimeout(timeoutRef.current);
-        }, []);
-
-        return debouncedCallback;
-    }
-    const debouncedSetStrokeColour = useDebouncedCallback((color) => {
-        setStrokeColour(color);
-    }, 100);
-
+    
     /**
      * Event handler function for handling changes to the X-axis grid size.
      *
@@ -121,9 +99,12 @@ const GridOverlayModal = () => {
                     <input type="checkbox" />
                     <span>{t("settings_dropdown.page_settings.grid_overlay_modal.snap_grid")}</span>
                 </label>
-               
-                <label className="modal_option color_picker">
-                    <input type="color" onChange={(e) => debouncedSetStrokeColour(e.target.value)}/>
+                <label className="modal_option">
+                    <ColourPicker
+                        label={t("settings_dropdown.page_settings.grid_overlay_modal.line_colour")}
+                        value={strokeColour}
+                        onChange={setStrokeColour}
+                    />
                     <span>{t("settings_dropdown.page_settings.grid_overlay_modal.line_colour")}</span>
                 </label>
             </div>

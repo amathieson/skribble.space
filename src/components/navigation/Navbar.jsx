@@ -7,6 +7,8 @@ import RightArrow from '~icons/ph/arrow-right-bold';
 import { useDropdown } from "@ctx/Dropdown";
 import SettingsDropdown from "./dropdowns/SettingsDropdown.jsx";
 import {Link} from "react-router-dom";
+import ColourPicker from "@util/ColourPicker.jsx";
+
 
 const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }) => {
     const { t } = useTranslation("common");
@@ -37,11 +39,10 @@ const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }
                     </div>
 
                     <div className="nav_icons">
-                        <input
-                            type="color"
-                            id="pencolor"
+                        <ColourPicker
                             value={penColor}
-                            onChange={e => setPenColor(e.target.value)}
+                            onChange={setPenColor}
+                            id={"pencolor"}
                         />
                     </div>
                 </div>

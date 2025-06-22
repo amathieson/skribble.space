@@ -4,6 +4,7 @@ import { useModal } from "@ctx/Modal";
 
 import '@scss/navigation/_settingsDropdown.scss';
 import GridOverlayModal from "../modals/GridOverlayModal.jsx";
+import ColourPicker from '@util/ColourPicker.jsx';
 
 /**
  * This is the dropdown menu shown by clicking on the three dots in the nav
@@ -38,12 +39,11 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                 <ul>
                     <li>
                         <label htmlFor="background-color-picker">{t('settings_dropdown.page_settings.background_colour')}</label>
-                        <input
-                            id="background-color-picker"
-                            type="color"
+                        <ColourPicker
                             value={backgroundColour}
-                            onChange={(e) => setBackgroundColour(e.target.value)}
-                            aria-label="Background Colour Picker"
+                            id={"background-color-picker"}
+                            onChange={setBackgroundColour}
+                            label={t('settings_dropdown.page_settings.background_colour')}
                         />
                     </li>
                     <li tabIndex={0} onClick={() => openModal(<GridOverlayModal />, t("settings_dropdown.page_settings.grid_overlay_modal.title"))}>{t("settings_dropdown.page_settings.grid_display")}</li>

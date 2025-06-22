@@ -66,29 +66,7 @@ const GridOverlay = memo(({ viewPort }) => {
      * @returns pattern for the selected shape
      */
     const getPatternPath = (gridSizeX, gridSizeY, gridShape) => {
-        let patternWidth, patternHeight;
-
-        switch (gridShape) {
-            case 'hexagon':
-                patternWidth = gridSizeX * 1.5;
-                patternHeight = Math.sqrt(3) * gridSizeY;
-                break;
-            case 'circle':
-                patternWidth = gridSizeX;
-                patternHeight = gridSizeY;
-                break;
-            case 'triangle':
-                patternWidth = gridSizeX;
-                patternHeight = Math.sqrt(3) / 2 * gridSizeY;
-                break;
-            case 'square':
-            default:
-                patternWidth = gridSizeX;
-                patternHeight = gridSizeY;
-                break;
-        }
-
-        let path = '';
+        let patternWidth, patternHeight,path;
 
         /**
          * Controls the path for the different shapes
@@ -124,31 +102,34 @@ const GridOverlay = memo(({ viewPort }) => {
             }
 
             case 'hexagon': {
-                const sX = gridSizeX;
-                const sY = gridSizeY;
-                const h = Math.sqrt(3) * sY / 2;
+                const stepX = gridSizeX * 0.74;  // horizontal distance between hex centers
+                const stepY = gridSizeY * 0.51;  // vertical offset between rows
 
-                patternWidth = sX * 1.5;
-                patternHeight = h * 2;
+                patternWidth = stepX * 2;      // enough to fit 2 hex centers horizontally
+                patternHeight = gridSizeY * 1.;       // enough for 2 staggered hex rows vertically
 
-                const p1 = [sX / 2, 0];
-                const p2 = [sX * 1.5, 0];
-                const p3 = [sX * 2, h];
-                const p4 = [sX * 1.5, h * 2];
-                const p5 = [sX / 2, h * 2];
-                const p6 = [0, h];
+                const points = [
+                    [gridSizeX * 0.25, 0],          // top-left
+                    [gridSizeX * 0.75, 0],          // top-right
+                    [gridSizeX, gridSizeY * 0.5],           // right-middle
+                    [gridSizeX * 0.75, gridSizeY],          // bottom-right
+                    [gridSizeX * 0.25, gridSizeY],          // bottom-left
+                    [0, gridSizeY * 0.5]            // left-middle
+                ];
+
+                function hexPath(offsetX = 0, offsetY = 0) {
+                    return points
+                        .map((p, i) => `${i === 0 ? 'M' : 'L'} ${p[0] + offsetX} ${p[1] + offsetY}`)
+                        .join(' ') + ' Z';
+                }
 
                 path = `
-                    M ${p1[0]} ${p1[1]} 
-                    L ${p2[0]} ${p2[1]} 
-                    L ${p3[0]} ${p3[1]} 
-                    L ${p4[0]} ${p4[1]} 
-                    L ${p5[0]} ${p5[1]} 
-                    L ${p6[0]} ${p6[1]} 
-                    Z
+                    ${hexPath(0, 0)}
+                    ${hexPath(stepX, stepY)}
                 `;
                 break;
             }
+
 
 
             case 'square':

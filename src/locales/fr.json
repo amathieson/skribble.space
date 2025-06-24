@@ -9,8 +9,6 @@
       "title": "Page Settings",
       "background_colour": "Background Colour",
       "grid_display": "Grid Display",
-      "snap_to_grid": "Snap to Grid",
-
       "grid_overlay_modal": {
         "title": "Grid Overlay Settings",
         "description": "Here you can change your grid display settings.",
@@ -36,6 +34,11 @@
           "y": "Y Axis:"
         }
       }
+    },
+    "import_export_settings": {
+      "title": "Import/Export Settings",
+      "import": "Import Mindmap from File",
+      "export": "Export Mindmap to File"
     }
   }
 }

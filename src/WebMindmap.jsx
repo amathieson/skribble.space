@@ -306,12 +306,15 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone, onViewPor
                 id="canvas"
                 ref={canvasRef}
             ></canvas>
+
+            <svg id="vector" ref={svgRef} fill={backgroundColour}>
+                <rect x={0} y={0} ref={svgBackRef}/>
+            </svg>
             
-            <svg id="vector" ref={svgRef}>
-                <rect x={0} y={0} ref={svgBackRef} fill={backgroundColour} />
-                <GridOverlay
-                    viewPort={viewPort}
-                />            
+            <svg
+                id="canvas_grid_overlay"
+            >
+                <GridOverlay viewPort={viewPort}/>
             </svg>
         </div>
     );

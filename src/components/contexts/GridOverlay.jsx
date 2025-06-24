@@ -1,8 +1,9 @@
 import React, {createContext, useContext, useState, memo} from 'react';
 
 // --- Context Definition ---
-const GridOverlayContext = createContext();
+const GridOverlayContext = createContext(undefined);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useGridOverlay = () => useContext(GridOverlayContext);
 
 /**
@@ -47,7 +48,7 @@ export const GridOverlayProvider = ({ children }) => {
 const GridOverlay = memo(({ viewPort }) => {
     const { gridSizeX, gridSizeY, gridEnabled, strokeColour, strokeWidth, gridShape, lineStyle } = useGridOverlay();
 
-    if (!gridEnabled) return <></>;
+    if (!gridEnabled) return null;
     const [x, y, width, height] = viewPort;
 
 
@@ -102,10 +103,10 @@ const GridOverlay = memo(({ viewPort }) => {
             }
 
             case 'hexagon': {
-                const stepX = gridSizeX * 0.74;  // horizontal distance between hex centers
+                const stepX = gridSizeX * 0.74;  // horizontal distance between hex centres
                 const stepY = gridSizeY * 0.51;  // vertical offset between rows
 
-                patternWidth = stepX * 2;      // enough to fit 2 hex centers horizontally
+                patternWidth = stepX * 2;      // enough to fit 2 hex centres horizontally
                 patternHeight = gridSizeY * 1.;       // enough for 2 staggered hex rows vertically
 
                 const points = [
@@ -153,7 +154,7 @@ const GridOverlay = memo(({ viewPort }) => {
     const { path, patternWidth, patternHeight } = getPatternPath(gridSizeX, gridSizeY, gridShape);
 
     return (
-            <svg>
+            <>
                 <defs>
                     <pattern
                         id="gridPattern"
@@ -180,7 +181,7 @@ const GridOverlay = memo(({ viewPort }) => {
                     fill="url(#gridPattern)"
                     pointerEvents="none"
                 />
-            </svg>
+            </>
     );
 });
 

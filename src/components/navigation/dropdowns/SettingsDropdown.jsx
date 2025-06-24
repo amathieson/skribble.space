@@ -49,6 +49,13 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                     <li tabIndex={0} onClick={() => openModal(<GridOverlayModal />, t("settings_dropdown.page_settings.grid_overlay_modal.title"))}>{t("settings_dropdown.page_settings.grid_display")}</li>
                 </ul>
             </div>
+            <div className="settings_section" role="group" aria-labelledby="page-settings">
+                <h4 id="page-settings">{t('settings_dropdown.import_export_settings.title')}</h4>
+                <ul>
+                    <li tabIndex={0}>{t("settings_dropdown.import_export_settings.import")}</li>
+                    <li tabIndex={0}>{t("settings_dropdown.import_export_settings.export")}</li>
+                </ul>
+            </div>
         </div>
     );
 };

@@ -5,6 +5,7 @@ import { useModal } from "@ctx/Modal";
 import '@scss/navigation/_settingsDropdown.scss';
 import GridOverlayModal from "../modals/GridOverlayModal.jsx";
 import ColourPicker from '@util/ColourPicker.jsx';
+import { exportSvgToPdf } from '@util/export_mindmap.js'; 
 
 /**
  * This is the dropdown menu shown by clicking on the three dots in the nav
@@ -53,7 +54,8 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                 <h4 id="page-settings">{t('settings_dropdown.import_export_settings.title')}</h4>
                 <ul>
                     <li tabIndex={0}>{t("settings_dropdown.import_export_settings.import")}</li>
-                    <li tabIndex={0}>{t("settings_dropdown.import_export_settings.export")}</li>
+                    <li tabIndex={0} onClick={() => exportSvgToPdf()}
+                    >{t("settings_dropdown.import_export_settings.export")}</li>
                 </ul>
             </div>
         </div>

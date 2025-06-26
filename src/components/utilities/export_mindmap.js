@@ -63,9 +63,10 @@ S`;
      *
      * @param {string} color - A valid colour string in hexadecimal format (`#RRGGBB`, `#RGB`)
      * or an RGB format (`rgb(r, g, b)`).
+     * @param isStroke
      * @returns {string} A colour in PDF-compatible format (`r g b RG`).
      */
-    const hexOrRgbToPdfColor = (color) => {
+    const hexOrRgbToPdfColor = (color, isStroke) => {
         let r, g, b;
 
         if (!color) return '0 0 0 RG'; // default to black
@@ -85,7 +86,7 @@ S`;
             }
         }
         // Convert 0-255 range to 0-1 for PDF
-        return `${(r/255).toFixed(3)} ${(g/255).toFixed(3)} ${(b/255).toFixed(3)} RG`;
+        return `${(r/255).toFixed(3)} ${(g/255).toFixed(3)} ${(b/255).toFixed(3)} ${isStroke ? 'RG' : 'rg'}`;
     };
 
     /**
@@ -94,45 +95,74 @@ S`;
      * @returns {string}
      */
     const parseSvgPathToPdfCommands = (d) => {
-        
-        
         let cmds = [];
         const tokens = d.match(/[a-zA-Z]|-?\d*\.?\d+/g);
         let i = 0;
+        let currentX = 0;
+        let currentY = 0;
+        let lastCmd = null;
+
         while (i < tokens.length) {
-            const cmd = tokens[i++];
-            switch (cmd) {
-                case 'M': {
-                    const x = tokens[i++];
-                    const y = tokens[i++];
-                    cmds.push(`${x} ${flipY(y)} m`);
+            let cmd = tokens[i++];
+
+            // Handle command repetition (e.g., multiple L without repeating "L")
+            if (!isNaN(parseFloat(cmd))) {
+                i--;
+                cmd = lastCmd;
+            } else {
+                lastCmd = cmd;
+            }
+
+            const isRelative = cmd === cmd.toLowerCase();
+
+            switch (cmd.toLowerCase()) {
+                case 'm': {
+                    const dx = parseFloat(tokens[i++]);
+                    const dy = parseFloat(tokens[i++]);
+                    currentX = isRelative ? currentX + dx : dx;
+                    currentY = isRelative ? currentY + dy : dy;
+                    cmds.push(`${currentX} ${flipY(currentY)} m`);
                     break;
                 }
-                case 'L': {
-                    const x = tokens[i++];
-                    const y = tokens[i++];
-                    cmds.push(`${x} ${flipY(y)} l`);
+                case 'l': {
+                    const dx = parseFloat(tokens[i++]);
+                    const dy = parseFloat(tokens[i++]);
+                    currentX = isRelative ? currentX + dx : dx;
+                    currentY = isRelative ? currentY + dy : dy;
+                    cmds.push(`${currentX} ${flipY(currentY)} l`);
                     break;
                 }
-                case 'C': {
-                    const x1 = tokens[i++];
-                    const y1 = tokens[i++];
-                    const x2 = tokens[i++];
-                    const y2 = tokens[i++];
-                    const x3 = tokens[i++];
-                    const y3 = tokens[i++];
+                case 'c': {
+                    const dx1 = parseFloat(tokens[i++]);
+                    const dy1 = parseFloat(tokens[i++]);
+                    const dx2 = parseFloat(tokens[i++]);
+                    const dy2 = parseFloat(tokens[i++]);
+                    const dx3 = parseFloat(tokens[i++]);
+                    const dy3 = parseFloat(tokens[i++]);
+
+                    const x1 = isRelative ? currentX + dx1 : dx1;
+                    const y1 = isRelative ? currentY + dy1 : dy1;
+                    const x2 = isRelative ? currentX + dx2 : dx2;
+                    const y2 = isRelative ? currentY + dy2 : dy2;
+                    const x3 = isRelative ? currentX + dx3 : dx3;
+                    const y3 = isRelative ? currentY + dy3 : dy3;
+
                     cmds.push(`${x1} ${flipY(y1)} ${x2} ${flipY(y2)} ${x3} ${flipY(y3)} c`);
+                    currentX = x3;
+                    currentY = y3;
                     break;
                 }
-                case 'Z':
                 case 'z': {
                     cmds.push('h');
                     break;
                 }
-        }}
-        cmds.push('S');
+            }
+        }
+
+        cmds.push('B'); // Fill and stroke the path
         return cmds.join('\n');
     };
+
 
     let contentStream = '';
 
@@ -145,8 +175,10 @@ S`;
     paths.forEach(path => {
         const d = path.getAttribute('d');
         const fill = path.getAttribute('fill') || '#000000';
-        const colorCmd = hexOrRgbToPdfColor(fill);
-        contentStream += `${colorCmd}\n`;
+        const stroke = path.getAttribute('stroke') || '#000000';
+
+        contentStream += hexOrRgbToPdfColor(fill, false) + "\n"; // fill
+        contentStream += hexOrRgbToPdfColor(stroke, true) + "\n"; // stroke
         contentStream += parseSvgPathToPdfCommands(d) + '\n';
     });
 

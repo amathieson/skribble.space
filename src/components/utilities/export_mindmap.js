@@ -55,6 +55,40 @@ S`;
     };
 
     /**
+     * Converts a hex or RGB colour string to a PDF-compatible colour format.
+     *
+     * The function accepts either a hexadecimal colour string (e.g. `#RRGGBB`, `#RGB`) or
+     * an RGB colour string (e.g. `rgb(r, g, b)`) and transforms it into a format
+     * compatible with PDF (e.g. `r g b RG`).
+     *
+     * @param {string} color - A valid colour string in hexadecimal format (`#RRGGBB`, `#RGB`)
+     * or an RGB format (`rgb(r, g, b)`).
+     * @returns {string} A colour in PDF-compatible format (`r g b RG`).
+     */
+    const hexOrRgbToPdfColor = (color) => {
+        let r, g, b;
+
+        if (!color) return '0 0 0 RG'; // default to black
+
+        if (color.startsWith('#')) {
+            let c = color.substring(1);
+            if (c.length === 3) c = c.split('').map(x => x + x).join('');
+            r = parseInt(c.substring(0, 2), 16);
+            g = parseInt(c.substring(2, 4), 16);
+            b = parseInt(c.substring(4, 6), 16);
+        } else if (color.startsWith('rgb')) {
+            let matches = color.match(/(\d+), ?(\d+), ?(\d+)/);
+            if (matches) {
+                r = parseInt(matches[1], 10);
+                g = parseInt(matches[2], 10);
+                b = parseInt(matches[3], 10);
+            }
+        }
+        // Convert 0-255 range to 0-1 for PDF
+        return `${(r/255).toFixed(3)} ${(g/255).toFixed(3)} ${(b/255).toFixed(3)} RG`;
+    };
+
+    /**
      * Converts the SVG path to PDF commands
      * @param d
      * @returns {string}
@@ -110,6 +144,9 @@ S`;
     const paths = svg.querySelectorAll('g path');
     paths.forEach(path => {
         const d = path.getAttribute('d');
+        const fill = path.getAttribute('fill') || '#000000';
+        const colorCmd = hexOrRgbToPdfColor(fill);
+        contentStream += `${colorCmd}\n`;
         contentStream += parseSvgPathToPdfCommands(d) + '\n';
     });
 

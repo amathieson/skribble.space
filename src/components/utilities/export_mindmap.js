@@ -63,38 +63,38 @@ S`;
      *
      * @param {string} color - A valid colour string in hexadecimal format (`#RRGGBB`, `#RGB`)
      * or an RGB format (`rgb(r, g, b)`).
-     * @param isStroke
+     * @param isOutline - changes the path arg
      * @returns {string} A colour in PDF-compatible format (`r g b RG`).
      */
-    const hexOrRgbToPdfColor = (color, isStroke) => {
+    function hexOrRgbToPdfColor(color, isOutline = false) {
         let r, g, b;
-
-        if (!color) return '0 0 0 RG'; // default to black
-
         if (color.startsWith('#')) {
-            let c = color.substring(1);
-            if (c.length === 3) c = c.split('').map(x => x + x).join('');
-            r = parseInt(c.substring(0, 2), 16);
-            g = parseInt(c.substring(2, 4), 16);
-            b = parseInt(c.substring(4, 6), 16);
+            // Example: #rrggbb
+            r = parseInt(color.slice(1, 3), 16) / 255;
+            g = parseInt(color.slice(3, 5), 16) / 255;
+            b = parseInt(color.slice(5, 7), 16) / 255;
         } else if (color.startsWith('rgb')) {
-            let matches = color.match(/(\d+), ?(\d+), ?(\d+)/);
-            if (matches) {
-                r = parseInt(matches[1], 10);
-                g = parseInt(matches[2], 10);
-                b = parseInt(matches[3], 10);
-            }
+            // Example: rgb(255, 255, 255)
+            [r, g, b] = color.match(/\d+/g).map(v => parseInt(v) / 255);
+        } else {
+            // fallback or throw error
+            r = g = b = 0;
         }
-        // Convert 0-255 range to 0-1 for PDF
-        return `${(r/255).toFixed(3)} ${(g/255).toFixed(3)} ${(b/255).toFixed(3)} ${isStroke ? 'RG' : 'rg'}`;
+
+        // Choose PDF operator
+        const op = isOutline ? 'RG' : 'rg';
+        return `${r} ${g} ${b} ${op}`;
     };
+
 
     /**
      * Converts the SVG path to PDF commands
      * @param d
+     * @param fill - if null, no fill
+     * @param outline - if null, no outline
      * @returns {string}
      */
-    const parseSvgPathToPdfCommands = (d) => {
+    const parseSvgPathToPdfCommands = (d, fill=null, outline=null) => {
         let cmds = [];
         const tokens = d.match(/[a-zA-Z]|-?\d*\.?\d+/g);
         let i = 0;
@@ -158,8 +158,19 @@ S`;
                 }
             }
         }
-
-        cmds.push('B'); // Fill and stroke the path
+        // Just fill
+        if (fill && outline === null) {
+            cmds.push('f');
+        } 
+        // Just outline
+        else if (outline && fill === null) {
+            cmds.push('S');
+        }
+        // Fill and Outline
+        else {
+            cmds.push('B'); 
+        }
+        
         return cmds.join('\n');
     };
 
@@ -174,12 +185,17 @@ S`;
     const paths = svg.querySelectorAll('g path');
     paths.forEach(path => {
         const d = path.getAttribute('d');
-        const fill = path.getAttribute('fill') || '#000000';
-        const stroke = path.getAttribute('stroke') || '#000000';
+        const fill = path.getAttribute('fill') || null;
+        const outline = path.getAttribute('outline') || null;
 
-        contentStream += hexOrRgbToPdfColor(fill, false) + "\n"; // fill
-        contentStream += hexOrRgbToPdfColor(stroke, true) + "\n"; // stroke
-        contentStream += parseSvgPathToPdfCommands(d) + '\n';
+        if (fill != null) {
+            contentStream += hexOrRgbToPdfColor(fill,false) + "\n"; // fill
+        } 
+        if (outline != null) {
+            contentStream += hexOrRgbToPdfColor(outline,true) + "\n"; // stroke
+        }
+        contentStream += parseSvgPathToPdfCommands(d, fill || null, outline || null) + '\n';
+
     });
 
     /**

@@ -43,15 +43,19 @@ export const exportSvgToPdf = () => {
         y = parseFloat(rect.getAttribute('y') || 0);
         w = parseFloat(rect.getAttribute('width') || 0);
         h = parseFloat(rect.getAttribute('height') || 0);
-        
+        let background = rect.parentElement?.getAttribute('fill') || '#fff';
+
         flipY = (y) => h - y;
-        
-        return `${x} ${flipY(y)} m
+
+        const fillColor = hexOrRgbToPdfColor(background, false); 
+
+        return `${fillColor}
+${x} ${flipY(y)} m
 ${x + w} ${flipY(y)} l
 ${x + w} ${flipY(y + h)} l
 ${x} ${flipY(y + h)} l
 h
-S`;
+f`; // Use 'f' to fill the background
     };
 
     /**
@@ -82,7 +86,7 @@ S`;
         }
 
         // Choose PDF operator
-        const op = isOutline ? 'RG' : 'rg';
+        let op = isOutline ? 'RG' : 'rg';
         return `${r} ${g} ${b} ${op}`;
     };
 
@@ -96,7 +100,7 @@ S`;
      */
     const parseSvgPathToPdfCommands = (d, fill=null, outline=null) => {
         let cmds = [];
-        const tokens = d.match(/[a-zA-Z]|-?\d*\.?\d+/g);
+        let tokens = d.match(/[a-zA-Z]|-?\d*\.?\d+/g);
         let i = 0;
         let currentX = 0;
         let currentY = 0;
@@ -105,7 +109,7 @@ S`;
         while (i < tokens.length) {
             let cmd = tokens[i++];
 
-            // Handle command repetition (e.g., multiple L without repeating "L")
+            // Handle command repetition (e.g. multiple L without repeating "L")
             if (!isNaN(parseFloat(cmd))) {
                 i--;
                 cmd = lastCmd;

@@ -1,7 +1,13 @@
 {
   "name": "Skribble.Space",
   "short_name": "Skribble.Space",
+  "description": "A scribbling app.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
   "theme_color": "#40245e",
+  "lang": "en-gb",
+  "scope": "/",
   "icons": [
     {
       "src": "/16w/Small.png",
@@ -58,9 +64,12 @@
       "purpose": "maskable"
     }
   ],
-  "display": "standalone",
-  "description": "A scribbling app.",
-  "lang": "en-gb",
   "id": "pwa.skribble.space",
-  "screenshots": []
+  "display_override": [
+    "standalone",
+    "fullscreen",
+    "minimal-ui",
+    "window-controls-overlay",
+    "browser"
+  ]
 }

@@ -149,9 +149,7 @@ const GridOverlay = memo(({ svgRef  }) => {
                 `;
                 break;
             }
-
-
-
+            
             case 'square':
             default:
                 patternWidth = gridSizeX;

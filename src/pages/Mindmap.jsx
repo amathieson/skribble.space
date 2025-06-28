@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import WebMindMap from "/src/WebMindmap.jsx";
 import Navbar from "/src/components/navigation/Navbar.jsx";
 import ToolFAB from "/src/components/navigation/ToolFAB.jsx";
-import { DropdownProvider } from "@ctx/Dropdown";
 import '@scss/themes/_dark.scss';
 import '@scss/themes/_light.scss';
 import Storage_manager from "../storage_manager.js";
 import LZString from 'lz-string';
+import AppProviders from '@ctx/AppContext.jsx';
 
 function minifyXML(xmlString) {
     return xmlString
@@ -23,24 +23,21 @@ function Mindmap() {
         console.log("MindMap Action:", e, document_content.length);
         Storage_manager.SaveDocument(1, LZString.compressToBase64(minifyXML(document_content))).catch(err => {console.error(err)});
     }
+  
     return (
-
         <>
-            <DropdownProvider>
-                <Navbar
-                    penColor={penColor}
-                    setPenColor={setPenColor}
-                    backgroundColour={backgroundColour}
-                    setBackgroundColour={setBackgroundColour}
-                />
-            </DropdownProvider>
-
-            <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction} />
-            <ToolFAB />
-            <p>
-                lala the quick brown fox something lazy dog, lorem ipsum bla bla bla
-                un deux trois quatre cinq six
-            </p>
+           <AppProviders>
+               <Navbar
+                   penColor={penColor}
+                   setPenColor={setPenColor}
+                   backgroundColour={backgroundColour}
+                   setBackgroundColour={setBackgroundColour}
+               />
+               <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction}/>
+               <ToolFAB />
+           </AppProviders>
+                  
+            
         </>
     );
 }

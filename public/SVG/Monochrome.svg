@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 795 795">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-dasharray: 90.96 52.66;
+        stroke-miterlimit: 10;
+        stroke-width: 14px;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke: #231f20;
+      }
+
+      .cls-1, .cls-3 {
+        fill: none;
+        stroke-linecap: round;
+      }
+
+      .cls-5 {
+        fill: #40245e;
+        filter: url(#drop-shadow-1);
+      }
+
+      .cls-2 {
+        stroke-miterlimit: 6.91;
+        stroke-width: 9.68px;
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2, .cls-4 {
+        fill: #231f20;
+      }
+
+      .cls-3 {
+        stroke-miterlimit: 2;
+        stroke-width: 32px;
+      }
+
+      .cls-4 {
+        stroke-miterlimit: 6.91;
+        stroke-width: 9.68px;
+      }
+    </style>
+    <filter id="drop-shadow-1" x="-878.7" y="-59.7" width="928.32" height="928.32" filterUnits="userSpaceOnUse">
+      <feOffset dx="7" dy="7"/>
+      <feGaussianBlur result="blur" stdDeviation="48"/>
+      <feFlood flood-color="#281443" flood-opacity=".75"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Colour">
+    <rect id="Upper_Square" data-name="Upper Square" class="cls-5" x="-741.5" y="77.5" width="640" height="640" rx="269.25" ry="269.25"/>
+  </g>
+  <g id="Monochrome">
+    <g id="Dots">
+      <g id="Dashed_Line" data-name="Dashed Line">
+        <circle class="cls-1" cx="397.5" cy="397.5" r="228.57"/>
+      </g>
+      <g id="lineMarker0_45d4878f" data-name="lineMarker0 45d4878f">
+        <g id="lineMarker0_309e4b7d" data-name="lineMarker0 309e4b7d">
+          <g id="lineMarker0_719c58df" data-name="lineMarker0 719c58df">
+            <g id="lineMarker0">
+              <g id="DotS">
+                <path id="path4209" class="cls-4" d="M168.83,418.5c-11.83-.05-21.38-9.7-21.33-21.53.05-11.83,9.7-21.38,21.53-21.33,11.83.05,21.38,9.7,21.33,21.53s-9.7,21.38-21.53,21.33Z"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="lineMarker0_45d4878f-2" data-name="lineMarker0 45d4878f">
+        <g id="lineMarker0_309e4b7d-2" data-name="lineMarker0 309e4b7d">
+          <g id="lineMarker0_719c58df-2" data-name="lineMarker0 719c58df">
+            <g id="lineMarker0-2" data-name="lineMarker0">
+              <g id="DotS-2" data-name="DotS">
+                <path id="path4209-2" data-name="path4209" class="cls-2" d="M418.5,626.07c0,11.83-9.6,21.43-21.43,21.43s-21.43-9.6-21.43-21.43,9.6-21.43,21.43-21.43,21.43,9.6,21.43,21.43Z"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="lineMarker0_45d4878f-3" data-name="lineMarker0 45d4878f">
+        <g id="lineMarker0_309e4b7d-3" data-name="lineMarker0 309e4b7d">
+          <g id="lineMarker0_719c58df-3" data-name="lineMarker0 719c58df">
+            <g id="lineMarker0-3" data-name="lineMarker0">
+              <g id="DotS-3" data-name="DotS">
+                <path id="path4209-3" data-name="path4209" class="cls-2" d="M626.07,376.5c11.83,0,21.43,9.6,21.43,21.43s-9.6,21.43-21.43,21.43-21.43-9.6-21.43-21.43,9.6-21.43,21.43-21.43Z"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="lineMarker1_340adca9" data-name="lineMarker1 340adca9">
+        <g id="lineMarker1_1e1e58d5" data-name="lineMarker1 1e1e58d5">
+          <g id="lineMarker1_45677350" data-name="lineMarker1 45677350">
+            <g id="lineMarker1">
+              <g id="DotS_564ae5d1" data-name="DotS 564ae5d1">
+                <path id="path4209_1e728f34" data-name="path4209 1e728f34" class="cls-2" d="M376.29,168.93c0-11.83,9.6-21.43,21.43-21.43s21.43,9.6,21.43,21.43-9.6,21.43-21.43,21.43-21.43-9.6-21.43-21.43Z"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <path id="Skribble" class="cls-3" d="M338.33,281.7l-39.5,39.5c-12.46,12.46-12.46,32.66,0,45.12h0c12.46,12.46,32.66,12.46,45.12,0l56.12-56.12c12.24-12.24,32.09-12.24,44.33,0h0c12.24,12.24,12.24,32.09,0,44.33l-102.03,102.03c-12.98,12.98-12.98,34.03,0,47.02h0c12.98,12.98,34.03,12.98,47.02,0l55.57-55.57c12.2-12.2,31.97-12.2,44.17,0h0c12.2,12.2,12.2,31.97,0,44.17h0c-.91.91-1.24,2.74-.65,3.45l17.03,16.05"/>
+  </g>
+</svg>

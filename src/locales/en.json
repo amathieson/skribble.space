@@ -6,10 +6,39 @@
       "title": "Skribble Settings"
     },
     "page_settings": {
-      "title":"Page Settings", 
+      "title": "Page Settings",
       "background_colour": "Background Colour",
       "grid_display": "Grid Display",
-      "snap_to_grid": "Snap to Grid"
+      "grid_overlay_modal": {
+        "title": "Grid Overlay Settings",
+        "description": "Here you can change your grid display settings.",
+        "snap_grid": "Enable Snap to Grid",
+        "enable_grid": "Show Grid",
+        "style_of_line": {
+            "title": "Line Style:", 
+            "solid": "Solid",
+            "dashed": "Dashed",
+            "dotted": "Dotted"
+        },
+        "line_colour": "Line Colour",
+        "line_width": "Line Width:",
+        "grid_shape": {
+          "title": "Grid Shape:",
+          "square": "Squares",
+          "circle": "Circles",
+          "triangle": "Triangles",
+          "hexagon": "Hexagons"
+        },
+        "size_of_grid": {
+          "x": "X Axis:",
+          "y": "Y Axis:"
+        }
+      }
+    },
+    "import_export_settings": {
+      "title": "Import/Export Settings",
+      "import": "Import Mindmap from File",
+      "export": "Export Mindmap to File"
     }
   }
 }

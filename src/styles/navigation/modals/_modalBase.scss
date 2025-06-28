@@ -1,0 +1,44 @@
+@use '@scss/mixins/colours';
+@use '@scss/mixins/variables';
+
+//The darkened background
+.modal_backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(13, 1, 26, 0.63);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+
+.modal_content {
+  background: colours.$modal_background;
+  padding: 2rem; 
+  border-radius: 8px;
+  max-width: 90%; 
+  max-height: 90%; 
+  overflow-y: auto;
+  color: white;
+}
+
+.modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.modal_close_btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: flex;
+  color: white;
+}

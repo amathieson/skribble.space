@@ -12,7 +12,7 @@ export default defineConfig({
     Icons({autoInstall: true, compiler: 'jsx', jsx: 'react' }),
     webfontDownload(),
     VitePWA({ registerType: 'autoUpdate',devOptions: {
-        enabled: true, webManifestUrl: "app.webmanifest"
+        enabled: true
       } })
   ],
   server: {

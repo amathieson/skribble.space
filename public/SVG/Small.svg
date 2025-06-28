@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 795 795">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#drop-shadow-1);
+      }
+
+      .cls-1, .cls-2 {
+        fill: #40245e;
+      }
+
+      .cls-3 {
+        fill: none;
+        fill-rule: evenodd;
+        stroke: #8160a8;
+        stroke-linecap: round;
+        stroke-miterlimit: 2;
+        stroke-width: 72px;
+      }
+    </style>
+    <filter id="drop-shadow-1" x="-59.7" y="-878.7" width="928.32" height="928.32" filterUnits="userSpaceOnUse">
+      <feOffset dx="7" dy="7"/>
+      <feGaussianBlur result="blur" stdDeviation="48"/>
+      <feFlood flood-color="#281443" flood-opacity=".75"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Colour">
+    <rect id="Upper_Square" data-name="Upper Square" class="cls-1" x="77.5" y="-741.5" width="640" height="640" rx="269.25" ry="269.25"/>
+  </g>
+  <g id="Small_Colour" data-name="Small Colour">
+    <rect id="Upper_Square-2" data-name="Upper Square" class="cls-2" x="0" y="0" width="795" height="795" rx="397.5" ry="397.5"/>
+    <path id="Skribble" class="cls-3" d="M287.94,183.06l-73.14,73.14c-23.07,23.07-23.07,60.48,0,83.55h0c23.07,23.07,60.48,23.07,83.55,0l103.92-103.92c22.67-22.67,59.41-22.67,82.08,0h0c22.67,22.67,22.67,59.41,0,82.08l-188.93,188.93c-24.04,24.04-24.04,63.02,0,87.06h0c24.04,24.04,63.02,24.04,87.06,0l102.89-102.89c22.58-22.58,59.2-22.58,81.79,0h0c22.58,22.58,22.58,59.2,0,81.79h0c-1.68,1.68-2.3,5.08-1.2,6.39l31.54,29.72"/>
+  </g>
+</svg>

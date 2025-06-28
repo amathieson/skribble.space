@@ -4,6 +4,7 @@ import path from 'path'
 import Icons from 'unplugin-icons/vite'
 import {webfontDownload} from "vite-plugin-webfont-dl";
 import { VitePWA } from 'vite-plugin-pwa'
+import manifest from './manifest.json'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
     webfontDownload(),
     VitePWA({ registerType: 'autoUpdate',devOptions: {
         enabled: true
-      } })
+      }, manifest})
   ],
   server: {
     host: '0.0.0.0',

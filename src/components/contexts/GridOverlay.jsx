@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState, memo} from 'react';
+import React, {createContext, useContext, useState, memo, useEffect} from 'react';
 
 // --- Context Definition ---
 const GridOverlayContext = createContext(undefined);
@@ -45,12 +45,31 @@ export const GridOverlayProvider = ({ children }) => {
 
 
 //This is the component part of the overlay
-const GridOverlay = memo(({ viewPort }) => {
-    const { gridSizeX, gridSizeY, gridEnabled, strokeColour, strokeWidth, gridShape, lineStyle } = useGridOverlay();
+const GridOverlay = memo(({ svgRef  }) => {
+    const { gridSizeX, gridSizeY, strokeColour, strokeWidth, gridShape, lineStyle } = useGridOverlay();
+    const [bounds, setBounds] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
-    if (!gridEnabled) return null;
-    const [x, y, width, height] = viewPort;
 
+    useEffect(() => {
+        const el = svgRef?.current;
+        if (!el) return;
+
+        const observer = new ResizeObserver(() => {
+            const bbox = el.getBBox();
+            if (bbox.width > 0 && bbox.height > 0) {
+                setBounds({
+                    x: bbox.x,
+                    y: bbox.y,
+                    width: bbox.width,
+                    height: bbox.height
+                });
+            }
+        });
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [svgRef, gridSizeX, gridSizeY, gridShape]);
+    
 
     /**
      *  Gets the line style, dotted, dashed, etc
@@ -174,10 +193,10 @@ const GridOverlay = memo(({ viewPort }) => {
                     </pattern>
                 </defs>
                 <rect
-                    x={x}
-                    y={y}
-                    width={width}
-                    height={height}
+                    x={bounds.x}
+                    y={bounds.y}
+                    width={bounds.width}
+                    height={bounds.height}
                     fill="url(#gridPattern)"
                     pointerEvents="none"
                 />

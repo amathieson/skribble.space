@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 import '@scss/navigation/_toolFAB.scss';
 import Paintbrush from '~icons/ph/paint-brush-bold';
 import Pen from '~icons/ph/pen-bold';

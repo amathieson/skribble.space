@@ -12,7 +12,10 @@ const providers = [
     ModalProvider,
 ];
 
+
 const AppProviders = ({ children }) =>
+    //for some reason eslint falsely complains about provider not being used
+    // eslint-disable-next-line no-unused-vars
     providers.reduceRight((acc, Provider) => <Provider>{acc}</Provider>, children);
 
 export default AppProviders;

@@ -10,9 +10,11 @@ canvas, #vector, #canvas_grid_overlay {
     margin: 0;
     padding: 0;
 }
+
 canvas {
     z-index: 9999;
 }
+
 #debug {
     pointer-events: none;
     position: absolute;
@@ -30,7 +32,7 @@ canvas {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: ADLaM Display, Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "ADLaM Display", Verdana, Geneva, Tahoma, sans-serif;
 }
 
 body, #root {
@@ -45,6 +47,7 @@ body, #root {
     overscroll-behavior: none;
     user-select: none;
 }
+
 .canvas {
     position: relative;
     z-index: 1;
@@ -64,10 +67,12 @@ input[type=color] {
     -moz-appearance: none;
     appearance: none;
     display: inline-block;
+    
     &::-webkit-color-swatch-wrapper  {
         margin: 0;
         padding: 10%;
     }
+    
     &::-webkit-color-swatch {
         border-radius: 50%;
     }

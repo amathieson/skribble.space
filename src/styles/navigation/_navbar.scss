@@ -54,6 +54,7 @@ header {
     cursor: pointer;
     transition: background-color 0.15s ease-in-out;
     border-radius: 6px;
+    
     &:hover {
       background-color: rgba(255, 255, 255, 0.08);
     }
@@ -97,7 +98,7 @@ header {
 .nav_icon_with_dropdown {
   position: relative;
 
-  .dropdown-container {
+  .dropdown_container {
     position: absolute;
     top: 100%;
     right: 0;
@@ -115,9 +116,12 @@ header {
     margin: 0;
     cursor: pointer;
     border-radius: 4px;
-
+    background-color: transparent;
+    border: none;
+    
     &::-webkit-color-swatch-wrapper {
-      padding: 0;
+      margin: 0;
+      padding: 10%;
     }
 
     &::-webkit-color-swatch {

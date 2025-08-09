@@ -23,30 +23,33 @@ export const DropdownProvider = ({ children }) => {
 
     const isDropdownOpen = (key) => !!openDropdowns[key];
 
-    const closeDropdown = (key) => {
+    const closeDropdown = React.useCallback((key) => {
         setOpenDropdowns((prev) => ({
             ...prev,
             [key]: false,
         }));
-    };
+    }, []);
 
     const closeAllDropdowns = () => setOpenDropdowns({});
-
-    const handleOutsideClick = (event) => {
-        Object.keys(dropdownRefs.current).forEach((key) => {
-            if (dropdownRefs.current[key].current && !dropdownRefs.current[key].current.contains(event.target)) {
-                closeDropdown(key);
-            }
-        });
-    };
-
+    
+    //TODO fix!!!
     useEffect(() => {
-        document.addEventListener("mousedown", handleOutsideClick);
+        const handleOutsideClick = (event) => {
+            Object.keys(dropdownRefs.current).forEach((key) => {
+                if (
+                    dropdownRefs.current[key].current &&
+                    !dropdownRefs.current[key].current.contains(event.target)
+                ) {
+                    closeDropdown(key);
+                }
+            });
+        };
 
+        document.addEventListener("mousedown", handleOutsideClick);
         return () => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
-    }, []);
+    }, [closeDropdown]);
 
     const registerDropdownRef = (key, ref) => {
         dropdownRefs.current[key] = ref;

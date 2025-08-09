@@ -33,7 +33,7 @@ const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }
                             onClick={() => toggleDropdown("settingsMenu")}
                         />
                         {isOpen && (
-                            <div className="dropdown-container">
+                            <div className="dropdown_container">
                                 <SettingsDropdown
                                     backgroundColour={backgroundColour}
                                     setBackgroundColour={setBackgroundColour}

@@ -113,7 +113,7 @@ const GridOverlayModal = () => {
 
                 <label className="modal_option">
                     <span>{t("settings_dropdown.page_settings.grid_overlay_modal.line_width")}</span>
-                    <input type="number" id="lineWidth" min={0} defaultValue="1" onChange={(e) => setStrokeWidth(e.target.value)}/>
+                    <input type="number" id="line_width" min={0} defaultValue="1" onChange={(e) => setStrokeWidth(e.target.value)}/>
                 </label>
                 
                 <label className="modal_option" htmlFor="styleOfLine">
@@ -141,7 +141,7 @@ const GridOverlayModal = () => {
             </div>
 
             <div className="size_of_grid">
-                <div className="input-group">
+                <div className="input_group">
                     <label htmlFor="xSize">
                         {t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.x")}
                     </label>
@@ -154,11 +154,11 @@ const GridOverlayModal = () => {
                     />
                 </div>
 
-                <div className="icon-wrapper" onClick={toggleLink}>
+                <div className="icon_wrapper" onClick={toggleLink}>
                     {linked ? <LinkChain /> : <BrokeChain />}
                 </div>
 
-                <div className="input-group">
+                <div className="input_group">
                     <label htmlFor="ySize">
                         {t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.y")}
                     </label>

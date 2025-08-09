@@ -54,15 +54,15 @@ Adam, who has done all the hard work, purely because I was complaining I couldn'
 - [ ] **Images**
 - [ ] **PDFs**
   - [ ] Import
-  - [ ] Export
+  - [x] Export - might need further expansion if we add shape tools
 - [ ] **Full Text Search**
-- [ ] **PWA**
+- [X] **PWA**
 - [ ] **Offline Storage**
   - [ ] Document storage and organisation
   - [ ] Settings Storage (Such as pen support)
 - [x] **Strokes**
   - [ ] Cleaner variable width strokes
-- [ ] **Background Customisation** - in prog by Cait
-  - [ ] Grid
-  - [ ] Lines
-  - [ ] Solid Colour
+- [X] **Background Customisation** - in prog by Cait
+  - [X] Grid
+  - [X] Lines
+  - [X] Solid Colour

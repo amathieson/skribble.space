@@ -3,62 +3,131 @@
 
 header {
   background-color: colours.$purple_primary_dark;
-  height: variables.$nav_height;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
-  .toolbar {
-    display: flex;
-    width: calc(100% - 2em);
-    height: variables.$tool_bar_height;
+  .toolbar,
+  .toolbar_sub {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     padding: 0 1em;
+  }
+
+  .toolbar .nav_icons_bar {
+    justify-self: end;
+  }
+
+  .toolbar_sub svg:last-child {
+    justify-self: end;
+  }
+
+  .toolbar {
+    height: variables.$tool_bar_height;
 
     h1 {
       color: colours.$purple_primary_dark_highlight_light;
-      align-self: center;
-      margin-left: 10px;
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin: 0;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.2em;
     }
-    
+
     .nav_icons_bar {
       display: flex;
-      flex-direction: row-reverse;
-      width: 100%;
+      align-items: center;
       gap: 1rem;
     }
   }
 
-  .nav_icons, #pencolor {
+  .nav_icons,
+  #pencolor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: variables.$toolbar_icon_size;
     width: variables.$toolbar_icon_size;
     color: colours.$purple_primary_dark_highlight_light;
-    align-self: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+    border-radius: 6px;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .toolbar_sub {
-    background-color: colours.$purple_secondary_dark;
-    align-content: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     height: variables.$sub_toolbar_height;
-    padding: 0 1em;
+    background-color: colours.$purple_secondary_dark;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 
+    h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: colours.$purple_primary_dark_highlight_light;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.2em;
+    }
 
     svg {
-      height: 20px;
       width: 20px;
+      height: 20px;
+      cursor: pointer;
+      transition: opacity 0.15s ease-in-out;
+
+      &:hover {
+        opacity: 0.85;
+      }
     }
   }
 }
 
 .nav_icon_with_dropdown {
   position: relative;
-  display: inline-block;
-  align-content: center;
 
   .dropdown-container {
     position: absolute;
-    top: variables.$tool_bar_height;
+    top: 100%;
     right: 0;
+    margin-top: 0.4rem;
     z-index: 10;
+  }
+}
+
+.colour_picker {
+  display: inline-block;
+
+  input[type="color"] {
+    -webkit-appearance: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+      border-radius: 4px;
+    }
+
+    &::-moz-color-swatch {
+      border: none;
+      border-radius: 4px;
+    }
   }
 }

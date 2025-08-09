@@ -149,7 +149,7 @@ $num_steps: variables.$num_circles - 1;
   }
 
   @for $i from 0 through $num_steps {
-    $delay: $i * 0.12s;
+    $delay: $i * 0.06s;
 
     .smaller_circle:nth-child(#{$i + 2}) {
       transition-delay: $delay;

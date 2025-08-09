@@ -1,5 +1,9 @@
+import {HomeNav} from "../components/navigation/HomeNav.jsx";
+
 const Home = () => {
-    return <h1>Home</h1>;
+    return (
+        <HomeNav/>
+    )
 };
 
 export default Home;

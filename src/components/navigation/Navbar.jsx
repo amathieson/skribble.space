@@ -1,5 +1,4 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import '@scss/navigation/_navbar.scss';
 import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import LeftArrow from '~icons/ph/arrow-left-bold';
@@ -11,7 +10,6 @@ import ColourPicker from "@util/ColourPicker.jsx";
 
 
 const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }) => {
-    const { t } = useTranslation("common");
     const { toggleDropdown, isDropdownOpen } = useDropdown();
 
     const isOpen = isDropdownOpen("settingsMenu");
@@ -19,10 +17,16 @@ const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }
     return (
         <header>
             <div className="toolbar">
-                <Link to="/home" className="nav_icons"><LeftArrow className="nav_icons"/></Link>
-                <h1>{t('title')}</h1>
-
+                <Link to="/home" className="nav_icons"><LeftArrow className="nav_icons" /></Link>
+                <h1>MAP NAME HERE</h1>
                 <div className="nav_icons_bar">
+                    <div className="nav_icons">
+                        <ColourPicker
+                            value={penColor}
+                            onChange={setPenColor}
+                            id={"pencolor"}
+                        />
+                    </div>
                     <div className="nav_icon_with_dropdown">
                         <SettingsDots
                             className="nav_icons"
@@ -37,21 +41,13 @@ const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }
                             </div>
                         )}
                     </div>
-
-                    <div className="nav_icons">
-                        <ColourPicker
-                            value={penColor}
-                            onChange={setPenColor}
-                            id={"pencolor"}
-                        />
-                    </div>
                 </div>
             </div>
 
             <div className="toolbar_sub">
-                <LeftArrow />
+                <LeftArrow id={"leftarrow"} />
                 <h3>PAGE 1</h3>
-                <RightArrow />
+                <RightArrow id={"rightarrow"} />
             </div>
         </header>
     );

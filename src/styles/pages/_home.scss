@@ -1,0 +1,81 @@
+@use '@scss/mixins/variables';
+@use '@scss/mixins/colours';
+
+
+.mindmap_card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background: colours.$card_background;
+  align-self: center;
+  display: flex;
+  
+  @media (min-width: variables.$breakpoint-sm) {
+    height: 80%;
+  }
+
+  @media (min-width: variables.$breakpoint-md) {
+    height: 70%;
+  }
+
+  @media (min-width: variables.$breakpoint-lg) {
+    height: 70%;
+  }
+}
+
+.mindmap_tags {
+  display: inline-block;
+  background: #fff;
+  color: #333;
+  border-radius: 8px;
+  padding: 0.2em 0.8em;
+  font-size: 0.85em;
+  margin-right: 0.5em;
+  margin-top: 0.8em;
+}
+
+.mindmap_container {
+  display: grid;
+  align-items: stretch;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #c9c9d0 #f6f6f8; /* thumb and track colors */
+  
+  @media (min-width: variables.$breakpoint-sm) {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    padding: 10px;
+
+  }
+
+  @media (min-width: variables.$breakpoint-md) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (min-width: variables.$breakpoint-lg) {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px 16px;
+  }
+
+}
+
+.mindmap_card_header {
+  border-bottom: 2px dashed #200228;
+  margin-bottom: 1em;
+}
+
+.home_container {         
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+main {
+  flex: 1 1 auto;
+  display: flex;
+  overflow: hidden;
+}
+

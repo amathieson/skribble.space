@@ -46,6 +46,9 @@ body, #root {
     touch-action: none;
     overscroll-behavior: none;
     user-select: none;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 .canvas {

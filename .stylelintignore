@@ -1,0 +1,11 @@
+**/*.js
+**/*.jsx
+**/*.ts
+**/*.tsx
+**/*.json
+**/*.html
+**/*.md
+node_modules/
+dist/
+build/
+public/

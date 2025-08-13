@@ -1,6 +1,5 @@
 export default {
-  ignoreFiles: ['**/*.js','**/*.jsx','**/*.json', '**/*.html','**/*.md', 'dist/**', 'public/**', 'vite.config.js'],
-  customSyntax: 'postcss-scss', 
+  customSyntax: 'postcss-scss',
   rules: {
     'at-rule-empty-line-before': [
       'always',

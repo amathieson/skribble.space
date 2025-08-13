@@ -1,6 +1,5 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-
 export const HomeNav = () => {
     const { t } = useTranslation("common");
 
@@ -8,12 +7,6 @@ export const HomeNav = () => {
         <header>
             <div className="toolbar">
                 <h1>{t('title')}</h1>
-
-                <div className="nav_icons_bar">
-                    {/*<div className="nav_icon_with_dropdown">*/}
-                    {/*    <p>lol</p>*/}
-                    {/*</div>*/}
-                </div>
             </div>
 
             <div className="nav_test">

@@ -34,13 +34,29 @@ const mindmaps = [
         name: "AIRBUS",
         date_created: "1987-02-22T03:20:00Z",
         last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve"],
+        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
+        description: "jtm jtm jtm jtm",
+    },
+    {
+        id: 5,
+        name: "AIRBUS",
+        date_created: "1987-02-22T03:20:00Z",
+        last_modified: "1987-02-22T03:20:00Z",
+        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
+        description: "jtm jtm jtm jtm",
+    },
+    {
+        id: 6,
+        name: "AIRBUS",
+        date_created: "1987-02-22T03:20:00Z",
+        last_modified: "1987-02-22T03:20:00Z",
+        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
         description: "jtm jtm jtm jtm",
     },
 ];
 
 const MindmapCard = ({ mindmap }) => (
-    <div className={"mindmap_card"}>
+    <div className={"mindmap_card"} onClick={() => alert("This will eventually open a thing!")}>
         <div>
             <div className={"mindmap_card_header"}>
                 <h2>{mindmap.name}</h2>
@@ -62,14 +78,27 @@ const MindmapCard = ({ mindmap }) => (
             </div>
         </div>
         
-        <div>
+        <div className={"mindmap_preview"}>
             <img src={"https://picsum.photos/200/200"} alt={"mindmap preview"} />
         </div>
     </div>
 );
 
+const CreateMindmapCard = ({ onClick }) => (
+    <div className="mindmap_card mindmap_card--new" onClick={onClick} tabIndex={0} role="button">
+        <div className="mindmap_card_new_content">
+            <div className="mindmap_card_plus">+</div>
+            <div className="mindmap_card_label">Create New Mindmap</div>
+        </div>
+    </div>
+);
+
+const onCreateMindmap = () => (
+    alert("This will eventually create a new mindmap!")
+);
 const MindmapList = () => (
     <div className={"mindmap_container"}>
+        <CreateMindmapCard onClick={onCreateMindmap} />
         {mindmaps.map(mindmap => (
             <MindmapCard key={mindmap.id} mindmap={mindmap} />
         ))}

@@ -1,6 +1,7 @@
 import {HomeNav} from "../components/navigation/HomeNav.jsx";
 import '@scss/pages/_home.scss';
 import React from "react";
+import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 
 // Dummy mindmaps data and MindmapList for illustration;
 // TODO: REMOVE
@@ -50,7 +51,7 @@ const mindmaps = [
         name: "AIRBUS",
         date_created: "1987-02-22T03:20:00Z",
         last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
+        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
         description: "jtm jtm jtm jtm",
     },
 ];
@@ -58,13 +59,15 @@ const mindmaps = [
 const MindmapCard = ({ mindmap }) => (
     <div className={"mindmap_card"} onClick={() => alert("This will eventually open a thing!")}>
         <div>
+            <div className="card_settings_dots">
+                <SettingsDots />
+            </div>
+            <div className={"mindmap_preview"}>
+                <img src={"https://placecats.com/200/200"} alt={"mindmap preview"} />
+            </div>
             <div className={"mindmap_card_header"}>
                 <h2>{mindmap.name}</h2>
                 <p>{mindmap.description}</p>
-            </div>
-            <div>
-                <p>Date Created: {new Date(mindmap.date_created).toLocaleString()}</p>
-                <p>Last Modified: {new Date(mindmap.last_modified).toLocaleString()}</p>
             </div>
             <div>
                 {mindmap.tags.map(tag => (
@@ -76,10 +79,6 @@ const MindmapCard = ({ mindmap }) => (
                 </span>
                 ))}
             </div>
-        </div>
-        
-        <div className={"mindmap_preview"}>
-            <img src={"https://picsum.photos/200/200"} alt={"mindmap preview"} />
         </div>
     </div>
 );

@@ -14,8 +14,8 @@ function App() {
                 <Routes>
                     <Route path="/">
                         <Route path="*" element={<Page404 />} />
-                        <Route path="home" element={<Home />} />
-                        <Route index element={<Mindmap />} />
+                        <Route index element={<Home />} />
+                        <Route path="mindmap" element={<Mindmap />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

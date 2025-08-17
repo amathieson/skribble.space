@@ -1,15 +1,15 @@
 import React from "react";
-import '@scss/navigation/_navbar.scss';
+import '@scss/navigation/navbars/_navbarMindmap.scss';
 import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import LeftArrow from '~icons/ph/arrow-left-bold';
 import RightArrow from '~icons/ph/arrow-right-bold';
-import { useDropdown } from "@ctx/Dropdown";
-import SettingsDropdown from "./dropdowns/SettingsDropdown.jsx";
+import { useDropdown } from "@ctx/Dropdown.jsx";
+import SettingsDropdown from "../dropdowns/SettingsDropdown.jsx";
 import {Link} from "react-router-dom";
 import ColourPicker from "@util/ColourPicker.jsx";
 
 
-const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }) => {
+const NavbarMindmap = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }) => {
     const { toggleDropdown, isDropdownOpen } = useDropdown();
 
     const isOpen = isDropdownOpen("settingsMenu");
@@ -53,4 +53,4 @@ const Navbar = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }
     );
 };
 
-export default Navbar;
+export default NavbarMindmap;

@@ -1,6 +1,3 @@
-@use '@scss/mixins/colours';
-
-
 @media (prefers-color-scheme: dark) {
   :root, input, input::placeholder {
     color: colours.$foreground_dark;

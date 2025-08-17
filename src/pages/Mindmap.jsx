@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import WebMindMap from "/src/WebMindmap.jsx";
-import Navbar from "/src/components/navigation/Navbar.jsx";
+import NavbarMindmap from "/src/components/navigation/navbars/NavbarMindmap.jsx";
 import ToolFAB from "/src/components/navigation/ToolFAB.jsx";
-import '@scss/themes/_dark.scss';
-import '@scss/themes/_light.scss';
 import Storage_manager from "../storage_manager.js";
 import LZString from 'lz-string';
 import AppProviders from '@ctx/AppContext.jsx';
@@ -27,7 +25,7 @@ function Mindmap() {
     return (
         <>
            <AppProviders>
-               <Navbar
+               <NavbarMindmap
                    penColor={penColor}
                    setPenColor={setPenColor}
                    backgroundColour={backgroundColour}

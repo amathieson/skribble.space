@@ -1,0 +1,38 @@
+header {
+  background-color: colours.$purple_primary_dark;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .toolbar_sub {
+    height: variables.$sub_toolbar_height;
+    background-color: colours.$purple_secondary_dark;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: colours.$purple_primary_dark_highlight_light;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.2em;
+    }
+  }
+  
+  .toolbar {
+    height: variables.$tool_bar_height;
+
+    h1 {
+      color: colours.$purple_primary_dark_highlight_light;
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin: 0;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.2em;
+    }
+  }

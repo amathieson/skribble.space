@@ -1,7 +1,7 @@
-import {HomeNav} from "../components/navigation/HomeNav.jsx";
 import '@scss/pages/_home.scss';
 import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import Tags from "../components/utilities/Tags.jsx";
+import NavbarController from '@nav/navbars/NavbarController';
 
 // Dummy mindmaps data and MindmapList for illustration;
 // TODO: REMOVE
@@ -98,7 +98,7 @@ const MindmapList = () => (
 const Home = () => {
     return (
         <div className={"home_container"}>
-            <HomeNav />
+            <NavbarController />
             <main>
                 <MindmapList />
             </main>

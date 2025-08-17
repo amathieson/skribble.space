@@ -1,7 +1,7 @@
 import {HomeNav} from "../components/navigation/HomeNav.jsx";
 import '@scss/pages/_home.scss';
-import React from "react";
 import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
+import Tags from "../components/utilities/Tags.jsx";
 
 // Dummy mindmaps data and MindmapList for illustration;
 // TODO: REMOVE
@@ -11,7 +11,7 @@ const mindmaps = [
         name: "IDK A Mindmap I Guess",
         date_created: "2024-06-10T15:23:00Z",
         last_modified: "2024-06-10T15:23:00Z",
-        tags: ["crisis", "purple", "coding attempts"],
+        tags: ["crisis", "purple", "coding attempts","cait","adam","love","testing the colours"],
         description: "IDK CAIT JUST NEEDED DEMO DATA",
     },
     {
@@ -35,7 +35,7 @@ const mindmaps = [
         name: "AIRBUS",
         date_created: "1987-02-22T03:20:00Z",
         last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
+        tags: ["plane", "sometimes neo", "geneve","plane", "xyz", "geneve","cake", "cookie", "ted","teddy", "sometimes neo", "geneve"],
         description: "jtm jtm jtm jtm",
     },
     {
@@ -43,7 +43,7 @@ const mindmaps = [
         name: "AIRBUS",
         date_created: "1987-02-22T03:20:00Z",
         last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
+        tags: ["plane", "sometimes neo", "geneve","plane", "neo", "geneve","plane", "a", "b","c", "d", "e"],
         description: "jtm jtm jtm jtm",
     },
     {
@@ -57,28 +57,19 @@ const mindmaps = [
 ];
 
 const MindmapCard = ({ mindmap }) => (
-    <div className={"mindmap_card"} onClick={() => alert("This will eventually open a thing!")}>
+    <div className="mindmap_card" onClick={() => alert("This will eventually open a thing!")}>
         <div>
             <div className="card_settings_dots">
                 <SettingsDots />
             </div>
-            <div className={"mindmap_preview"}>
-                <img src={"https://placecats.com/200/200"} alt={"mindmap preview"} />
+            <div className="mindmap_preview">
+                <img src="https://placecats.com/200/200" alt="mindmap preview" />
             </div>
-            <div className={"mindmap_card_header"}>
+            <div className="mindmap_card_header">
                 <h2>{mindmap.name}</h2>
                 <p>{mindmap.description}</p>
             </div>
-            <div>
-                {mindmap.tags.map(tag => (
-                    <span
-                        key={tag}
-                        className={"mindmap_tags"}
-                    >
-                    {tag}
-                </span>
-                ))}
-            </div>
+            <Tags tags={mindmap.tags} />
         </div>
     </div>
 );

@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '@scss/_style.scss';
 import GridOverlay, {useGridOverlay} from "@ctx/GridOverlay.jsx";
+import { useColourSettings } from "@ctx/MindmapDrawingContext.jsx";
 
-const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone, onViewPortChange }) => {
+const WebMindMap = ({ actionDone, onViewPortChange }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
     const svgBackRef = useRef(null);
     const gridRef = useRef(null);
     const viewPortRef = useRef([0,0,0,0]);
     const [viewPort, setViewPort] = useState([0,0,0,0]);
-    const { gridEnabled } = useGridOverlay(); 
+    const { gridEnabled } = useGridOverlay();
+    const { penColor, backgroundColour } = useColourSettings();
 
     const [debug, setDebug] = useState({
         penSupport: false,

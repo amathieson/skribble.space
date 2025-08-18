@@ -9,7 +9,7 @@ const NavbarHome = () => {
     return (
         <header>
             <div className="toolbar">
-                <img className={"nav_logo"} src="public/SVG/Small.svg" alt="Skribble.Space Logo" />
+                <img className={"nav_logo"} src="/SVG/Small.svg" alt="Skribble.Space Logo" />
                 <h1>{t('title')}</h1>
             </div>
 

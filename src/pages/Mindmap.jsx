@@ -24,18 +24,8 @@ function Mindmap() {
   
     return (
         <>
-           <AppProviders>
-               <NavbarMindmap
-                   penColor={penColor}
-                   setPenColor={setPenColor}
-                   backgroundColour={backgroundColour}
-                   setBackgroundColour={setBackgroundColour}
-               />
-               <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction}/>
-               <ToolFAB />
-           </AppProviders>
-                  
-            
+            <WebMindMap penColor={penColor} backgroundColour={backgroundColour} actionDone={handleMinMapAction}/>
+            <ToolFAB />
         </>
     );
 }

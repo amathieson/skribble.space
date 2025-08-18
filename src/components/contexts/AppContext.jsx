@@ -1,6 +1,8 @@
 import { DropdownProvider } from "@ctx/Dropdown";
 import {ModalProvider} from "@ctx/Modal.jsx";
 import {GridOverlayProvider} from "@ctx/GridOverlay.jsx";
+import {MindmapCreationProvider} from "@ctx/MindmapCreation.jsx";
+import {MindmapDrawingProvider} from "@ctx/MindmapDrawingContext.jsx";
 
 /**
  * List of all the providers, order matters
@@ -10,6 +12,8 @@ const providers = [
     DropdownProvider,
     GridOverlayProvider,
     ModalProvider,
+    MindmapCreationProvider,
+    MindmapDrawingProvider
 ];
 
 

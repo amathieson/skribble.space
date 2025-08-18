@@ -1,9 +1,18 @@
 @media (prefers-color-scheme: dark) {
   :root, input, input::placeholder {
     color: colours.$foreground_dark;
+
+    //Card
+    --card-border: #ddd;
+    
+    //New Card
+    --new-card-text: #fff;
+    --new-card-text-hover:#c48cff;
   }
   
   body {
     background: colours.$background_dark;
   }
+  
+
 }

@@ -1,5 +1,5 @@
 .mindmap_card {
-  border: 1px solid #ddd;
+  border: 1px solid var(--card-border);
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -98,14 +98,14 @@
 .mindmap_card--new {
   border: 2px dashed #210434;
   background: rgba(184, 134, 245, 0.56);
-  color: #fff;
+  color: var(--new-card-text);
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: box-shadow 0.2s, border-color 0.2s;
   
   &:hover, &:focus {
-    color: #c48cff;
+    color: var(--new-card-text-hover);
   }
 }
 

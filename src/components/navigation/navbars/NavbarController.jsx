@@ -8,9 +8,7 @@ const NavBarController = (props) => {
 
     // Decide navbar type based on pathname
     let type;
-    if (location.pathname.startsWith("/")) {
-        type = 1;
-    } else if (location.pathname.startsWith("/mindmap")) {
+    if (location.pathname.startsWith("/mindmap")) {
         type = 2;
     } else {
         type = 1;

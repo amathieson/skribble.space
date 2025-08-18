@@ -1,7 +1,10 @@
 import '@scss/pages/_home.scss';
 import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import Tags from "../components/utilities/Tags.jsx";
-import NavbarController from '@nav/navbars/NavbarController';
+import React from "react";
+import { useModal } from "@ctx/Modal"; // Import path as needed
+import MindmapCreationModal from "../components/navigation/modals/MindmapCreationModal.jsx";
+import AppProviders from "@ctx/AppContext.jsx";
 
 // Dummy mindmaps data and MindmapList for illustration;
 // TODO: REMOVE
@@ -75,7 +78,12 @@ const MindmapCard = ({ mindmap }) => (
 );
 
 const CreateMindmapCard = ({ onClick }) => (
-    <div className="mindmap_card mindmap_card--new" onClick={onClick} tabIndex={0} role="button">
+    <div
+        className="mindmap_card mindmap_card--new"
+        onClick={onClick}
+        tabIndex={0}
+        role="button"
+    >
         <div className="mindmap_card_new_content">
             <div className="mindmap_card_plus">+</div>
             <div className="mindmap_card_label">Create New Mindmap</div>
@@ -83,27 +91,33 @@ const CreateMindmapCard = ({ onClick }) => (
     </div>
 );
 
-const onCreateMindmap = () => (
-    alert("This will eventually create a new mindmap!")
-);
-const MindmapList = () => (
-    <div className={"mindmap_container"}>
-        <CreateMindmapCard onClick={onCreateMindmap} />
-        {mindmaps.map(mindmap => (
-            <MindmapCard key={mindmap.id} mindmap={mindmap} />
-        ))}
-    </div>
-);
+
+const MindmapList = () => {
+    const { openModal, closeModal } = useModal();
+
+    return (
+        <div className={"mindmap_container"}>
+            <CreateMindmapCard onClick={() =>
+                openModal(
+                    <MindmapCreationModal onCreate={closeModal} onCancel={closeModal} />
+                )
+            } />
+            {mindmaps.map(mindmap => (
+                <MindmapCard key={mindmap.id} mindmap={mindmap} />
+            ))}
+        </div>
+    );
+};
+
 
 const Home = () => {
     return (
         <div className={"home_container"}>
-            <NavbarController />
             <main>
                 <MindmapList />
             </main>
         </div>
-    );
+            );
 };
 
 export default Home;

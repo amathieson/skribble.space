@@ -5,20 +5,25 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Page404 from "@pages/404.jsx";
 import Home from "@pages/Home.jsx";
 import Mindmap from "@pages/Mindmap.jsx";
+import NavbarController from "./components/navigation/navbars/NavbarController.jsx";
+import AppProviders from "@ctx/AppContext.jsx";
 
 function App() {
     return (
         
         <>
+        <AppProviders>
             <BrowserRouter>
-                <Routes>
-                    <Route path="/">
-                        <Route path="*" element={<Page404 />} />
-                        <Route index element={<Home />} />
-                        <Route path="mindmap" element={<Mindmap />} />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
+                    <NavbarController />
+                        <Routes>
+                            <Route path="/">
+                                <Route path="*" element={<Page404 />} />
+                                <Route index element={<Home />} />
+                                <Route path="mindmap" element={<Mindmap />} />
+                            </Route>
+                        </Routes>
+                </BrowserRouter>
+            </AppProviders>
         </>
     );
 }

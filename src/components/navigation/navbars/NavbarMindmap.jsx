@@ -7,10 +7,12 @@ import { useDropdown } from "@ctx/Dropdown.jsx";
 import SettingsDropdown from "../dropdowns/SettingsDropdown.jsx";
 import {Link} from "react-router-dom";
 import ColourPicker from "@util/ColourPicker.jsx";
+import { useColourSettings } from "@ctx/MindmapDrawingContext.jsx";
 
 
-const NavbarMindmap = ({ penColor, setPenColor, backgroundColour, setBackgroundColour }) => {
+const NavbarMindmap = () => {
     const { toggleDropdown, isDropdownOpen } = useDropdown();
+    const { penColor, setPenColor, backgroundColour, setBackgroundColour } = useColourSettings();
 
     const isOpen = isDropdownOpen("settingsMenu");
 

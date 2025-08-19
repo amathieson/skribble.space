@@ -9,11 +9,12 @@ import {MindmapDrawingProvider} from "@ctx/MindmapDrawingContext.jsx";
  * @type {((function({children: *}): *)|*)[]}
  */
 const providers = [
-    DropdownProvider,
+    MindmapDrawingProvider,
     GridOverlayProvider,
     ModalProvider,
     MindmapCreationProvider,
-    MindmapDrawingProvider
+    DropdownProvider,
+  
 ];
 
 

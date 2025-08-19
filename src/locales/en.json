@@ -40,5 +40,23 @@
       "import": "Import Mindmap from File",
       "export": "Export Mindmap to File"
     }
-  }
+  },
+    "create_modal": {
+      "title": "Create A Mindmap",
+      "description": "Here you can create a mindmap.",
+      "submit": "Create Mindmap",
+      "mindmap_name": {
+        "name": "Mindmap Name",
+        "placeholder": "Enter your mindmap name here"
+      },
+      "mindmap_description": {
+        "name": "Mindmap Description",
+        "placeholder": "Enter your mindmap description here (optional)"
+      },
+      "mindmap_tags": {
+        "name": "Add Mindmap Tags",
+        "placeholder": "Enter your mindmap tags here (optional)"
+      }
+    }
+ 
 }

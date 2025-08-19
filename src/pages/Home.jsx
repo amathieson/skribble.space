@@ -5,6 +5,8 @@ import React from "react";
 import { useModal } from "@ctx/Modal"; // Import path as needed
 import MindmapCreationModal from "../components/navigation/modals/MindmapCreationModal.jsx";
 import AppProviders from "@ctx/AppContext.jsx";
+import GridOverlayModal from "../components/navigation/modals/GridOverlayModal.jsx";
+import {useTranslation} from "react-i18next";
 
 // Dummy mindmaps data and MindmapList for illustration;
 // TODO: REMOVE
@@ -94,12 +96,13 @@ const CreateMindmapCard = ({ onClick }) => (
 
 const MindmapList = () => {
     const { openModal, closeModal } = useModal();
+    const { t } = useTranslation("common");
 
     return (
         <div className={"mindmap_container"}>
             <CreateMindmapCard onClick={() =>
                 openModal(
-                    <MindmapCreationModal onCreate={closeModal} onCancel={closeModal} />
+                    <MindmapCreationModal onCreate={closeModal} onCancel={closeModal}/>, t("create_modal.title")
                 )
             } />
             {mindmaps.map(mindmap => (

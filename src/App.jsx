@@ -12,18 +12,19 @@ function App() {
     return (
         
         <>
-        <AppProviders>
-            <BrowserRouter>
+        <BrowserRouter>
+            <AppProviders>
                     <NavbarController />
                         <Routes>
                             <Route path="/">
                                 <Route path="*" element={<Page404 />} />
                                 <Route index element={<Home />} />
-                                <Route path="mindmap" element={<Mindmap />} />
+                                <Route path="mindmap/:id?" element={<Mindmap />} />
                             </Route>
                         </Routes>
-                </BrowserRouter>
             </AppProviders>
+        </BrowserRouter>
+
         </>
     );
 }

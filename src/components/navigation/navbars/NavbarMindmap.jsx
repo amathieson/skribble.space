@@ -8,19 +8,21 @@ import SettingsDropdown from "../dropdowns/SettingsDropdown.jsx";
 import {Link} from "react-router-dom";
 import ColourPicker from "@util/ColourPicker.jsx";
 import { useColourSettings } from "@ctx/MindmapDrawingContext.jsx";
+import { useAppContext } from "@ctx/AppContext.jsx";
 
 
 const NavbarMindmap = () => {
     const { toggleDropdown, isDropdownOpen } = useDropdown();
     const { penColor, setPenColor, backgroundColour, setBackgroundColour } = useColourSettings();
+    const { currentMindmap } = useAppContext();
 
     const isOpen = isDropdownOpen("settingsMenu");
 
     return (
         <header>
             <div className="toolbar">
-                <Link to="/home" className="nav_icons"><LeftArrow className="nav_icons" /></Link>
-                <h1>MAP NAME HERE</h1>
+                <Link to="/" className="nav_icons"><LeftArrow className="nav_icons" /></Link>
+                <h1>{currentMindmap?.name || "Dummy Map Name"}</h1>
                 <div className="nav_icons_bar">
                     <div className="nav_icons">
                         <ColourPicker

@@ -1,26 +1,37 @@
+import React, { createContext, useContext, useState } from "react";
 import { DropdownProvider } from "@ctx/Dropdown";
-import {ModalProvider} from "@ctx/Modal.jsx";
-import {GridOverlayProvider} from "@ctx/GridOverlay.jsx";
-import {MindmapCreationProvider} from "@ctx/MindmapCreation.jsx";
-import {MindmapDrawingProvider} from "@ctx/MindmapDrawingContext.jsx";
+import { ModalProvider } from "@ctx/Modal.jsx";
+import { GridOverlayProvider } from "@ctx/GridOverlay.jsx";
+import { MindmapCreationProvider } from "@ctx/MindmapCreation.jsx";
+import { MindmapDrawingProvider } from "@ctx/MindmapDrawingContext.jsx";
 
-/**
- * List of all the providers, order matters
- * @type {((function({children: *}): *)|*)[]}
- */
+export const AppContext = createContext();
+
+export function useAppContext() {
+    return useContext(AppContext);
+}
+
+function CurrentMindmapProvider({ children }) {
+    const [currentMindmap, setCurrentMindmap] = useState(null);
+
+    return (
+        <AppContext.Provider value={{ currentMindmap, setCurrentMindmap }}>
+            {children}
+        </AppContext.Provider>
+    );
+}
+
 const providers = [
+    CurrentMindmapProvider,
+    MindmapCreationProvider,
     MindmapDrawingProvider,
     GridOverlayProvider,
     ModalProvider,
-    MindmapCreationProvider,
     DropdownProvider,
-  
 ];
 
-
+// 4. Compose them for app use
 const AppProviders = ({ children }) =>
-    //for some reason eslint falsely complains about provider not being used
-    // eslint-disable-next-line no-unused-vars
     providers.reduceRight((acc, Provider) => <Provider>{acc}</Provider>, children);
 
 export default AppProviders;

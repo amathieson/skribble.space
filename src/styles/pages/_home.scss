@@ -7,15 +7,15 @@
   display: grid;
   grid-template-rows: auto;
   position: relative;
-  
+
   &:hover, &:focus {
     box-shadow: 0 0 0 2px #b04bff;
     border-color: #3b1660;
   }
-  
+
   @media (min-width: variables.$breakpoint-sm) {
     flex-direction: column;
-    
+
     .mindmap_preview {
       display: flex;
       justify-content: center;
@@ -33,7 +33,7 @@
 
   .card_settings_dots {
     position: absolute;
-    top: 0.75rem;    
+    top: 0.75rem;
     right: 0.75rem;
     z-index: 2;
     cursor: pointer;
@@ -45,7 +45,7 @@
     font-size: 1.5rem;
     align-items: center;
     display: flex;
-    
+
     &:hover {
       background: rgba(230,230,230,0.85);
     }
@@ -61,14 +61,14 @@
   scrollbar-color: #c9c9d0 #f6f6f8;
   padding: 16px;
   gap: 20px 16px;
-  
+
   @media (max-width: variables.$breakpoint-xs) {
     grid-template-columns: 1fr;
     margin: 10px;
-    overflow-x: hidden;  
+    overflow-x: hidden;
     box-sizing: border-box;
   }
-  
+
   @media (min-width: variables.$breakpoint-sm) {
     grid-template-columns: 1fr 1fr;
   }
@@ -103,7 +103,7 @@
   align-items: center;
   cursor: pointer;
   transition: box-shadow 0.2s, border-color 0.2s;
-  
+
   &:hover, &:focus {
     color: var(--new-card-text-hover);
   }
@@ -125,6 +125,22 @@
   font-size: 1.1em;
   font-weight: 500;
 }
+
+.mindmap_container--empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 0;
+  width: 100%;
+}
+
+.mindmap_card--expanded {
+  font-size: 1.5rem;
+  width: 70%;
+  height: 200px;
+}
+
 /**
 * ---------------------------------------
 * Tags

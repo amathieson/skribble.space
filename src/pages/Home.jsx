@@ -77,9 +77,9 @@ const MindmapCard = ({ mindmap }) => (
     </div>
 );
 
-const CreateMindmapCard = ({ onClick, t }) => (
+const CreateMindmapCard = ({ onClick, t, className = "" }) => (
     <div
-        className="mindmap_card mindmap_card--new"
+        className={`mindmap_card mindmap_card--new${className ? " " + className : ""}`}
         onClick={onClick}
         tabIndex={0}
         role="button"
@@ -92,12 +92,15 @@ const CreateMindmapCard = ({ onClick, t }) => (
 );
 
 
+
 const MindmapList = () => {
     const { openModal, closeModal } = useModal();
     const { t } = useTranslation("common");
 
+    const isEmpty = mindmaps.length === 0;
+
     return (
-        <div className={"mindmap_container"}>
+        <div className={`mindmap_container${isEmpty ? " mindmap_container--empty" : ""}`}>
             <CreateMindmapCard
                 onClick={() =>
                     openModal(
@@ -106,8 +109,9 @@ const MindmapList = () => {
                     )
                 }
                 t={t}
+                className={isEmpty ? "mindmap_card--expanded" : ""}
             />
-            {mindmaps.map(mindmap => (
+            {!isEmpty && mindmaps.map(mindmap => (
                 <MindmapCard key={mindmap.id} mindmap={mindmap} />
             ))}
         </div>
@@ -122,7 +126,7 @@ const Home = () => {
                 <MindmapList />
             </main>
         </div>
-            );
+    );
 };
 
 export default Home;

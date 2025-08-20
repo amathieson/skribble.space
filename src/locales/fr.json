@@ -1,5 +1,8 @@
 {
   "title": "Skribble.Space",
+  "home": {
+    "title": "Create A Mindmap"
+  },
   "settings_dropdown": {
     "title": "Settings",
     "skribble_settings": {
@@ -58,5 +61,4 @@
       "placeholder": "Enter your mindmap tags here (optional)"
     }
   }
-
 }

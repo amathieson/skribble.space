@@ -4,8 +4,6 @@ import Tags from "../components/utilities/Tags.jsx";
 import React from "react";
 import { useModal } from "@ctx/Modal"; // Import path as needed
 import MindmapCreationModal from "../components/navigation/modals/MindmapCreationModal.jsx";
-import AppProviders from "@ctx/AppContext.jsx";
-import GridOverlayModal from "../components/navigation/modals/GridOverlayModal.jsx";
 import {useTranslation} from "react-i18next";
 
 // Dummy mindmaps data and MindmapList for illustration;
@@ -79,7 +77,7 @@ const MindmapCard = ({ mindmap }) => (
     </div>
 );
 
-const CreateMindmapCard = ({ onClick }) => (
+const CreateMindmapCard = ({ onClick, t }) => (
     <div
         className="mindmap_card mindmap_card--new"
         onClick={onClick}
@@ -88,7 +86,7 @@ const CreateMindmapCard = ({ onClick }) => (
     >
         <div className="mindmap_card_new_content">
             <div className="mindmap_card_plus">+</div>
-            <div className="mindmap_card_label">Create New Mindmap</div>
+            <div className="mindmap_card_label">{t("home.title")}</div>
         </div>
     </div>
 );
@@ -100,11 +98,15 @@ const MindmapList = () => {
 
     return (
         <div className={"mindmap_container"}>
-            <CreateMindmapCard onClick={() =>
-                openModal(
-                    <MindmapCreationModal onCreate={closeModal} onCancel={closeModal}/>, t("create_modal.title")
-                )
-            } />
+            <CreateMindmapCard
+                onClick={() =>
+                    openModal(
+                        <MindmapCreationModal onCreate={closeModal} onCancel={closeModal} />,
+                        t("create_modal.title")
+                    )
+                }
+                t={t}
+            />
             {mindmaps.map(mindmap => (
                 <MindmapCard key={mindmap.id} mindmap={mindmap} />
             ))}

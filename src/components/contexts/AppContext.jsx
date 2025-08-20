@@ -3,7 +3,6 @@ import { DropdownProvider } from "@ctx/Dropdown";
 import { ModalProvider } from "@ctx/Modal.jsx";
 import { GridOverlayProvider } from "@ctx/GridOverlay.jsx";
 import { MindmapCreationProvider } from "@ctx/MindmapCreation.jsx";
-import { MindmapDrawingProvider } from "@ctx/MindmapDrawingContext.jsx";
 
 export const AppContext = createContext();
 
@@ -24,7 +23,6 @@ function CurrentMindmapProvider({ children }) {
 const providers = [
     CurrentMindmapProvider,
     MindmapCreationProvider,
-    MindmapDrawingProvider,
     GridOverlayProvider,
     ModalProvider,
     DropdownProvider,

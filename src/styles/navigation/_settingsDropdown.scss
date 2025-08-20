@@ -37,7 +37,7 @@
         cursor: pointer;
         transition: background-color 0.15s ease;
         margin: 8pt 0;
-
+        display: flex;
         &:hover,
         &:focus {
           background-color: #624091;

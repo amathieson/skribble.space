@@ -3,7 +3,7 @@ import '@scss/_style.scss';
 import GridOverlay, {useGridOverlay} from "@ctx/GridOverlay.jsx";
 import { useColourSettings } from "@ctx/MindmapDrawingContext.jsx";
 
-const WebMindMap = ({ actionDone, onViewPortChange }) => {
+const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
     const svgBackRef = useRef(null);
@@ -11,8 +11,8 @@ const WebMindMap = ({ actionDone, onViewPortChange }) => {
     const viewPortRef = useRef([0,0,0,0]);
     const [viewPort, setViewPort] = useState([0,0,0,0]);
     const { gridEnabled } = useGridOverlay();
-    const { penColor, backgroundColour } = useColourSettings();
-
+    const { penColor } = useColourSettings();
+    
     const [debug, setDebug] = useState({
         penSupport: false,
         penDown: false,

@@ -1,0 +1,13 @@
+img#cat_image {
+    width: 50%;
+    height: 70%;
+    display: block;
+}
+
+div#cat_image_container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

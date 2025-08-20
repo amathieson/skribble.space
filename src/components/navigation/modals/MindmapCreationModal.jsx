@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import '@scss/navigation/modals/_mindmapCreationModal.scss';
-import {useColourSettings} from "@ctx/MindmapDrawingContext.jsx";
 import ColourPicker from "../../utilities/ColourPicker.jsx";
 import {useNavigate} from "react-router-dom";
 import { useMindmapCreation } from "@ctx/MindmapCreation.jsx"; // Add/import this
@@ -10,7 +9,6 @@ import { useModal } from '@ctx/Modal.jsx';
 
 const MindmapCreationModal = () => {
     const { t } = useTranslation("common");
-    const {backgroundColour } = useColourSettings();
     const navigate = useNavigate();
     const { createMindmap } = useMindmapCreation();
     const { closeModal } = useModal();
@@ -18,7 +16,7 @@ const MindmapCreationModal = () => {
     const [mindmap, setMindmap] = useState({
         name: "",
         description: "",
-        background_colour: backgroundColour || "#ffffff",
+        background_colour: "#ffffff",
         date_created: new Date().toISOString(),
     });
 
@@ -33,7 +31,6 @@ const MindmapCreationModal = () => {
         e.preventDefault();
         closeModal();
         const mindmapCreated = createMindmap(mindmap);
-        //todo: fix mindmap creation background colour
         navigate(`/mindmap/${mindmapCreated.id}`);   
     };
 
@@ -76,8 +73,7 @@ const MindmapCreationModal = () => {
                 <label className="modal_option">
                     <ColourPicker
                         label={t("settings_dropdown.page_settings.background_colour")}
-                        value={mindmap.background_colour
-                        }
+                        value={mindmap.background_colour}
                         onChange={c => setMindmap({ ...mindmap, background_colour: c })}
                     />
                     <span>{t("settings_dropdown.page_settings.background_colour")}</span>

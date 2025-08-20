@@ -1,11 +1,11 @@
-import React, {createContext, useContext, memo, useEffect, useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import { useAppContext } from "@ctx/AppContext.jsx";
 
 // --- Context Definition ---
 const MindmapCreationContext = createContext(undefined);
 
 /**
- * This controls all the grid behaviour
+ * This controls all the mindmap create behaviour
  * @param children
  * @returns {Element}
  * @constructor
@@ -13,7 +13,7 @@ const MindmapCreationContext = createContext(undefined);
 export function MindmapCreationProvider({ children }) {
     const [mindmaps, setMindmaps] = useState([]);
     const { setCurrentMindmap } = useAppContext();
-
+  
     function createMindmap(mindmap) {
         const id = crypto.randomUUID();
         const newMindmap = { ...mindmap, id };
@@ -22,10 +22,20 @@ export function MindmapCreationProvider({ children }) {
         return newMindmap;
 
     }
+    function updateMindmap(id, updates) {
+        setMindmaps((mindmaps) =>
+            mindmaps.map(m =>
+                m.id === id ? { ...m, ...updates } : m
+            )
+        );
+    }
+
+
 
 
     return (
-        <MindmapCreationContext.Provider value={{ mindmaps, createMindmap }}>
+        <MindmapCreationContext.Provider value={{ mindmaps, createMindmap,updateMindmap
+        }}>
             {children}
         </MindmapCreationContext.Provider>
     );

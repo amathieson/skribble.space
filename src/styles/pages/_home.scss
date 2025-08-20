@@ -7,7 +7,7 @@
   display: grid;
   grid-template-rows: auto;
   position: relative;
-  
+
   &:hover, &:focus {
     box-shadow: 0 0 0 2px #b04bff;
     border-color: #3b1660;
@@ -125,6 +125,22 @@
   font-size: 1.1em;
   font-weight: 500;
 }
+
+.mindmap_container--empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 0;
+  width: 100%;
+}
+
+.mindmap_card--expanded {
+  font-size: 1.5rem;
+  width: 70%;
+  height: 200px;
+}
+
 /**
 * ---------------------------------------
 * Tags
@@ -160,3 +176,4 @@ main {
   height: 100vh;
   flex-direction: column;
 }
+

@@ -6,58 +6,7 @@ import { useModal } from "@ctx/Modal"; // Import path as needed
 import MindmapCreationModal from "../components/navigation/modals/MindmapCreationModal.jsx";
 import {useTranslation} from "react-i18next";
 
-// Dummy mindmaps data and MindmapList for illustration;
-// TODO: REMOVE
-const mindmaps = [
-    {
-        id: 1,
-        name: "IDK A Mindmap I Guess",
-        date_created: "2024-06-10T15:23:00Z",
-        last_modified: "2024-06-10T15:23:00Z",
-        tags: ["crisis", "purple", "coding attempts","cait","adam","love","testing the colours"],
-        description: "IDK CAIT JUST NEEDED DEMO DATA",
-    },
-    {
-        id: 2,
-        name: "a la la la",
-        date_created: "2026-03-28T11:13:07Z",
-        last_modified: "2026-03-28T11:13:07Z",
-        tags: ["france", "red", "pain au chocolat"],
-        description: "waffle waffle waffle waffle cruffle brookie war crimes bread",
-    },
-    {
-        id: 3,
-        name: "Boeing",
-        date_created: "2009-12-15T07:08:07Z",
-        last_modified: "2009-12-15T07:08:07Z",
-        tags: ["dream", "liner", "favourite plane", "apparently there's a boeing dreamlifter"],
-        description: "jtm jtm jtm jtm",
-    },
-    {
-        id: 4,
-        name: "AIRBUS",
-        date_created: "1987-02-22T03:20:00Z",
-        last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "xyz", "geneve","cake", "cookie", "ted","teddy", "sometimes neo", "geneve"],
-        description: "jtm jtm jtm jtm",
-    },
-    {
-        id: 5,
-        name: "AIRBUS",
-        date_created: "1987-02-22T03:20:00Z",
-        last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "neo", "geneve","plane", "a", "b","c", "d", "e"],
-        description: "jtm jtm jtm jtm",
-    },
-    {
-        id: 6,
-        name: "AIRBUS",
-        date_created: "1987-02-22T03:20:00Z",
-        last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
-        description: "jtm jtm jtm jtm",
-    },
-];
+const mindmaps = [];
 
 const MindmapCard = ({ mindmap }) => (
     <div className="mindmap_card" onClick={() => alert("This will eventually open a thing!")}>
@@ -77,9 +26,9 @@ const MindmapCard = ({ mindmap }) => (
     </div>
 );
 
-const CreateMindmapCard = ({ onClick, t }) => (
+const CreateMindmapCard = ({ onClick, t, className = "" }) => (
     <div
-        className="mindmap_card mindmap_card--new"
+        className={`mindmap_card mindmap_card--new${className ? " " + className : ""}`}
         onClick={onClick}
         tabIndex={0}
         role="button"
@@ -92,12 +41,15 @@ const CreateMindmapCard = ({ onClick, t }) => (
 );
 
 
+
 const MindmapList = () => {
     const { openModal, closeModal } = useModal();
     const { t } = useTranslation("common");
 
+    const isEmpty = mindmaps.length === 0;
+
     return (
-        <div className={"mindmap_container"}>
+        <div className={`mindmap_container${isEmpty ? " mindmap_container--empty" : ""}`}>
             <CreateMindmapCard
                 onClick={() =>
                     openModal(
@@ -106,8 +58,9 @@ const MindmapList = () => {
                     )
                 }
                 t={t}
+                className={isEmpty ? "mindmap_card--expanded" : ""}
             />
-            {mindmaps.map(mindmap => (
+            {!isEmpty && mindmaps.map(mindmap => (
                 <MindmapCard key={mindmap.id} mindmap={mindmap} />
             ))}
         </div>

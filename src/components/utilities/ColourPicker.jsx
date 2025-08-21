@@ -25,7 +25,7 @@ const ColourPicker = ({ label, value, onChange, debounceDelay = 20,id}) => {
     };
 
     return (
-        <label className="modal_option color_picker">
+        <label className="modal_option colour_picker">
             <input
                 type="color"
                 value={localValue}

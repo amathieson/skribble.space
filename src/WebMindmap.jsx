@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '@scss/_style.scss';
 import GridOverlay, {useGridOverlay} from "@ctx/GridOverlay.jsx";
+import { useColourSettings } from "@ctx/MindmapDrawingContext.jsx";
 
-const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone, onViewPortChange }) => {
+const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
     const svgBackRef = useRef(null);
     const gridRef = useRef(null);
     const viewPortRef = useRef([0,0,0,0]);
     const [viewPort, setViewPort] = useState([0,0,0,0]);
-    const { gridEnabled } = useGridOverlay(); 
-
+    const { gridEnabled } = useGridOverlay();
+    const { penColor } = useColourSettings();
+    
     const [debug, setDebug] = useState({
         penSupport: false,
         penDown: false,
@@ -172,7 +174,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone, onViewPor
             penDown = true;
             ctx.beginPath();
             ctx.moveTo(e.offsetX, e.offsetY);
-            ctx.lineWidth = size*zoom;
+            ctx.line_width = size*zoom;
 
             penID = e.pointerId;
             size = 5 * 2 ** (3 * e.pressure);
@@ -216,7 +218,7 @@ const WebMindMap = ({ penColor, backgroundColour = '#fff', actionDone, onViewPor
 
             if (penDown && e.isPrimary && tool === 'PEN') {
                 size = 5 * 2 ** (3 * e.pressure);
-                ctx.lineWidth = size*zoom;
+                ctx.line_width = size*zoom;
                 ctx.lineTo(e.offsetX, e.offsetY);
                 ctx.stroke();
 

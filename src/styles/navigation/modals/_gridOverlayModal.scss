@@ -69,7 +69,7 @@
   }
 }
 
-select, #lineWidth {
+select, #line_width {
   width: 100%;
 }
 
@@ -79,7 +79,7 @@ select, #lineWidth {
   align-items: end;
   gap: 0.75rem;
 
-  .input-group {
+  .input_group {
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -92,14 +92,14 @@ select, #lineWidth {
     }
   }
 
-  .icon-wrapper {
+  .icon_wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     padding-bottom: 0.25rem;
   }
 
-  .icon-wrapper svg {
+  .icon_wrapper svg {
     width: 24px;
     height: 24px;
   }

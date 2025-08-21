@@ -1,15 +1,15 @@
 /**
 * ---------------------------------------
-* Navbar Stuffs
+* NavbarMindmap Stuffs
 * ---------------------------------------
 */
 
 //Main Tool Bar
-$tool_bar_height: 48pt;
+$tool_bar_height: 36pt;
 $toolbar_icon_size: $tool_bar_height * 0.6;
 
 //Sub Tool Bar
-$sub_toolbar_height: 36pt;
+$sub_toolbar_height: 20pt;
 
 //Header
 $nav_height: $sub_toolbar_height + $tool_bar_height;
@@ -30,4 +30,14 @@ $circle_size_icons: $circle_size * 0.60;
 $num_circles: 4;
 
 // How far away the surrounding circles orbit
-$orbit_radius: 77px
+$orbit_radius: 77px;
+
+/**
+* ---------------------------------------
+* Screen Sizes
+* ---------------------------------------
+*/
+$breakpoint-xs: 480px;   // Phones
+$breakpoint-sm: 768px;   // Tablets
+$breakpoint-md: 1024px;  // Laptops
+$breakpoint-lg: 1440px;  // Desktop

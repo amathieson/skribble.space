@@ -1,6 +1,3 @@
-@use '@scss/mixins/colours';
-@use '@scss/mixins/variables';
-
 /**
 * ---------------------------------------
 * Generic Styling
@@ -46,6 +43,7 @@
   }
 
 }
+
 /**
 * ---------------------------------------
 * Icons
@@ -79,7 +77,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   opacity: 0;
   visibility: hidden;
-
   transform-origin: center center;
   transform: scale(0) translate(0, 0);
   transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out, visibility 0.8s ease-in-out;
@@ -149,7 +146,7 @@ $num_steps: variables.$num_circles - 1;
   }
 
   @for $i from 0 through $num_steps {
-    $delay: $i * 0.12s;
+    $delay: $i * 0.06s;
 
     .smaller_circle:nth-child(#{$i + 2}) {
       transition-delay: $delay;

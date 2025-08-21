@@ -27,8 +27,7 @@ export default defineConfig({
       '@ctx': path.resolve(__dirname, 'src/components/contexts'),
       '@nav': path.resolve(__dirname, 'src/components/navigation'),
       '@pages': path.resolve(__dirname, 'src/pages'),
-      '@util': path.resolve(__dirname, 'src/components/utilities'),
-
+      '@util': path.resolve(__dirname, 'src/components/utilities')
     }
   },
   build: {
@@ -51,5 +50,16 @@ export default defineConfig({
         }
       }
     }
-  }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @use "/src/styles/mixins/_variables.scss";
+          @use "/src/styles/mixins/_colours.scss";
+        `
+      }
+    }
+  },
+
 })

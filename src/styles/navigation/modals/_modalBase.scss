@@ -1,13 +1,7 @@
-@use '@scss/mixins/colours';
-@use '@scss/mixins/variables';
-
 //The darkened background
 .modal_backdrop {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background-color: rgba(13, 1, 26, 0.63);
     display: flex;
     align-items: center;

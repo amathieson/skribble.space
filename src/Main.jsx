@@ -7,7 +7,7 @@ import App from './App.jsx';
 import {initI18n} from "./components/utilities/i18n.js";
 import StorageManager from "./storage_manager.js";
 
-// Initialize i18next with the default language
+// Initialise i18next with the default language
 initI18n('en').then(() => {
     createRoot(document.getElementById('root')).render(
         <StrictMode>

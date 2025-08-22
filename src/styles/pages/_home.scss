@@ -1,14 +1,21 @@
+/**
+* ---------------------------------------
+* Base Card Stylings
+* ---------------------------------------
+*/
+
 .mindmap_card {
   border: 1px solid var(--card-border);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   background: colours.$card_background;
   display: grid;
   grid-template-rows: auto;
   position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     box-shadow: 0 0 0 2px #b04bff;
     border-color: #3b1660;
   }
@@ -20,11 +27,6 @@
       display: flex;
       justify-content: center;
     }
-  }
-
-  @media (min-width: variables.$breakpoint-md) {
-    flex-direction: column;
-
   }
 
   @media (min-width: variables.$breakpoint-lg) {
@@ -41,47 +43,18 @@
     color: rgb(32, 2, 40);
     border-radius: 25%;
     padding: 0.2rem;
-    transition: background 0.2s;
     font-size: 1.5rem;
-    align-items: center;
     display: flex;
+    align-items: center;
+    transition: background 0.2s;
 
     &:hover {
-      background: rgba(230,230,230,0.85);
+      background: rgba(230, 230, 230, 0.85);
     }
   }
 }
 
-.mindmap_container {
-  display: grid;
-  align-items: stretch;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-  scrollbar-width: thin;
-  scrollbar-color: #c9c9d0 #f6f6f8;
-  padding: 16px;
-  gap: 20px 16px;
 
-  @media (max-width: variables.$breakpoint-xs) {
-    grid-template-columns: 1fr;
-    margin: 10px;
-    overflow-x: hidden;
-    box-sizing: border-box;
-  }
-
-  @media (min-width: variables.$breakpoint-sm) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (min-width: variables.$breakpoint-md) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-  @media (min-width: variables.$breakpoint-lg) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-}
 
 .mindmap_card_header {
   border-bottom: 2px dashed #200228;
@@ -89,22 +62,24 @@
 }
 
 
-
 /**
 * ---------------------------------------
-* New Mindmap Card
+* New Mindmap Card Styling
 * ---------------------------------------
 */
-.mindmap_card--new {
+
+.mindmap_card_new {
   border: 2px dashed #210434;
   background: rgba(184, 134, 245, 0.56);
   color: var(--new-card-text);
+  display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: box-shadow 0.2s, border-color 0.2s;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: var(--new-card-text-hover);
   }
 }
@@ -126,6 +101,7 @@
   font-weight: 500;
 }
 
+// If there are no stored mindmaps
 .mindmap_container--empty {
   display: flex;
   justify-content: center;
@@ -135,7 +111,7 @@
   width: 100%;
 }
 
-.mindmap_card--expanded {
+.mindmap_card_expanded {
   font-size: 1.5rem;
   width: 70%;
   height: 200px;
@@ -153,19 +129,18 @@
   color: var(--tag-text);
   border-radius: 5px;
   padding: 0.2em 0.8em;
+  margin: 0.8em 0.5em 0 0;
   font-size: 0.85em;
-  margin-right: 0.5em;
-  margin-top: 0.8em;
   text-transform: uppercase;
   font-weight: 550;
-
 }
 
 /**
 * ---------------------------------------
-* Misc
+* Layout Containers
 * ---------------------------------------
 */
+
 main {
   display: flex;
   overflow: hidden;
@@ -173,6 +148,33 @@ main {
 
 .home_container {
   display: flex;
-  height: 100vh;
+  height: 90vh;
   flex-direction: column;
+}
+
+.mindmap_container {
+  display: grid;
+  align-items: stretch;
+  overflow-y: auto;
+  padding: 16px;
+  gap: 20px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: #c9c9d0 #f6f6f8;
+  scrollbar-gutter: stable;
+
+  // Sizings Stuff
+  @media (max-width: variables.$breakpoint-xs) {
+    grid-template-columns: 1fr;
+    margin: 10px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  @media (min-width: variables.$breakpoint-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: variables.$breakpoint-md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

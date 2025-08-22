@@ -1,10 +1,9 @@
 import '@scss/pages/_home.scss';
 import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
-import Tags from "../components/utilities/Tags.jsx";
-import React from "react";
-import { useModal } from "@ctx/Modal"; // Import path as needed
-import MindmapCreationModal from "../components/navigation/modals/MindmapCreationModal.jsx";
-import {useTranslation} from "react-i18next";
+import Tags from '@util/Tags.jsx';
+import MindmapCreationModal from '@ui/modals/MindmapCreationModal.jsx';
+import {useTranslation} from 'react-i18next';
+import {useState} from 'react';
 
 // Dummy mindmaps data and MindmapList for illustration;
 // TODO: REMOVE
@@ -38,7 +37,7 @@ const mindmaps = [
         name: "AIRBUS",
         date_created: "1987-02-22T03:20:00Z",
         last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "xyz", "geneve","cake", "cookie", "ted","teddy", "sometimes neo", "geneve"],
+        tags: ["teddy"],
         description: "jtm jtm jtm jtm",
     },
     {
@@ -46,7 +45,7 @@ const mindmaps = [
         name: "AIRBUS",
         date_created: "1987-02-22T03:20:00Z",
         last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "neo", "geneve","plane", "a", "b","c", "d", "e"],
+        tags: ["ted"],
         description: "jtm jtm jtm jtm",
     },
     {
@@ -54,11 +53,17 @@ const mindmaps = [
         name: "AIRBUS",
         date_created: "1987-02-22T03:20:00Z",
         last_modified: "1987-02-22T03:20:00Z",
-        tags: ["plane", "sometimes neo", "geneve","plane", "sometimes neo", "geneve"],
+        tags: ["cri"],
         description: "jtm jtm jtm jtm",
     },
 ];
 
+/**
+ * This is the base card for a mindmap.
+ * @param mindmap
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const MindmapCard = ({ mindmap }) => (
     <div className="mindmap_card" onClick={() => alert("This will eventually open a thing!")}>
         <div>
@@ -77,39 +82,47 @@ const MindmapCard = ({ mindmap }) => (
     </div>
 );
 
-const CreateMindmapCard = ({ onClick, t, className = "" }) => (
-    <div
-        className={`mindmap_card mindmap_card--new${className ? " " + className : ""}`}
-        onClick={onClick}
-        tabIndex={0}
-        role="button"
-    >
-        <div className="mindmap_card_new_content">
-            <div className="mindmap_card_plus">+</div>
-            <div className="mindmap_card_label">{t("home.title")}</div>
+/**
+ * This displays a create mindmap card, and opens a modal when clicked.
+ * @param onClick
+ * @param className
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const CreateMindmapCard = ({ onClick, className = "" }) => {
+    const {t} = useTranslation("common");
+    return (
+        <div
+            className={`mindmap_card mindmap_card_new${className ? " " + className : ""}`}
+            onClick={onClick}
+            tabIndex={0}
+            role="button"
+        >
+            <div className="mindmap_card_new_content">
+                <div className="mindmap_card_plus">+</div>
+                <div className="mindmap_card_label">{t("home.title")}</div>
+            </div>
         </div>
-    </div>
-);
+    );
+
+};
 
 
+/**
+ * This displays a create mindmap card and the list of stored mindmaps
+ * @param openModal
+ * @returns {JSX.Element}
+ * @constructor
+ */
 
-const MindmapList = () => {
-    const { openModal, closeModal } = useModal();
-    const { t } = useTranslation("common");
-
+const MindmapList = ({ openModal }) => {
     const isEmpty = mindmaps.length === 0;
 
     return (
         <div className={`mindmap_container${isEmpty ? " mindmap_container--empty" : ""}`}>
             <CreateMindmapCard
-                onClick={() =>
-                    openModal(
-                        <MindmapCreationModal onCreate={closeModal} onCancel={closeModal} />,
-                        t("create_modal.title")
-                    )
-                }
-                t={t}
-                className={isEmpty ? "mindmap_card--expanded" : ""}
+                onClick={openModal}
+                className={isEmpty ? "mindmap_card_expanded" : ""}
             />
             {!isEmpty && mindmaps.map(mindmap => (
                 <MindmapCard key={mindmap.id} mindmap={mindmap} />
@@ -119,13 +132,28 @@ const MindmapList = () => {
 };
 
 
+
 const Home = () => {
+    
+    // Modal States. Etc
+    const [modalOpen, setModalOpen] = useState(false);
+    const openModal = () => setModalOpen(true); 
+    const closeModal = () => setModalOpen(false);
+
+
     return (
-        <div className={"home_container"}>
-            <main>
-                <MindmapList />
-            </main>
-        </div>
+        <>
+            <div className={"home_container"}>
+                <main>
+                    <MindmapList openModal={openModal}/>
+                </main>
+            </div>
+
+            <MindmapCreationModal
+                isOpen={modalOpen}
+                closeModal={closeModal}
+            />
+        </>
     );
 };
 

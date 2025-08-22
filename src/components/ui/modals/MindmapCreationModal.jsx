@@ -1,17 +1,23 @@
 import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
-import '@scss/navigation/modals/_mindmapCreationModal.scss';
-import ColourPicker from "../../utilities/ColourPicker.jsx";
-import {useNavigate} from "react-router-dom";
-import { useMindmapCreation } from "@ctx/MindmapCreation.jsx"; // Add/import this
-import { useModal } from '@ctx/Modal.jsx';
+import '@scss/ui/modals/_mindmapCreationModal.scss';
+import ColourPicker from '@util/ColourPicker.jsx';
+import {useNavigate} from 'react-router-dom';
+import { useMindmapCreation } from '@ctx/MindmapCreation.jsx';
+import {BaseModal} from '@ui/modals/BaseModal.jsx';
 
-
-const MindmapCreationModal = () => {
+/**
+ * This is the modal that is shown when the user clicks on the "Create Mindmap" button
+ * It is used to create a new mindmap, store the data, and then redirect the user to the new mindmap page.
+ * @param isOpen
+ * @param closeModal
+ * @returns {Element}
+ * @constructor
+ */
+const MindmapCreationModal  = ({ isOpen, closeModal }) => {
     const { t } = useTranslation("common");
     const navigate = useNavigate();
     const { createMindmap } = useMindmapCreation();
-    const { closeModal } = useModal();
 
     const [mindmap, setMindmap] = useState({
         name: "",
@@ -33,11 +39,9 @@ const MindmapCreationModal = () => {
         const mindmapCreated = createMindmap(mindmap);
         navigate(`/mindmap/${mindmapCreated.id}`);   
     };
-
-
-
-
-    return (
+    
+    // HTML Content for Modal
+    const modalContent = (
         <form className="mindmap_create_modal" onSubmit={handleSubmit}>
             <p className="modal_description">
                 {t("create_modal.description")}
@@ -88,6 +92,15 @@ const MindmapCreationModal = () => {
                 </label>
             </div>
         </form>
+        )
+    
+    return (
+        <BaseModal
+            isOpen={isOpen}
+            title={t("create_modal.title")}
+            content={modalContent}
+            closeModal={closeModal}
+        />
     );
 };
 

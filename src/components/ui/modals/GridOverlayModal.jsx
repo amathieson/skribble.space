@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
-import '@scss/navigation/modals/_gridOverlayModal.scss';
+import '@scss/ui/modals/_gridOverlayModal.scss';
 import BrokeChain from '~icons/ph/link-simple-break-bold';
 import LinkChain from '~icons/ph/link-simple-bold';
 import { useGridOverlay } from '@ctx/GridOverlay.jsx';
 import ColourPicker from '@util/ColourPicker.jsx';
+import {BaseModal} from './BaseModal.jsx';
 
-const GridOverlayModal = () => {
+/**
+ * This is the modal that is shown when the user clicks on the "Grid Overlay" button in the settings dropdown
+ * It is used to set the grid overlay settings, such as a grid overlay, line thickness, shape, etc.
+ * @returns {Element}
+ */
+const GridOverlayModal = ({ isOpen, closeModal }) => {
     const { t } = useTranslation("common");
     
     //Props
@@ -39,7 +45,7 @@ const GridOverlayModal = () => {
         { value: "hexagon", label: t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.hexagon") },
     ];
     
-    
+    // Toggles whether the x-axis and y-axis grid sizes are linked or not.
     const toggleLink = () => setLinked(prev => !prev);
     
     /**
@@ -84,12 +90,13 @@ const GridOverlayModal = () => {
         }
     };
     
-    return (
+    //HTML Content for Modal
+    const modalContent = (
         <div className="grid_overlay_modal">
             <p className="modal_description">
                 {t("settings_dropdown.page_settings.grid_overlay_modal.description")}
             </p>
-            
+
             <div className="modal_options">
                 <label className="modal_option">
                     <input type="checkbox" checked={gridEnabled} onChange={(e) => setGridEnabled(e.target.checked)}/>
@@ -115,28 +122,28 @@ const GridOverlayModal = () => {
                     <span>{t("settings_dropdown.page_settings.grid_overlay_modal.line_width")}</span>
                     <input type="number" id="line_width" min={0} defaultValue="1" onChange={(e) => setStrokeWidth(e.target.value)}/>
                 </label>
-                
+
                 <label className="modal_option" htmlFor="styleOfLine">
                     {t("settings_dropdown.page_settings.grid_overlay_modal.style_of_line.title")}
-                <select id="styleOfLine" name="styleOfLine" value={lineStyle} onChange={(e) => setLineStyle(e.target.value)}>
-                    {styleOptions.map(({ value, label }) => (
-                        <option key={value} value={value}>
-                            {label}
-                        </option>
-                    ))}
-                </select>
+                    <select id="styleOfLine" name="styleOfLine" value={lineStyle} onChange={(e) => setLineStyle(e.target.value)}>
+                        {styleOptions.map(({ value, label }) => (
+                            <option key={value} value={value}>
+                                {label}
+                            </option>
+                        ))}
+                    </select>
                 </label>
 
                 <label className="modal_option" htmlFor="gridShape">
                     {t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.title")}
-                <select id="gridShape" name="gridShape" value={gridShape}
-                        onChange={(e) => setGridShape(e.target.value)}>
-                    {shapeOptions.map(({ value, label }) => (
-                        <option key={value} value={value}>
-                            {label}
-                        </option>
-                    ))}
-                </select>
+                    <select id="gridShape" name="gridShape" value={gridShape}
+                            onChange={(e) => setGridShape(e.target.value)}>
+                        {shapeOptions.map(({ value, label }) => (
+                            <option key={value} value={value}>
+                                {label}
+                            </option>
+                        ))}
+                    </select>
                 </label>
             </div>
 
@@ -172,7 +179,17 @@ const GridOverlayModal = () => {
                 </div>
             </div>
         </div>
+    )
+    
+    return (
+        <BaseModal
+            isOpen={isOpen}
+            title={t("settings_dropdown.page_settings.grid_overlay_modal.title")}
+            content={modalContent}
+            closeModal={closeModal}
+        />
     );
 };
+
 
 export default GridOverlayModal;

@@ -1,9 +1,7 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { useModal } from "@ctx/Modal";
-
+import React, {useState} from 'react';
+import { useTranslation } from 'react-i18next';
 import '@scss/navigation/_settingsDropdown.scss';
-import GridOverlayModal from "../modals/GridOverlayModal.jsx";
+import GridOverlayModal from '@ui/modals/GridOverlayModal.jsx';
 import ColourPicker from '@util/ColourPicker.jsx';
 import { exportSvgToPdf } from '@util/export_mindmap.js'; 
 
@@ -16,7 +14,11 @@ import { exportSvgToPdf } from '@util/export_mindmap.js';
  */
 const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
     const { t } = useTranslation("common");
-    const { openModal } = useModal();
+    
+    // Modal States. Etc
+    const [modalOpen, setModalOpen] = useState(false);
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
 
     return (
         <div className="settings_dropdown" role="menu" aria-label="Settings">
@@ -58,6 +60,11 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                     >{t("settings_dropdown.import_export_settings.export")}</li>
                 </ul>
             </div>
+
+            <GridOverlayModal
+                isOpen={modalOpen}
+                closeModal={closeModal}
+            />
         </div>
     );
 };

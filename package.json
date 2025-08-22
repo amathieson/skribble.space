@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . && stylelint .",
-    "preview": "vite preview",
-    "test": "stylelint ."
+    "preview": "vite preview"
   },
   "dependencies": {
     "i18next": "^25.3.6",

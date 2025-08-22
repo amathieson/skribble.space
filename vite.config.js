@@ -27,7 +27,8 @@ export default defineConfig({
       '@ctx': path.resolve(__dirname, 'src/components/contexts'),
       '@nav': path.resolve(__dirname, 'src/components/navigation'),
       '@pages': path.resolve(__dirname, 'src/pages'),
-      '@util': path.resolve(__dirname, 'src/components/utilities')
+      '@util': path.resolve(__dirname, 'src/components/utilities'),
+      '@ui': path.resolve(__dirname, 'src/components/ui')
     }
   },
   build: {

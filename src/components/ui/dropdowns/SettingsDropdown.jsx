@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
-import '@scss/navigation/_settingsDropdown.scss';
 import GridOverlayModal from '@ui/modals/GridOverlayModal.jsx';
 import ColourPicker from '@util/ColourPicker.jsx';
-import { exportSvgToPdf } from '@util/export_mindmap.js'; 
+import { exportSvgToPdf } from '@util/export_mindmap.js';
+import BaseDropdown from './BaseDropdown.jsx'; 
 
 /**
  * This is the dropdown menu shown by clicking on the three dots in the nav
@@ -12,7 +12,8 @@ import { exportSvgToPdf } from '@util/export_mindmap.js';
  * @returns {Element}
  * @constructor
  */
-const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
+//TODO: fix the flickery dropdown when the settings button is pressed twice- once to close, once to open
+const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, closeDropdown }) => {
     const { t } = useTranslation("common");
     
     // Modal States. Etc
@@ -20,7 +21,8 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
 
-    return (
+
+    const dropdownContent = (
         <div className="settings_dropdown" role="menu" aria-label="Settings">
             <div className="settings_section" role="group" aria-labelledby="page-settings">
                 <h4 id="page-settings">{t('settings_dropdown.skribble_settings.title')}</h4>
@@ -49,7 +51,7 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                             label={t('settings_dropdown.page_settings.background_colour')}
                         />
                     </li>
-                    <li tabIndex={0} onClick={() => openModal(<GridOverlayModal />, t("settings_dropdown.page_settings.grid_overlay_modal.title"))}>{t("settings_dropdown.page_settings.grid_display")}</li>
+                    <li tabIndex={0} onClick={openModal}>{t("settings_dropdown.page_settings.grid_overlay_modal.title")}</li>
                 </ul>
             </div>
             <div className="settings_section" role="group" aria-labelledby="page-settings">
@@ -66,6 +68,13 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                 closeModal={closeModal}
             />
         </div>
+    )
+    
+    return (
+        <BaseDropdown     
+            isOpen={isOpen}
+            content={dropdownContent}
+            closeDropdown={closeDropdown} />
     );
 };
 

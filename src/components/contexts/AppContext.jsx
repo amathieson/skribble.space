@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import { DropdownProvider } from '@ctx/Dropdown';
 import { GridOverlayProvider } from '@ctx/GridOverlay.jsx';
 import { MindmapCreationProvider } from '@ctx/MindmapCreation.jsx';
 
@@ -23,10 +22,8 @@ const providers = [
     CurrentMindmapProvider,
     MindmapCreationProvider,
     GridOverlayProvider,
-    DropdownProvider,
 ];
 
-// 4. Compose them for app use
 const AppProviders = ({ children }) =>
     providers.reduceRight((acc, Provider) => <Provider>{acc}</Provider>, children);
 

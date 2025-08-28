@@ -14,7 +14,6 @@ const MindmapCreationContext = createContext(undefined);
  */
 export function MindmapCreationProvider({ children }) {
     const [mindmaps, setMindmaps] = useState([]);
-    const { setCurrentMindmap } = useAppContext();
 
     // Load metadata on mount
     useEffect(() => {
@@ -32,35 +31,33 @@ export function MindmapCreationProvider({ children }) {
         const id = crypto.randomUUID();
         const now = new Date().toISOString();
 
-        const newMindmap = {
-            ...mindmap,
+        const mindmapData = {
             id,
-            date_created: now,
-            date_modified: now,
+            name: mindmap.name,
             nodes: [],
             connections: [],
-            tags: [],
-            version: 1
+            version: 1,
+            background_colour: mindmap.background_colour,
         };
 
         // Persist
         await idb.SaveMindmapMetadata({
             id,
-            name: newMindmap.name,
-            description: newMindmap.description,
+            name: mindmap.name,
+            description: mindmap.description,
             date_modified: now,
-            tags: newMindmap.tags
+            date_created: now,
+            tags: mindmap.tags
         });
-        await idb.SaveMindmapData(newMindmap);
+        await idb.SaveMindmapData(mindmapData);
 
         // Update in-memory state
         setMindmaps(prev => [
             ...prev,
-            { id, name: newMindmap.name, description: newMindmap.description, date_modified: now, tags: newMindmap.tags }
+            { id, name: mindmap.name, description: mindmap.description, background_colour: mindmap.background_colour }
         ]);
 
-        setCurrentMindmap(id);
-        return newMindmap;
+        return id;
     }
 
     async function updateMindmap(id, updates) {

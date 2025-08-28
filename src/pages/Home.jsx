@@ -5,6 +5,7 @@ import MindmapCreationModal from '@ui/modals/MindmapCreationModal.jsx';
 import {useTranslation} from 'react-i18next';
 import {useState} from 'react';
 import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 /**
@@ -13,23 +14,27 @@ import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
  * @returns {JSX.Element}
  * @constructor
  */
-const MindmapCard = ({ mindmap }) => (
-    <div className="mindmap_card" onClick={() => alert("This will eventually open a thing!")}>
-        <div>
-            <div className="card_settings_dots">
-                <SettingsDots />
+const MindmapCard = ({ mindmap }) => {
+    const navigate = useNavigate();
+
+    return (
+        <div className="mindmap_card" onClick={() => navigate(`/mindmap/${mindmap.id}`)}>
+            <div>
+                <div className="card_settings_dots">
+                    <SettingsDots />
+                </div>
+                <div className="mindmap_preview">
+                    <img src="https://placecats.com/200/200" alt="mindmap preview" />
+                </div>
+                <div className="mindmap_card_header">
+                    <h2>{mindmap.name}</h2>
+                    <p>{mindmap.description}</p>
+                </div>
+                <Tags tags={mindmap.tags} />
             </div>
-            <div className="mindmap_preview">
-                <img src="https://placecats.com/200/200" alt="mindmap preview" />
-            </div>
-            <div className="mindmap_card_header">
-                <h2>{mindmap.name}</h2>
-                <p>{mindmap.description}</p>
-            </div>
-            <Tags tags={mindmap.tags} />
         </div>
-    </div>
-);
+    );
+};
 
 /**
  * This displays a create mindmap card, and opens a modal when clicked.
@@ -89,8 +94,7 @@ const Home = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const openModal = () => setModalOpen(true); 
     const closeModal = () => setModalOpen(false);
-
-
+    
     return (
         <>
             <div className={"home_container"}>

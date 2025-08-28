@@ -33,11 +33,11 @@ const MindmapCreationModal  = ({ isOpen, closeModal }) => {
      * name, description, colour, date_created
      * @param e
      */
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal();
-        const mindmapCreated = createMindmap(mindmap);
-        navigate(`/mindmap/${mindmapCreated.id}`);   
+        const id = await createMindmap(mindmap);
+        navigate(`/mindmap/${id}`);
     };
     
     // HTML Content for Modal

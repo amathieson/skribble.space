@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import { useAppContext } from "@ctx/AppContext.jsx";
 import { useMindmapCreation } from "@ctx/MindmapCreation.jsx";
+import idb from "@util/indexed_db.js";
 
 const MindmapDrawingContext = createContext(undefined);
 export const useColourSettings = () => useContext(MindmapDrawingContext);
@@ -16,10 +17,21 @@ export const MindmapDrawingProvider = ({ children }) => {
   // The background colour of the mindmap
   const [backgroundColour, _setBackgroundColour] = useState("#ffffff");
 
-  // New setter for background and mindmap persistence
+  // Load saved background color when currentMindmap changes
+  useEffect(() => {
+    if (currentMindmap?.id) {
+      (async () => {
+        const data = await idb.GetMindmapData(currentMindmap.id);
+        if (data?.background_colour) {
+          _setBackgroundColour(data.background_colour);
+        }
+      })();
+    }
+  }, [currentMindmap?.id]);
+
   const setBackgroundColour = (newColour) => {
     _setBackgroundColour(newColour);
-    if (currentMindmap && currentMindmap.id) {
+    if (currentMindmap?.id) {
       updateMindmap(currentMindmap.id, { background_colour: newColour });
     }
   };

@@ -4,7 +4,6 @@ import ToolFAB from "/src/components/navigation/ToolFAB.jsx";
 import idb from "@util/indexed_db.js";
 import LZString from 'lz-string';
 import {useParams} from "react-router-dom";
-import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
 
 function minifyXML(xmlString) {
     return xmlString
@@ -15,20 +14,27 @@ function minifyXML(xmlString) {
 }
 function Mindmap() {
     const { id } = useParams();
-    const { mindmaps} = useMindmapCreation();
-
-    let mindmapData;
-    if (id) {
-        mindmapData = mindmaps.find(m => m.id === id);
-    }
-
+    const [mindmapData, setMindmapData] = useState(null);
+    
     // fallback or initial values
     const [penColor] = useState('#000000');
     const [backgroundColour, setBackgroundColour] = useState(mindmapData?.background_colour || "#ffffff");
 
     useEffect(() => {
-        setBackgroundColour(mindmapData?.background_colour || "#ffffff");
-    }, [mindmapData]);
+        if (!id) return;
+
+        (async () => {
+            try {
+                const data = await idb.GetMindmapData(id);
+                if (data) {
+                    setMindmapData(data);
+                    setBackgroundColour(data.background_colour || "#ffffff");
+                }
+            } catch (err) {
+                console.error("Failed to load mindmap data:", err);
+            }
+        })();
+    }, [id]);
     
     function handleMinMapAction(e, document_content) {
         // Save logic as before

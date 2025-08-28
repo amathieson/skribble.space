@@ -31,6 +31,7 @@
 
   @media (min-width: variables.$breakpoint-lg) {
     flex-direction: column-reverse;
+    min-width: 300px;
   }
 
   .card_settings_dots {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import WebMindMap from "/src/WebMindmap.jsx";
 import ToolFAB from "/src/components/navigation/ToolFAB.jsx";
-import Storage_manager from "../storage_manager.js";
+import idb from "@util/indexed_db.js";
 import LZString from 'lz-string';
 import {useParams} from "react-router-dom";
 import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
@@ -32,7 +32,7 @@ function Mindmap() {
     
     function handleMinMapAction(e, document_content) {
         // Save logic as before
-        Storage_manager.SaveDocument(
+        idb.SaveDocument(
             id || 1,
             LZString.compressToBase64(minifyXML(document_content))
         ).catch(err => {console.error(err)});

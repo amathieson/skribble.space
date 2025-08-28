@@ -3,7 +3,6 @@ const STORAGE_VERSION = 1;
 const META_STORE = "metadata_store";
 const DATA_STORE = "data_store";
 const SETTINGS_STORE = "settings_store";
-const DOCUMENT_STORE = "documents_store";
 
 let db = null;
 let callback = null;
@@ -15,7 +14,6 @@ request.onsuccess = () => {
 }
 request.onupgradeneeded = (event) => {
     const db = event.target.result;
-    db.createObjectStore(DOCUMENT_STORE, { autoIncrement: true, keyPath: "id" });
     db.createObjectStore(SETTINGS_STORE, { autoIncrement: false });
     db.createObjectStore(META_STORE, {keyPath: "id" });
     db.createObjectStore(DATA_STORE, {keyPath: "id" });
@@ -35,11 +33,6 @@ if (navigator.storage && navigator.storage.persist) {
 
 function ReadyCallBack(cb) {
     callback = cb;
-}
-function ListDocuments() {
-    const t = db.transaction("documents", "readonly");
-    const os = t.objectStore("documents");
-    return os.getAll();
 }
 
 /**
@@ -74,21 +67,10 @@ function SaveSetting(key, value) {
         req.onerror = () => reject(req.error);
     });
 }
-
-function CreateDocument() {
-    const t = db.transaction("documents", "readwrite");
-    const os = t.objectStore("documents");
-    return os.put({
-        "name": "New Skribble",
-        "created": Date.now(),
-        "updated": Date.now(),
-        "content": "",
-    })
-}
-function SaveDocument(id, newContent) {
+function SaveDocument(id, paths) {
     return new Promise((resolve, reject) => {
-        const t = db.transaction("documents", "readwrite");
-        const os = t.objectStore("documents");
+        const t = db.transaction(DATA_STORE, "readwrite");
+        const os = t.objectStore(DATA_STORE);
 
         const getReq = os.get(id);
 
@@ -96,10 +78,7 @@ function SaveDocument(id, newContent) {
             const doc = getReq.result;
             if (!doc) {
                 const newDoc = {
-                    "name": "New Skribble",
-                    "created": Date.now(),
-                    "updated": Date.now(),
-                    content: newContent,
+                    paths: paths,
                     id: id
                 };
                 const putReq = os.put(newDoc);
@@ -109,7 +88,7 @@ function SaveDocument(id, newContent) {
             }
 
             doc.updated = Date.now();
-            doc.content = newContent;
+            doc.paths = paths;
             doc.id = id;
 
             const putReq = os.put(doc);
@@ -120,32 +99,34 @@ function SaveDocument(id, newContent) {
         getReq.onerror = () => reject(getReq.error);
     });
 }
-function RenameDocument(id, name) {
-    return new Promise((resolve, reject) => {
-        const t = db.transaction("documents", "readwrite");
-        const os = t.objectStore("documents");
 
-        const getReq = os.get(id);
 
-        getReq.onsuccess = () => {
-            const doc = getReq.result;
-            if (!doc) {
-                reject(new Error("Document not found"));
-                return;
-            }
-
-            doc.updated = Date.now();
-            doc.name = name;
-            doc.id = id;
-
-            const putReq = os.put(doc);
-            putReq.onsuccess = () => resolve(putReq.result);
-            putReq.onerror = () => reject(putReq.error);
-        };
-
-        getReq.onerror = () => reject(getReq.error);
-    });
-}
+// function RenameDocument(id, name) {
+//     return new Promise((resolve, reject) => {
+//         const t = db.transaction("documents", "readwrite");
+//         const os = t.objectStore("documents");
+//
+//         const getReq = os.get(id);
+//
+//         getReq.onsuccess = () => {
+//             const doc = getReq.result;
+//             if (!doc) {
+//                 reject(new Error("Document not found"));
+//                 return;
+//             }
+//
+//             doc.updated = Date.now();
+//             doc.name = name;
+//             doc.id = id;
+//
+//             const putReq = os.put(doc);
+//             putReq.onsuccess = () => resolve(putReq.result);
+//             putReq.onerror = () => reject(putReq.error);
+//         };
+//
+//         getReq.onerror = () => reject(getReq.error);
+//     });
+// }
 
 /**
  * Gets all the metadata for all stored mindmaps
@@ -210,4 +191,4 @@ async function GetMindmapData(id) {
     });
 }
 
-export default {ListDocuments, CreateDocument, ReadyCallBack, GetSetting, SaveSetting, SaveDocument, RenameDocument, GetAllMindmapsMetadata,SaveMindmapData,SaveMindmapMetadata,GetMindmapData};
+export default {ReadyCallBack, GetSetting, SaveSetting, SaveDocument, GetAllMindmapsMetadata,SaveMindmapData,SaveMindmapMetadata,GetMindmapData};

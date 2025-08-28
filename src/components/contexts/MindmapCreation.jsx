@@ -34,8 +34,7 @@ export function MindmapCreationProvider({ children }) {
         const mindmapData = {
             id,
             name: mindmap.name,
-            nodes: [],
-            connections: [],
+            paths: [],
             version: 1,
             background_colour: mindmap.background_colour,
         };
@@ -73,13 +72,13 @@ export function MindmapCreationProvider({ children }) {
             name: updated.name,
             description: updated.description,
             date_modified: updated.date_modified,
-            tags: updated.tags || []
+            tags: updated.tags || ["[no tags]"],
         });
 
         setMindmaps(prev =>
             prev.map(m =>
                 m.id === id
-                    ? { id, name: updated.name, description: updated.description, date_modified: updated.date_modified, tags: updated.tags || [] }
+                    ? { id, name: updated.name, description: updated.description, date_modified: updated.date_modified, tags: updated.tags || ["[no tags]"] }
                     : m
             )
         );

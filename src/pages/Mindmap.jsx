@@ -37,9 +37,8 @@ function Mindmap() {
     }, [id]);
     
     function handleMinMapAction(e, document_content) {
-        // Save logic as before
         idb.SaveDocument(
-            id || 1,
+            id,
             LZString.compressToBase64(minifyXML(document_content))
         ).catch(err => {console.error(err)});
     }

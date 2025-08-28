@@ -1,5 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+/**
+ * This is a colour picker
+ * It staggers the input to prevent the app from being unperformant
+ * @param label
+ * @param value
+ * @param onChange
+ * @param debounceDelay
+ * @param id
+ * @returns {Element}
+ * @constructor
+ */
 const ColourPicker = ({ label, value, onChange, debounceDelay = 20,id}) => {
     const [localValue, setLocalValue] = useState(value);
     const timeoutRef = useRef(null);

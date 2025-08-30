@@ -4,6 +4,7 @@ import ToolFAB from "/src/components/navigation/ToolFAB.jsx";
 import idb from "@util/indexed_db.js";
 import LZString from 'lz-string';
 import {useParams} from "react-router-dom";
+import { useAppContext } from "@ctx/AppContext.jsx";
 
 function minifyXML(xmlString) {
     return xmlString
@@ -15,7 +16,8 @@ function minifyXML(xmlString) {
 function Mindmap() {
     const { id } = useParams();
     const [mindmapData, setMindmapData] = useState(null);
-    
+    const { setCurrentMindmap } = useAppContext();
+
     // fallback or initial values
     const [penColor] = useState('#000000');
     const [backgroundColour, setBackgroundColour] = useState(mindmapData?.background_colour || "#ffffff");
@@ -32,6 +34,7 @@ function Mindmap() {
                         paths: LZString.decompressFromBase64(data.paths)
                     });
                     setBackgroundColour(data.background_colour || "#ffffff");
+                    setCurrentMindmap(data);
                 }
             } catch (err) {
                 console.error("Failed to load mindmap data:", err);

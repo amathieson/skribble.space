@@ -10,7 +10,12 @@ import { useColourSettings } from '@ctx/MindmapDrawingContext.jsx';
 import { useAppContext } from '@ctx/AppContext.jsx';
 import {useTranslation} from 'react-i18next';
 
-
+/**
+ * This is the mindmap page navbar. It contains the mindmap name, colour picker
+ * and other tools for the mindmap page.
+ * @returns {Element}
+ * @constructor
+ */
 const NavbarMindmap = () => {
     const { penColor, setPenColor, backgroundColour, setBackgroundColour } = useColourSettings();
     const { currentMindmap } = useAppContext();
@@ -20,7 +25,6 @@ const NavbarMindmap = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const closeDropdown = () => setDropdownOpen(false);
     const toggleDropdown = () => setDropdownOpen(prev => !prev);
-
     return (
         <header>
             <div className="toolbar">
@@ -52,7 +56,7 @@ const NavbarMindmap = () => {
             </div>
 
             <div className="toolbar_sub">
-                <LeftArrow id={"leftarrow"} />
+                <LeftArrow id={"leftarrow"}/>
                 <h3>PAGE 1</h3>
                 <RightArrow id={"rightarrow"} />
             </div>

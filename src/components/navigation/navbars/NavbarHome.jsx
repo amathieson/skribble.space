@@ -3,6 +3,11 @@ import '@scss/navigation/navbars/_navbar.scss';
 import '@scss/navigation/navbars/_navbarHome.scss';
 import {useTranslation} from "react-i18next";
 
+/**
+ * This is the home page navbar.
+ * @returns {Element}
+ * @constructor
+ */
 const NavbarHome = () => {
     const { t } = useTranslation("common");
 

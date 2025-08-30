@@ -1,38 +1,127 @@
-//The darkened background
+// _baseModal.scss
 .modal_backdrop {
     position: fixed;
     inset: 0;
-    background-color: rgba(13, 1, 26, 0.63);
+    background-color: rgba(13, 1, 26, 0.75);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 
-
 .modal_content {
-  background: colours.$modal_background;
-  padding: 2rem; 
-  border-radius: 8px;
-  max-width: 90%; 
-  max-height: 90%; 
-  overflow-y: auto;
-  color: white;
+    background: linear-gradient(145deg, colours.$purple_primary_dark, colours.$purple_secondary_dark);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    color: colours.$purple_primary_dark_highlight_light;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal_header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .modal_title {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #ffffff;
+        margin: 0;
+    }
 }
 
 .modal_close_btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  display: flex;
-  color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    color: colours.$purple_primary_dark_highlight_light;
+    transition: all 0.2s ease;
+    display: flex;
+    
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+    }
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+// Styling for form elements within modals
+.modal_body {
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 6px;
+        color: #FFFFFF;
+        padding: 0.75rem;
+        width: 100%;
+        transition: all 0.2s ease;
+        box-sizing: border-box; 
+        min-height: 2.5rem;  
+        font-size: 1rem;
+
+        &:focus {
+            border-color: colours.$purple_primary_dark_highlight_light;
+            background: rgba(255, 255, 255, 0.08);
+            outline: none;
+        }
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    // Specific textarea adjustments
+    textarea {
+        min-height: 5rem;
+        resize: vertical;
+    }
+
+    label {
+        color: #FFFFFF;  
+        margin-bottom: 0.5rem;
+        display: block;
+        font-weight: 500;
+    }
+
+    .modal_description, span, p {
+        color: rgba(255, 255, 255, 0.9); 
+    }
+}
+
+
+// Submit button styling
+.submit_button {
+    background: colours.$purple_primary_dark_highlight_light;
+    color: colours.$purple_primary_dark; 
+    font-weight: 700;  
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: colours.$purple_primary_dark_foreground;
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
 }

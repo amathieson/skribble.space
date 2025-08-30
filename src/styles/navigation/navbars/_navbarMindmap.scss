@@ -55,7 +55,8 @@
     * ---------------------------------------
     */
     .colour_picker {
-        display: inline-block;
+        display: flex;
+        align-items: center;
 
         input[type="color"] {
             -webkit-appearance: none;

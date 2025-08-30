@@ -44,6 +44,7 @@ const ColourPicker = ({ label, value, onChange, debounceDelay = 20,id}) => {
                 aria-label={label}
                 id={id}
             />
+            <span>{label}</span>
         </label>
     );
 };

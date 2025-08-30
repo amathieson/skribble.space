@@ -17,6 +17,8 @@
         "description": "Here you can change your grid display settings.",
         "snap_grid": "Enable Snap to Grid",
         "enable_grid": "Show Grid",
+        "basic_settings": "Basic Settings",
+        "appearance": "Appearance",
         "style_of_line": {
             "title": "Line Style:", 
             "solid": "Solid",
@@ -33,6 +35,7 @@
           "hexagon": "Hexagons"
         },
         "size_of_grid": {
+          "title": "Grid Size",
           "x": "X Axis:",
           "y": "Y Axis:"
         }

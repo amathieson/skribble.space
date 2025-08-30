@@ -1,6 +1,4 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import { useAppContext } from "@ctx/AppContext.jsx";
-// import {GetAllMindmapsMetadata, SaveMindmapData, SaveMindmapMetadata,GetMindmapData} from "@util/indexed_db.js";
 import idb from "@util/indexed_db.js";
 
 // --- Context Definition ---

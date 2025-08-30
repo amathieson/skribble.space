@@ -3,7 +3,7 @@ import '@scss/_style.scss';
 import GridOverlay, {useGridOverlay} from "@ctx/GridOverlay.jsx";
 import { useColourSettings } from "@ctx/MindmapDrawingContext.jsx";
 
-const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour }) => {
+const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour, initialSVG = "" }) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
     const svgBackRef = useRef(null);
@@ -27,6 +27,12 @@ const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour }) => {
         actionButton: ""
     });
 
+    useEffect(() => {
+        if (svgRef.current && initialSVG) {
+            svgRef.current.innerHTML = initialSVG;
+        }
+    }, [initialSVG]);
+    
     useEffect(() => {
         const canvas = canvasRef.current;
         const svg = svgRef.current;

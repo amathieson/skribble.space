@@ -27,7 +27,10 @@ function Mindmap() {
             try {
                 const data = await idb.GetMindmapData(id);
                 if (data) {
-                    setMindmapData(data);
+                    setMindmapData({
+                        ...data,
+                        paths: LZString.decompressFromBase64(data.paths)
+                    });
                     setBackgroundColour(data.background_colour || "#ffffff");
                 }
             } catch (err) {
@@ -36,10 +39,10 @@ function Mindmap() {
         })();
     }, [id]);
     
-    function handleMinMapAction(e, document_content) {
+    function handleMinMapAction(e, paths) {
         idb.SaveDocument(
             id,
-            LZString.compressToBase64(minifyXML(document_content))
+            LZString.compressToBase64(minifyXML(paths))
         ).catch(err => {console.error(err)});
     }
 
@@ -54,6 +57,7 @@ function Mindmap() {
                 penColor={penColor}
                 backgroundColour={backgroundColour}
                 actionDone={handleMinMapAction}
+                initialSVG={mindmapData?.paths || ""}
             />
             <ToolFAB />
         </>

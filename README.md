@@ -57,12 +57,12 @@ Adam, who has done all the hard work, purely because I was complaining I couldn'
   - [x] Export - might need further expansion if we add shape tools
 - [ ] **Full Text Search**
 - [X] **PWA**
-- [ ] **Offline Storage**
+- [X] **Offline Storage** - in prog
   - [ ] Document storage and organisation
   - [ ] Settings Storage (Such as pen support)
 - [x] **Strokes**
   - [ ] Cleaner variable width strokes
-- [X] **Background Customisation** - in prog by Cait
+- [X] **Background Customisation**
   - [X] Grid
   - [X] Lines
   - [X] Solid Colour

@@ -9,10 +9,11 @@ $tool_bar_height: 36pt;
 $toolbar_icon_size: $tool_bar_height * 0.6;
 
 //Sub Tool Bar
-$sub_toolbar_height: 20pt;
+$sub_toolbar_height_mindmap: 20pt;
+$sub_toolbar_height_home: 6pt;
 
 //Header
-$nav_height: $sub_toolbar_height + $tool_bar_height;
+$nav_height: $sub_toolbar_height_mindmap + $tool_bar_height;
 
 /**
 * ---------------------------------------

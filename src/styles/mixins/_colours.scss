@@ -18,7 +18,7 @@ $foreground_dark: #3d245a;
 * ---------------------------------------
 */
 $background_dark: #1e1a20;
-$background_light: #c8b8e3;
+$background_light: #e2dde7;         
 
 
 /**
@@ -42,4 +42,37 @@ $modal_background: #3b1364;
 * Cards
 * ---------------------------------------
 */
-$card_background: #a97fda;
+
+//Dark
+$card_background_dark: #2d1f35;
+$card_border_dark: #4a2f5d;           
+$card_border_hover_dark: #8a5299;  
+$card_text_dark: #e8e4ed;         
+$card_text_hover_dark: #b67dd4;
+
+$new_card_background_dark: #532d6d;
+$new_card_border_dark: #8a4bb2;    
+$new_card_border_hover_dark: #8a5299;
+$new_card_text_dark: #E8E4ED;
+$new_card_text_hover_dark: #F0E6FF; 
+
+
+
+//Light
+$card_background_light: #ffffff;      
+$card_border_light: #e0d5ee;         
+$card_border_hover_light: #9b6cc3;    
+$card_text_light: #452760;           
+$card_text_hover_light: #5c2f84;    
+$card_shadow_light: rgba(138, 82, 153, 0.2);
+
+
+$new_card_background_light: #e2ccff;  
+$new_card_border_light: #b184dd;      
+$new_card_border_hover_light: #9b6cc3; 
+$new_card_text_light: #452760;        
+$new_card_text_hover_light: #5c2f84;
+
+
+
+

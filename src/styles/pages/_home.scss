@@ -8,16 +8,18 @@
   border: 1px solid var(--card-border);
   border-radius: 8px;
   padding: 16px;
-  background: colours.$card_background;
+  background: var(--card-background-colour);
   display: grid;
   grid-template-rows: auto;
   position: relative;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  color: var(--card-text);
 
   &:hover,
   &:focus {
-    box-shadow: 0 0 0 2px #b04bff;
-    border-color: #3b1660;
+    border-color: var(--card-border-hover);
+    box-shadow: 0 0 8px var(--card-border-hover);       
+    transform: translateY(-2px);
   }
 
   @media (min-width: variables.$breakpoint-sm) {
@@ -53,6 +55,16 @@
       background: rgba(230, 230, 230, 0.85);
     }
   }
+
+  @media (prefers-color-scheme: light) {
+    border-radius: 12px;
+    box-shadow: 5px 5px 1px 4px colours.$card_shadow_light;    
+    transition: all 0.2s ease;
+    border-width: 2px;
+    &:hover {
+      box-shadow: 0 6px 1px 4px colours.$card_shadow_light;
+    }
+  }
 }
 
 
@@ -70,20 +82,23 @@
 */
 
 .mindmap_card_new {
-  border: 2px dashed #210434;
-  background: rgba(184, 134, 245, 0.56);
-  color: var(--new-card-text);
+  border: 2px dashed var(--new-card-border);
+  background: var(--new-card-background-colour);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition: all 0.2s ease-in-out;
+  color: var(--new-card-text);
 
   &:hover,
   &:focus {
+    border-style: solid;
+    border-color: var(--new-card-border-hover);
     color: var(--new-card-text-hover);
   }
 }
+
 
 .mindmap_card_new_content {
   display: flex;

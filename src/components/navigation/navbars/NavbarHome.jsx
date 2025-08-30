@@ -12,7 +12,7 @@ const NavbarHome = () => {
     const { t } = useTranslation("common");
 
     return (
-        <header>
+        <header className={"navbar_home"}>
             <div className="toolbar">
                 <img className={"nav_logo"} src="/SVG/Small.svg" alt="Skribble.Space Logo" />
                 <h1>{t('title')}</h1>

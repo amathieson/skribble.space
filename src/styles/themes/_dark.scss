@@ -1,13 +1,20 @@
 @media (prefers-color-scheme: dark) {
   :root, input, input::placeholder {
-    color: colours.$foreground_dark;
 
     //Card
-    --card-border: #ddd;
+    --card-border: #{colours.$card_border_dark};
+    --card-border-hover: #{colours.$card_border_hover_dark};
+    --card-background-colour: #{colours.$card_background_dark};
+    --card-text: #{colours.$card_text_dark};
+    --card-text-hover: #{colours.$card_text_hover_dark};
     
     //New Card
-    --new-card-text: #fff;
-    --new-card-text-hover:#c48cff;
+    --new-card-border: #{colours.$new_card_border_dark};
+    --new-card-border-hover: #{colours.$new_card_border_hover_dark};
+    --new-card-background-colour: #{colours.$new_card_background_dark};
+    --new-card-text: #{colours.$new_card_text_dark};
+    --new-card-text-hover: #{colours.$new_card_text_hover_dark};
+
   }
   
   body {

@@ -1,16 +1,37 @@
-/**
-* ---------------------------------------
-* Images
-* ---------------------------------------
-*/
+.navbar_home {
 
-.nav_logo {
-height: 24px;
+    /**
+    * ---------------------------------------
+    * Images
+    * ---------------------------------------
+    */
+
+    .nav_logo {
+        height: 24px;
+    }
+
+
+    /**
+    * ---------------------------------------
+    * Headings
+    * ---------------------------------------
+    */
+
+    .toolbar_sub {
+        height: variables.$sub_toolbar_height_home;
+        background-color: colours.$purple_secondary_dark;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        //border-bottom: 4px solid #fff;
+        h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: colours.$purple_primary_dark_highlight_light;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 1.2em;
+        }
+    }
 }
-
-
-/**
-* ---------------------------------------
-* Headings
-* ---------------------------------------
-*/

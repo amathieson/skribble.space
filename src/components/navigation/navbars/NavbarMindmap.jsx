@@ -26,7 +26,7 @@ const NavbarMindmap = () => {
     const closeDropdown = () => setDropdownOpen(false);
     const toggleDropdown = () => setDropdownOpen(prev => !prev);
     return (
-        <header>
+        <header className={"navbar_mindmap"}>
             <div className="toolbar">
                 <Link to="/" className="nav_icons"><LeftArrow className="nav_icons" /></Link>
                 <h1>{currentMindmap?.name || t("title")}</h1>

@@ -7,6 +7,10 @@
     --card-background-colour: #{colours.$card_background_dark};
     --card-text: #{colours.$card_text_dark};
     --card-text-hover: #{colours.$card_text_hover_dark};
+    --card-settings-colour: #{colours.$purple_primary_dark_highlight_light};
+    --card-settings-background: rgba(255, 255, 255, 0.05);
+    --card-settings-colour-hover: #ffffff;
+    --card-settings-background-hover: rgba(255, 255, 255, 0.1);
     
     //New Card
     --new-card-border: #{colours.$new_card_border_dark};

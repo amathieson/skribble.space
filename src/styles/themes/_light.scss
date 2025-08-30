@@ -7,13 +7,19 @@
     --card-background-colour: #{colours.$card_background_light};
     --card-text: #{colours.$card_text_light};
     --card-text-hover: #{colours.$card_text_hover_light};
-
+    --card-settings-colour: #{colours.$purple_tertiary_dark};
+    --card-settings-background: rgba(0, 0, 0, 0.11);
+    --card-settings-colour-hover: #{colours.$purple_primary_dark};
+    --card-settings-background-hover: rgba(0, 0, 0, 0.1);
+    
     //New Card
     --new-card-border: #{colours.$new_card_border_light};
     --new-card-border-hover: #{colours.$new_card_border_hover_light};
     --new-card-background-colour: #{colours.$new_card_background_light};
     --new-card-text: #{colours.$new_card_text_light};
     --new-card-text-hover: #{colours.$new_card_text_hover_light};
+    
+    
   }
 
   body {

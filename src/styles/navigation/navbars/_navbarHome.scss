@@ -1,37 +1,55 @@
 .navbar_home {
+    .toolbar {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 2rem;
+        box-shadow: 0 2px 8px rgba(74, 47, 93, 0.1);
 
-    /**
-    * ---------------------------------------
-    * Images
-    * ---------------------------------------
-    */
-
-    .nav_logo {
-        height: 24px;
+        @media (max-width: variables.$breakpoint-xs) {
+            justify-content: center;        
+        }
+        
+        h1 {
+            color: #D7A8E1;
+            font-weight: 500;
+            font-size: 1.5rem;
+            letter-spacing: -0.01em;
+            margin-left: 20px;
+        }
     }
 
+    .nav_logo {
+        height: 28px;
+        transition: all 0.2s ease;
 
-    /**
-    * ---------------------------------------
-    * Headings
-    * ---------------------------------------
-    */
+        &:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+    }
 
     .toolbar_sub {
         height: variables.$sub_toolbar_height_home;
         background-color: colours.$purple_secondary_dark;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        //border-bottom: 4px solid #fff;
-        h3 {
-            margin: 0;
-            font-size: 1.05rem;
-            font-weight: 500;
-            color: colours.$purple_primary_dark_highlight_light;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 1.2em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right,
+                    rgba(255,255,255,0.05),
+                    rgba(255,255,255,0.1),
+                    rgba(255,255,255,0.05)
+            );
         }
+    
+    @media(prefers-color-scheme: light) {
+        box-shadow: -1px 2px 4px 6px rgb(74 47 93 / 20%);    
+    }
     }
 }

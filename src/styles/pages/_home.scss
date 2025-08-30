@@ -18,7 +18,7 @@
   &:hover,
   &:focus {
     border-color: var(--card-border-hover);
-    box-shadow: 0 0 8px var(--card-border-hover);       
+    box-shadow: 0 0 8px var(--card-border-hover);
     transform: translateY(-2px);
   }
 
@@ -42,34 +42,30 @@
     right: 0.75rem;
     z-index: 2;
     cursor: pointer;
-    background: rgba(32, 2, 40, 0.29);
-    color: rgb(32, 2, 40);
-    border-radius: 25%;
-    padding: 0.2rem;
-    font-size: 1.5rem;
+    padding: 0.4rem;
+    border-radius: 6px;
     display: flex;
     align-items: center;
-    transition: background 0.2s;
-
-    &:hover {
-      background: rgba(230, 230, 230, 0.85);
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    border-radius: 12px;
-    box-shadow: 5px 5px 1px 4px colours.$card_shadow_light;    
     transition: all 0.2s ease;
-    border-width: 2px;
+    color: var(--card-settings-colour);
+    background: var(--card-settings-background);
+    
     &:hover {
-      box-shadow: 0 6px 1px 4px colours.$card_shadow_light;
+      background: var(--card-settings-background-hover);
+      color: var(--card-settings-colour-hover);
+    }
+    // Icon sizing
+    svg {
+      width: 20px;
+      height: 20px;
     }
   }
 }
 
 
 
-.mindmap_card_header {
+
+  .mindmap_card_header {
   border-bottom: 2px dashed #200228;
   margin-bottom: 1em;
 }
@@ -160,6 +156,7 @@
 main {
   display: flex;
   overflow: hidden;
+  flex-direction: column;
 }
 
 .home_container {

@@ -43,7 +43,6 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, close
                 <h4 id="page-settings">{t('settings_dropdown.page_settings.title')}</h4>
                 <ul>
                     <li>
-                        <label htmlFor="background-color-picker">{t('settings_dropdown.page_settings.background_colour')}</label>
                         <ColourPicker
                             value={backgroundColour}
                             id={"background-color-picker"}

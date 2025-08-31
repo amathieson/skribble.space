@@ -61,7 +61,7 @@
       },
       "mindmap_tags": {
         "name": "Add Mindmap Tags",
-        "placeholder": "Enter your mindmap tags here (optional)"
+        "placeholder": "Enter your mindmap tags here (optional). Press enter to submit a tag."
       }
     }
 }

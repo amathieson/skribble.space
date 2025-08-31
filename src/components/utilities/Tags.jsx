@@ -69,7 +69,7 @@ const Tag = ({ text }) => {
 export default function Tags({ tags }) {
     return (
         <div className="tags_container">
-            {tags.map(tag => (
+            {(tags || []).map(tag => (
                 <Tag key={tag} text={tag} />
             ))}
         </div>

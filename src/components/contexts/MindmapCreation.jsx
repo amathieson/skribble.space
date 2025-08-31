@@ -51,7 +51,7 @@ export function MindmapCreationProvider({ children }) {
         // Update in-memory state
         setMindmaps(prev => [
             ...prev,
-            { id, name: mindmap.name, description: mindmap.description, background_colour: mindmap.background_colour }
+            { id, name: mindmap.name, description: mindmap.description, background_colour: mindmap.background_colour, tags: mindmap.tags}
         ]);
 
         return id;

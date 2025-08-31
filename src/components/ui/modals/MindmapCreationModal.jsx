@@ -24,6 +24,7 @@ const MindmapCreationModal  = ({ isOpen, closeModal }) => {
         description: "",
         background_colour: "#ffffff",
         date_created: new Date().toISOString(),
+        tags: []
     });
 
 
@@ -61,7 +62,7 @@ const MindmapCreationModal  = ({ isOpen, closeModal }) => {
                 </label>
 
                 <label className="modal_option">
-                    {t("create_modal.mindmap_description.name")}
+                    <span id={"description"}>{t("create_modal.mindmap_description.name")}</span>
                     <textarea
                         id="description"
                         placeholder={t("create_modal.mindmap_description.placeholder")}
@@ -71,6 +72,46 @@ const MindmapCreationModal  = ({ isOpen, closeModal }) => {
                         onChange={e => setMindmap({ ...mindmap, description: e.target.value })}
                     />
                 </label>
+
+                {/* Tags Section */}
+                <div className="modal_option tags_section">
+                    <label htmlFor="tags-input">
+                        <span id="tags-label">{t("create_modal.mindmap_tags.name")}</span>
+                    </label>
+                    <div className="tags_input_container">
+                        {mindmap.tags?.map((tag, index) => (
+                            <span key={index} className="tag">
+        {tag}
+                                <button
+                                    type="button"
+                                    className="remove_tag"
+                                    onClick={() => {
+                                        const updatedTags = mindmap.tags.filter((_, i) => i !== index);
+                                        setMindmap({ ...mindmap, tags: updatedTags });
+                                    }}
+                                >
+          &times;
+        </button>
+      </span>
+                        ))}
+                        <input
+                            id="tags-input"
+                            type="text"
+                            placeholder={t("create_modal.mindmap_tags.placeholder")}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === ",") {
+                                    e.preventDefault();
+                                    const newTag = e.target.value.trim();
+                                    if (newTag !== "" && !mindmap.tags.includes(newTag)) {
+                                        setMindmap({ ...mindmap, tags: [...mindmap.tags, newTag] });
+                                    }
+                                    e.target.value = ""; // Clear input after adding the tag
+                                }
+                            }}
+                        />
+                    </div>
+                </div>
+
             </div>
 
             <div className="modal_options">
@@ -80,7 +121,6 @@ const MindmapCreationModal  = ({ isOpen, closeModal }) => {
                         value={mindmap.background_colour}
                         onChange={c => setMindmap({ ...mindmap, background_colour: c })}
                     />
-                    <span>{t("settings_dropdown.page_settings.background_colour")}</span>
                 </label>
             </div>
 

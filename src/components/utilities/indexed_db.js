@@ -191,4 +191,19 @@ async function GetMindmapData(id) {
     });
 }
 
-export default {ReadyCallBack, GetSetting, SaveSetting, SaveDocument, GetAllMindmapsMetadata,SaveMindmapData,SaveMindmapMetadata,GetMindmapData};
+/**
+ * Delete Mindmap Data by ID
+ * @param id
+ * @constructor
+ */
+async function DeleteMindmap(id) {
+    const t = db.transaction(DATA_STORE, "readwrite");
+    const os = t.objectStore(DATA_STORE);
+    os.delete(id);
+
+    const t2 = db.transaction(META_STORE, "readwrite");
+    const os2 = t2.objectStore(META_STORE);
+    os2.delete(id);
+}
+
+export default {ReadyCallBack, GetSetting, SaveSetting, SaveDocument, GetAllMindmapsMetadata,SaveMindmapData,SaveMindmapMetadata,GetMindmapData,DeleteMindmap};

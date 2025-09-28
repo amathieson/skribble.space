@@ -1,11 +1,12 @@
 import '@scss/pages/_home.scss';
 import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import Tags from '@util/Tags.jsx';
-import MindmapCreationModal from '@ui/modals/MindmapCreationModal.jsx';
+import MindmapCreationModal from '@ui/modals/single_page/MindmapCreationModal.jsx';
 import {useTranslation} from 'react-i18next';
 import {useState} from 'react';
 import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
 import {useNavigate} from "react-router-dom";
+import CardDropdown from "@ui/dropdowns/CardDropdown.jsx";
 
 
 /**
@@ -16,13 +17,27 @@ import {useNavigate} from "react-router-dom";
  */
 const MindmapCard = ({ mindmap }) => {
     const navigate = useNavigate();
+    
+    // Dropdown States. Etc
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const closeDropdown = () => setDropdownOpen(false);
+    const toggleDropdown = (e) => {
+        e.stopPropagation(); // Prevent the click from triggering navigation
+        setDropdownOpen((prev) => !prev);
+    };
+
 
     return (
         <div className="mindmap_card" onClick={() => navigate(`/mindmap/${mindmap.id}`)}>
             <div>
-                <div className="card_settings_dots">
-                    <SettingsDots />
+                <div className="card_settings_dots" onClick={toggleDropdown}>
+                    <SettingsDots onClick={toggleDropdown}/>
                 </div>
+                <CardDropdown
+                    isOpen={dropdownOpen}
+                    closeDropdown={closeDropdown}
+                    mindmapId={mindmap.id}
+                />
                 <div className="mindmap_preview">
                     <img src="https://placecats.com/200/200" alt="mindmap preview" />
                 </div>
@@ -35,6 +50,7 @@ const MindmapCard = ({ mindmap }) => {
         </div>
     );
 };
+
 
 /**
  * This displays a create mindmap card, and opens a modal when clicked.

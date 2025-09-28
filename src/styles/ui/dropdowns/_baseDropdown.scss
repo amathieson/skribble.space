@@ -1,15 +1,46 @@
-.dropdown {
-    background-color: colours.$purple_primary_dark;
-    border-radius: 0 0 6px 6px;
-    border-width: 0 0 1px 1px;
-    border-style: solid;
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: -1px 9px 3px 0px rgba(0, 0, 0, 0.2);
+.base_dropdown {
     padding: 0.8rem 1rem;
     font-size: 14px;
     color: #ddd;
     align-content: center;
-    width: min(100vw, 256pt);
+    transform-origin: center; 
+    transform: scaleX(0); 
+    transition: transform 0.3s ease-in-out, padding 0.3s ease-in-out;
+    width: 100%;
+    
+    &.unfurl-right {
+        right: 0; 
+        transform-origin: left center; 
+    }
+
+   
+    &.unfurl-left {
+        left: 0; 
+        transform-origin: right center; 
+    }
+    
+    &.unfurl-top {
+        bottom: 100%;
+        transform-origin: bottom center; 
+        transform: scaleY(0); 
+    }
+
+    &.unfurl-bottom {
+        top: 100%; 
+        transform-origin: top center; 
+        transform: scaleY(0);
+    }
+
+    /* When Dropdown is Open */
+    &.open {
+        transform: scaleX(1);
+        padding: 8px;
+    }
+
+    &.unfurl-top.open,
+    &.unfurl-bottom.open {
+        transform: scaleY(1);
+    }
 
     .dropdown_title {
         margin-bottom: 0.6rem;
@@ -17,35 +48,5 @@
         font-size: 1.15rem;
         border-bottom: 1px solid #ddd;
         padding-bottom: 0.3rem;
-    }
-
-    .settings_section {
-        margin-bottom: 0.9rem;
-
-        h4 {
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-            font-size: 1rem;
-        }
-
-        ul {
-            list-style: none;
-            margin: 0;
-            padding-left: 0;
-
-            li {
-                padding: 0.25rem 0.4rem;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: background-color 0.15s ease;
-                margin: 8pt 0;
-                display: flex;
-                &:hover,
-                &:focus {
-                    background-color: #624091;
-                    outline: none;
-                }
-            }
-        }
     }
 }

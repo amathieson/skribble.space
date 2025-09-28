@@ -1,3 +1,6 @@
+@use "/src/styles/mixins/_variables.scss";
+@use "/src/styles/mixins/_colours.scss";
+
 .navbar_mindmap {
     
     /**
@@ -97,6 +100,7 @@
             right: -14px;
             margin-top: 0.6rem;
             z-index: 10;
+            width: min(100vw, 256pt);
         }
     }
 

@@ -48,7 +48,6 @@ export function MindmapCreationProvider({ children }) {
         });
         await idb.SaveMindmapData(mindmapData);
 
-        // Update in-memory state
         setMindmaps(prev => [
             ...prev,
             { id, name: mindmap.name, description: mindmap.description, background_colour: mindmap.background_colour, tags: mindmap.tags}
@@ -58,7 +57,6 @@ export function MindmapCreationProvider({ children }) {
     }
 
     async function updateMindmap(id, updates) {
-        // Update full data
         const existing = await idb.GetMindmapData(id);
         if (!existing) return;
 

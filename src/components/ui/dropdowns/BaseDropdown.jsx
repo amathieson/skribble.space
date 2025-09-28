@@ -5,9 +5,10 @@ import '@scss/ui/dropdowns/_baseDropdown.scss';
  * This is the base dropdown used for all other modals.
  * It is used to create a dropdown that can be closed by clicking on the backdrop or pressing the escape key.
  * @param props
+ * @param - unfurlDirection is used to control what directions animations will go in
  * @returns {React.JSX.Element}
  */
-export const BaseDropdown = ({ isOpen, content, closeDropdown }) => {
+export const BaseDropdown = ({ isOpen, content, closeDropdown,unfurlDirection }) => {
     const dropdownRef = useRef(null);
 
     /**
@@ -40,8 +41,11 @@ export const BaseDropdown = ({ isOpen, content, closeDropdown }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="dropdown" ref={dropdownRef} role="menu">
-            {content}
+        <div
+            ref={dropdownRef}
+            className={`base_dropdown ${isOpen ? "open" : ""} unfurl-${unfurlDirection}`}>
+
+        {content}
         </div>
     );
 };

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
-import GridOverlayModal from '@ui/modals/GridOverlayModal.jsx';
+import GridOverlayModal from '@ui/modals/single_page/GridOverlayModal.jsx';
 import ColourPicker from '@util/ColourPicker.jsx';
 import { exportSvgToPdf } from '@util/export_mindmap.js';
 import BaseDropdown from './BaseDropdown.jsx'; 
+import '@scss/ui/dropdowns/_settingsDropdown.scss';
 
 /**
  * This is the dropdown menu shown by clicking on the three dots in the nav
@@ -23,7 +24,7 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, close
 
 
     const dropdownContent = (
-        <div className="settings_dropdown" role="menu" aria-label="Settings">
+        <>
             <div className="settings_section" role="group" aria-labelledby="page-settings">
                 <h4 id="page-settings">{t('settings_dropdown.skribble_settings.title')}</h4>
                 <ul>
@@ -66,14 +67,19 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, close
                 isOpen={modalOpen}
                 closeModal={closeModal}
             />
-        </div>
+        </>
     )
     
     return (
-        <BaseDropdown     
-            isOpen={isOpen}
-            content={dropdownContent}
-            closeDropdown={closeDropdown} />
+        <div className={"settings_dropdown"}>
+            <BaseDropdown
+                isOpen={isOpen}
+                content={dropdownContent}
+                closeDropdown={closeDropdown}
+                unfurlDirection={"bottom"} 
+            />
+        </div>
+     
     );
 };
 

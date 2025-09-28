@@ -1,3 +1,5 @@
+@use '/src/styles/mixins/_variables.scss';
+
 canvas, #vector, #canvas_grid_overlay {
     position: absolute;
     bottom: 0;

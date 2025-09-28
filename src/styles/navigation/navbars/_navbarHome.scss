@@ -1,3 +1,6 @@
+@use "/src/styles/mixins/_variables.scss";
+@use "/src/styles/mixins/_colours.scss";
+
 .navbar_home {
     .toolbar {
         display: flex;

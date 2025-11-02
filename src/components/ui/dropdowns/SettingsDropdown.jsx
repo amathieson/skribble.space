@@ -62,11 +62,6 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, close
                     >{t("settings_dropdown.import_export_settings.export")}</li>
                 </ul>
             </div>
-
-            <GridOverlayModal
-                isOpen={modalOpen}
-                closeModal={closeModal}
-            />
         </>
     )
     
@@ -76,7 +71,12 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, close
                 isOpen={isOpen}
                 content={dropdownContent}
                 closeDropdown={closeDropdown}
-                unfurlDirection={"bottom"} 
+                unfurlDirection={"bottom"}
+            />
+
+            <GridOverlayModal
+                isOpen={modalOpen}
+                closeModal={closeModal}
             />
         </div>
      

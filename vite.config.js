@@ -52,4 +52,9 @@ export default defineConfig({
       }
     }
   },
+  // --- Vitest config ---
+  test: {
+    globals: true,         
+    environment: 'jsdom',  
+  },
 })

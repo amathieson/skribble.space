@@ -70,85 +70,80 @@ const GridOverlayModal = ({ isOpen, closeModal }) => {
                 <section className="modal_section">
                     <h3>{t("settings_dropdown.page_settings.grid_overlay_modal.basic_settings")}</h3>
                     <div className="basic_controls">
-                        <label className="modal_option">
+                        <label htmlFor="enable-grid">
                             <input
+                                id="enable-grid"
                                 type="checkbox"
                                 checked={gridEnabled}
                                 onChange={(e) => setGridEnabled(e.target.checked)}
                             />
                             <span>{t("settings_dropdown.page_settings.grid_overlay_modal.enable_grid")}</span>
                         </label>
-                        <label className="modal_option">
-                            <input type="checkbox" />
+
+                        <label htmlFor="snap-grid">
+                            <input id="snap-grid" type="checkbox" />
                             <span>{t("settings_dropdown.page_settings.grid_overlay_modal.snap_grid")}</span>
                         </label>
-                        <div className="modal_option">
-                            <ColourPicker
-                                label={t("settings_dropdown.page_settings.grid_overlay_modal.line_colour")}
-                                value={strokeColour}
-                                onChange={setStrokeColour}
-                            />
-                        </div>
+
+                        <ColourPicker
+                            label={t("settings_dropdown.page_settings.grid_overlay_modal.line_colour")}
+                            value={strokeColour}
+                            onChange={setStrokeColour}
+                            id="line-colour"
+                        />
                     </div>
                 </section>
 
                 <section className="modal_section">
                     <h3>{t("settings_dropdown.page_settings.grid_overlay_modal.appearance")}</h3>
                     <div className="appearance_controls">
-                        <div className="control_group">
-                            <label>
-                                <span>{t("settings_dropdown.page_settings.grid_overlay_modal.line_width")}</span>
-                                <input
-                                    type="number"
-                                    min={0}
-                                    value={strokeWidth || 1}
-                                    onChange={(e) => setStrokeWidth(Number(e.target.value))}
-                                />
-                            </label>
-                        </div>
+                        <label htmlFor="line-width" className="control_group">
+                            <span>{t("settings_dropdown.page_settings.grid_overlay_modal.line_width")}</span>
+                            <input
+                                id="line-width"
+                                type="number"
+                                min={0}
+                                value={strokeWidth || 1}
+                                onChange={(e) => setStrokeWidth(Number(e.target.value))}
+                            />
+                        </label>
 
-                        <div className="control_group">
-                            <label htmlFor="styleOfLine">
-                                {t("settings_dropdown.page_settings.grid_overlay_modal.style_of_line.title")}
-                                <select
-                                    id="styleOfLine"
-                                    value={lineStyle}
-                                    onChange={(e) => setLineStyle(e.target.value)}
-                                >
-                                    {styleOptions.map(({ value, label }) => (
-                                        <option key={value} value={value}>{label}</option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
+                        <label htmlFor="line-style" className="control_group">
+                            <span>{t("settings_dropdown.page_settings.grid_overlay_modal.style_of_line.title")}</span>
+                            <select
+                                id="line-style"
+                                value={lineStyle}
+                                onChange={(e) => setLineStyle(e.target.value)}
+                            >
+                                {styleOptions.map(({ value, label }) => (
+                                    <option key={value} value={value}>{label}</option>
+                                ))}
+                            </select>
+                        </label>
 
-                        <div className="control_group">
-                            <label htmlFor="gridShape">
-                                {t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.title")}
-                                <select
-                                    id="gridShape"
-                                    value={gridShape}
-                                    onChange={(e) => setGridShape(e.target.value)}
-                                >
-                                    {shapeOptions.map(({ value, label }) => (
-                                        <option key={value} value={value}>{label}</option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
+                        <label htmlFor="grid-shape" className="control_group">
+                            <span>{t("settings_dropdown.page_settings.grid_overlay_modal.grid_shape.title")}</span>
+                            <select
+                                id="grid-shape"
+                                value={gridShape}
+                                onChange={(e) => setGridShape(e.target.value)}
+                            >
+                                {shapeOptions.map(({ value, label }) => (
+                                    <option key={value} value={value}>{label}</option>
+                                ))}
+                            </select>
+                        </label>
                     </div>
                 </section>
 
                 <section className="modal_section">
                     <h3>{t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.title")}</h3>
                     <div className="size_of_grid">
-                        <div className="input_group">
-                            <label htmlFor="xSize">
-                                {t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.x")}
-                            </label>
+                        <div className="input_wrapper">
+                            <label htmlFor="grid-size-x">X Axis:</label>
                             <input
+                                id="grid-size-x"
                                 type="number"
-                                id="xSize"
                                 value={gridSizeX}
                                 onChange={handleXChange}
                             />
@@ -156,19 +151,17 @@ const GridOverlayModal = ({ isOpen, closeModal }) => {
 
                         <button
                             className="link_button"
+                            aria-label={linked ? "Unlink X/Y" : "Link X/Y"}
                             onClick={() => setLinked(!linked)}
-                            type="button"
                         >
                             {linked ? <LinkChain /> : <BrokeChain />}
                         </button>
 
-                        <div className="input_group">
-                            <label htmlFor="ySize">
-                                {t("settings_dropdown.page_settings.grid_overlay_modal.size_of_grid.y")}
-                            </label>
+                        <div className="input_wrapper">
+                            <label htmlFor="grid-size-y">Y Axis:</label>
                             <input
+                                id="grid-size-y"
                                 type="number"
-                                id="ySize"
                                 value={gridSizeY}
                                 onChange={handleYChange}
                             />

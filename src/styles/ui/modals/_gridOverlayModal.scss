@@ -1,19 +1,22 @@
+@use "/src/styles/mixins/_colours.scss";
+
 .grid_overlay_modal {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  
+
   .modal_section {
     background-color: #0000001c;
     padding: 10px;
     border-radius: 12px;
-    
+
     h3 {
       color: #FFFFFF;
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
+      font-size: 1rem; // slightly smaller for mobile readability
+      margin: 0 0 0.75rem 0;
       letter-spacing: 0.75px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 0.25rem;
     }
   }
 
@@ -23,29 +26,59 @@
   * ---------------------------------------
   */
   .basic_controls {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
-
+    justify-content: space-evenly;
+    
     label {
       display: flex;
       align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #ccc;
     }
-    
+
     input[type="checkbox"] {
       width: 20px;
       height: 20px;
     }
-    
+
     input[type="color"] {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+
+      // reset default look
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+
+      // Chrome / Edge
+      &::-webkit-color-swatch-wrapper {
+        padding: 0;
+        border-radius: 6px; 
+        background: transparent;
+      }
+
+      &::-webkit-color-swatch {
+        border: none;
+        border-radius: 6px; 
+      }
+
+      // Firefox
+      &::-moz-color-swatch {
+        border: none;
+        border-radius: 6px; 
+      }
     }
-    
+
     span {
-      height: 20px;
-      padding-left: 5px;
+      padding-left: 2px;
     }
   }
 
@@ -55,18 +88,31 @@
   * ---------------------------------------
   */
   .appearance_controls {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
     .control_group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-    } 
-    
-    input, select {
-      margin-top: 5px;
+      gap: 0.35rem;
+
+      span {
+        font-size: 0.9rem;
+        color: #ccc;
+      }
+
+      input,
+      select {
+        border-radius: 6px;
+        padding: 0.45rem;
+        color: #fff;
+      }
+
+      select option {
+        background-color: colours.$purple_primary_dark_highlight;
+        color: #fff;
+      }
     }
   }
 
@@ -79,7 +125,31 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 1rem;
-    align-items: end;
+    align-items: start;
+    
+    .input_group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      justify-content: center;
+      
+      span {
+        font-size: 0.9rem;
+        color: #ccc;
+      }
+
+      .input_wrapper {
+        display: flex;
+        align-items: center;
+        input {
+          border-radius: 6px;
+          padding: 0.45rem;
+          background-color: #111;
+          color: #fff;
+          width: 100%;
+        }
+      }
+    }
 
     .link_button {
       background: none;
@@ -90,7 +160,9 @@
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-
+      justify-content: center;
+      margin-top: 1.5rem;
+      
       &:hover {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 6px;
@@ -100,6 +172,19 @@
         width: 24px;
         height: 24px;
       }
+    }
+  }
+
+  /**
+  * ---------------------------------------
+  * Responsive adjustments
+  * ---------------------------------------
+  */
+  @media (min-width: 768px) {
+    .appearance_controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.25rem;
     }
   }
 }

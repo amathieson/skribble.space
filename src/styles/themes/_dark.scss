@@ -3,6 +3,9 @@
 @media (prefers-color-scheme: dark) {
   :root, input, input::placeholder {
 
+    //Background
+    --background-colour: #{colours.$background_dark};
+    
     //Card
     --card-border: #{colours.$card_border_dark};
     --card-border-hover: #{colours.$card_border_hover_dark};

@@ -2,6 +2,9 @@
 
 @media (prefers-color-scheme: light) { 
   :root, input, input::placeholder {
+
+    //Background
+    --background-colour: #{colours.$background_light};
     
     //Card
     --card-border: #{colours.$card_border_light};

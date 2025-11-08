@@ -17,19 +17,16 @@ import CardDropdown from "@ui/dropdowns/CardDropdown.jsx";
  */
 const MindmapCard = ({ mindmap }) => {
     const navigate = useNavigate();
-    
-    // Dropdown States. Etc
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const closeDropdown = () => setDropdownOpen(false);
     const toggleDropdown = (e) => {
-        e.stopPropagation(); // Prevent the click from triggering navigation
+        e.stopPropagation();
         setDropdownOpen((prev) => !prev);
     };
 
-
     return (
-        <div className="mindmap_card" onClick={() => navigate(`/mindmap/${mindmap.id}`)}>
-            <div>
+        <div className="mindmap_planet_card" onClick={() => navigate(`/mindmap/${mindmap.id}`)}> {/* New class */}
+            <div className="planet_core"> {/* For styling the circular body */}
                 <div className="card_settings_dots" onClick={toggleDropdown}>
                     <SettingsDots onClick={toggleDropdown}/>
                 </div>
@@ -39,13 +36,16 @@ const MindmapCard = ({ mindmap }) => {
                     mindmapId={mindmap.id}
                 />
                 <div className="mindmap_preview">
-                    <img src="https://placecats.com/200/200" alt="mindmap preview" />
+                    {/* Placeholder image, eventually a real mindmap preview */}
+                    <img src={`https://picsum.photos/seed/${mindmap.id}/150/150`} alt="mindmap preview" />
                 </div>
-                <div className="mindmap_card_header">
-                    <h2>{mindmap.name}</h2>
-                    <p>{mindmap.description}</p>
+                <div className="planet_info"> {/* Renamed for theme */}
+                    <h3>{mindmap.name}</h3> {/* Changed to h3 for hierarchy */}
+                    {/* Description might be hidden or truncated in this view */}
+                    {/* <p>{mindmap.description}</p> */}
                 </div>
-                <Tags tags={mindmap.tags} />
+                {/* Tags could be styled as orbiting elements or a small footer */}
+                {/* <Tags tags={mindmap.tags} /> */}
             </div>
         </div>
     );
@@ -59,22 +59,23 @@ const MindmapCard = ({ mindmap }) => {
  * @returns {JSX.Element}
  * @constructor
  */
-const CreateMindmapCard = ({ onClick, className = "" }) => {
-    const {t} = useTranslation("common");
+const CreateMindmapCard = ({ onClick }) => {
+    // const { t } = useTranslation("common"); // No longer needed for the label
+
     return (
-        <div
-            className={`mindmap_card mindmap_card_new${className ? " " + className : ""}`}
+        <button
+            className="create_mindmap_nebula_button"
             onClick={onClick}
             tabIndex={0}
             role="button"
         >
-            <div className="mindmap_card_new_content">
-                <div className="mindmap_card_plus">+</div>
-                <div className="mindmap_card_label">{t("home.title")}</div>
-            </div>
-        </div>
+            {/*<div className="nebula_content">*/}
+            {/*    <div className="nebula_label">*/}
+            {/*        Create New<br/>Mindmap*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+        </button>
     );
-
 };
 
 
@@ -85,19 +86,25 @@ const CreateMindmapCard = ({ onClick, className = "" }) => {
  * @constructor
  */
 
-const MindmapList = ({ openModal }) => {
+const StarfieldMindmapDisplay = ({ openModal }) => {
     const { mindmaps } = useMindmapCreation();
-    const isEmpty = mindmaps.length === 0;
-
+    
     return (
-        <div className={`mindmap_container${isEmpty ? " mindmap_container--empty" : ""}`}>
-            <CreateMindmapCard
-                onClick={openModal}
-                className={isEmpty ? "mindmap_card_expanded" : ""}
-            />
-            {!isEmpty && mindmaps.map(mindmap => (
-                <MindmapCard key={mindmap.id} mindmap={mindmap} />
-            ))}
+        <div className="starfield_display_area"> {/* New container */}
+            {/* Left side: Create New Mindmap */}
+            <div className="starfield_action_area">
+                <CreateMindmapCard onClick={openModal} />
+            </div>
+
+            {/* Right side: Recent Mindmaps as celestial objects */}
+            <div className="recent_mindmaps_section">
+                <h3>Recent Skribbles</h3> {/* Or "Your Galaxies" */}
+                <div className="mindmap_planets_grid"> {/* Grid for planets */}
+                    {mindmaps.map(mindmap => (
+                        <MindmapCard key={mindmap.id} mindmap={mindmap} />
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };
@@ -105,17 +112,16 @@ const MindmapList = ({ openModal }) => {
 
 
 const Home = () => {
-    
-    // Modal States. Etc
     const [modalOpen, setModalOpen] = useState(false);
-    const openModal = () => setModalOpen(true); 
+    const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
-    
+
     return (
-        <>
-            <div className={"home_container"}>
+        <div className="app_container"> {/* Overall app container to hold header and main content */}
+
+            <div className="home_container starfield_background"> {/* Apply starfield background here */}
                 <main>
-                    <MindmapList openModal={openModal}/>
+                    <StarfieldMindmapDisplay openModal={openModal} />
                 </main>
             </div>
 
@@ -123,7 +129,7 @@ const Home = () => {
                 isOpen={modalOpen}
                 closeModal={closeModal}
             />
-        </>
+        </div>
     );
 };
 

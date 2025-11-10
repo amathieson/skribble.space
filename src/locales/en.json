@@ -1,7 +1,13 @@
 {
   "title": "Skribble.Space",
   "home": {
-    "title": "Create A Mindmap"
+    "title": "Create A Mindmap",
+    "filter": {
+      "placeholder": "Search by name or tag...",
+      "all": "All",
+      "favourites": "Favourites",
+      "recent": "Recent"
+    }
   },
   "settings_dropdown": {
     "title": "Settings",

@@ -9,9 +9,8 @@ $purple_primary_dark_highlight: #7647ad;
 $purple_primary_dark_highlight_light: #D7A8E1;
 $purple_secondary_dark: #3d245a;
 $purple_tertiary_dark: #4A2277;
-$red_error_dark: #FFB4AB;
-$foreground_dark: #3d245a;
-
+$border_dark: #2A003B;
+$accent_colour: hsla(355, 100%, 60%, 0.95);
 /**
 * ---------------------------------------
 * Background Colours
@@ -35,7 +34,6 @@ $circle_colour: #F4B3FF;
 * Modals
 * ---------------------------------------
 */
-$modal_background: #3b1364;
 
 /**
 * ---------------------------------------
@@ -56,17 +54,32 @@ $new_card_border_hover_dark: #8a5299;
 $new_card_text_dark: #E8E4ED;
 $new_card_text_hover_dark: #F0E6FF; 
 
-
-
 //Light
 $card_background_light: #ffffff;      
 $card_border_light: #e0d5ee;         
 $card_border_hover_light: #9b6cc3;    
 $card_text_light: #452760;           
 $card_text_hover_light: #5c2f84;    
-$card_shadow_light: rgba(138, 82, 153, 0.2);
+
+/**
+* ---------------------------------------
+* Inputs
+* ---------------------------------------
+*/
+
+//Dark
+$input_bg_dark: #2b2b40;
+$input_text_dark: #ffffff;
+$input_placeholder_text_dark: #bebebe;
+
+//Light
+$input_placeholder_text_light: #504949;
+$input_bg_light: #ecdef5;
+$input_text_light: #131313;
 
 
+
+//togothrough
 $new_card_background_light: #e2ccff;  
 $new_card_border_light: #b184dd;      
 $new_card_border_hover_light: #9b6cc3; 
@@ -74,17 +87,13 @@ $new_card_text_light: #452760;
 $new_card_text_hover_light: #5c2f84;
 
 
-$header-bg: #2A003B;
 $text-color: #E0E0E0;
 $text-color-light: #B0B0B0;
-$primary-color-light: #C06FFC; // Lighter purple for accents
-$planet-base-color-start: #4A006A;
-$planet-base-color-end: #2A003B;
-$planet-hover-glow-rgb: 192, 111, 252; // RGB for primary-color-light
+
+$primary-accent: #7f5af0; 
+$border-color: #41415c;
+$active-filter-bg: $primary-accent;
+$active-filter-text: #ffffff;
+$inactive-filter-hover-bg: #3a3a52;
 
 
-
-$nebula-core-dark: #28183b; // Deepest dark for center/shadows
-$nebula-mid-purple: #71499f; // Mid-tone purple
-$nebula-bright-purple: #D7A8E1; // Brightest purple for highlights
-$nebula-soft-red: #FFB4AB;   // Soft red for accents

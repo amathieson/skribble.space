@@ -100,34 +100,6 @@ function SaveDocument(id, paths) {
     });
 }
 
-
-// function RenameDocument(id, name) {
-//     return new Promise((resolve, reject) => {
-//         const t = db.transaction("documents", "readwrite");
-//         const os = t.objectStore("documents");
-//
-//         const getReq = os.get(id);
-//
-//         getReq.onsuccess = () => {
-//             const doc = getReq.result;
-//             if (!doc) {
-//                 reject(new Error("Document not found"));
-//                 return;
-//             }
-//
-//             doc.updated = Date.now();
-//             doc.name = name;
-//             doc.id = id;
-//
-//             const putReq = os.put(doc);
-//             putReq.onsuccess = () => resolve(putReq.result);
-//             putReq.onerror = () => reject(putReq.error);
-//         };
-//
-//         getReq.onerror = () => reject(getReq.error);
-//     });
-// }
-
 /**
  * Gets all the metadata for all stored mindmaps
  * @returns {*}
@@ -206,4 +178,39 @@ async function DeleteMindmap(id) {
     os2.delete(id);
 }
 
-export default {ReadyCallBack, GetSetting, SaveSetting, SaveDocument, GetAllMindmapsMetadata,SaveMindmapData,SaveMindmapMetadata,GetMindmapData,DeleteMindmap};
+/**
+ * Updates a single field of a specific mindmap's metadata.
+ * @param {string} id - The ID of the mindmap to update.
+ * @param {string} key - The name of the property to update (e.g., "name", "tags").
+ * @param {*} value - The new value for the property.
+ * @returns {Promise<unknown>} A promise that resolves when the update is complete.
+ * @constructor
+ */
+function UpdateMindmapMetadataField(id, key, value) {
+    const t = db.transaction(META_STORE, "readwrite");
+    const os = t.objectStore(META_STORE);
+
+    return new Promise((resolve, reject) => {
+        const getReq = os.get(id);
+
+        getReq.onerror = () => reject(getReq.error);
+
+        getReq.onsuccess = () => {
+            const existingMeta = getReq.result;
+            
+            if (!existingMeta) {
+                reject(new Error(`Metadata for mindmap with ID "${id}" not found.`));
+                return;
+            }
+            
+            existingMeta[key] = value;
+            
+            const putReq = os.put(existingMeta);
+
+            putReq.onsuccess = () => resolve(putReq.result);
+            putReq.onerror = () => reject(putReq.error);
+        };
+    });
+}
+export default {ReadyCallBack,
+    SaveDocument, GetAllMindmapsMetadata,SaveMindmapData,SaveMindmapMetadata,GetMindmapData,DeleteMindmap, UpdateMindmapMetadataField};

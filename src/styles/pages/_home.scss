@@ -2,14 +2,16 @@
 @use "/src/styles/mixins/_colours.scss";
 @use 'sass:math';
 
-// Global app container
+/**
+ * ---------------------------------------
+ * Containers
+ * ---------------------------------------
+ */
+
 .app_container {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: var(--dark-bg); // A very dark base
+  height: 90%;
 }
-
 
 .home_container.starfield_background {
   flex-grow: 1;
@@ -23,14 +25,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-
-    //TODO: stars???
-    //background-image: radial-gradient(white 1px, transparent 0),
-    //radial-gradient(white 1px, transparent 0),
-    //radial-gradient(white 2px, transparent 0);
-    //background-size: 500px 500px, 300px 300px, 150px 150px; // Different star densities
-    //background-position: 0 0, 100px 60px, 200px 120px; // Adjust positions
-    //animation: moveStars 100s linear infinite; // Subtle parallax effect
   }
 
   main {
@@ -75,17 +69,246 @@
   }
 }
 
+/**
+ * ---------------------------------------
+ * Recent_mindmaps_section
+ * ---------------------------------------
+ */
+
 .recent_mindmaps_section {
-  flex-grow: 1;
-  //todo: fix
-  //color: var(--text-color);
+  flex: 1;  
+  color: var(--text-color);
+  max-width: 800px;
   h3 {
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
-    //color: var(--primary-color-light);
+    color: var(--primary-color-light);
   }
 }
 
+
+/**
+ * ---------------------------------------
+ * All filtering-section related stuff
+ * ---------------------------------------
+ */
+
+.filtering_section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 550px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background: var(--card-background-colour);
+  position: relative;
+  border-radius: 30px;
+  height: 95%;
+  
+  .search_bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--input-background);
+    border: 1px solid colours.$border-color;
+    padding: 14px 20px 14px 50px;
+    border-radius: 30px 30px 0 0;
+    
+    svg {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--input-placeholder-text);
+      font-size: 1.2rem;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      color: var(--input-text);
+      font-size: 1rem;
+      transition: all 0.3s ease-in-out;
+
+      &::placeholder {
+        color: var(--input-placeholder-text);
+      }
+      
+    }
+  }
+
+  .filter_options {
+    display: flex;
+    
+  
+    button {
+      padding: 8px 20px;
+      background-color: transparent;
+      border: 1px solid colours.$border-color;
+      color: var(--input-placeholder-text);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      flex: 1;
+      
+      &:hover {
+        background-color: colours.$inactive-filter-hover-bg;
+        color: colours.$text-color;
+        border-color: colours.$inactive-filter-hover-bg;
+      }
+
+      &.active {
+        background-color: colours.$active-filter-bg;
+        color: colours.$active-filter-text;
+        border-color: colours.$active-filter-bg;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .results_of_filter {
+    padding-left: 0.5rem;
+    color: #fff;
+
+    p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+    }
+  }
+
+  .search_result_item {
+    display: flex;
+    flex: 1;
+    margin: 0 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--card-border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 50px;
+    
+    .tags {
+      padding: 0.2rem 0.5rem;
+      display: inline-grid;
+      align-content: center;
+      justify-content: space-between;
+      align-items: center;
+      grid-template-columns: auto auto auto auto;
+      gap: 10px;
+      
+      .tag {
+        background-color: purple;
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        align-self: center;
+      }
+
+    }
+  }
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  
+  svg {
+    padding: 3px;
+  }
+}
+
+/**
+ * ---------------------------------------
+ * All create_mindmap related stuff
+ * ---------------------------------------
+ */
+
+.create_mindmap_nebula_button {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  position: relative;
+  background-color: red;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  border-color: var(--vortex-border-colour);
+  border-style: solid;
+  border-width: 4px;
+  
+  &:hover {
+    border-color: var(--vortex-border-colour-hover);
+    transform: scale(1.05);
+  }
+}
+
+.swirl_vortex {
+  position: absolute;
+  border-radius: 50%;
+  width: 109%;
+  height: 109%;
+}
+
+.swirl_vortex_overlay {
+  position: absolute;
+  border-radius: 50%;
+  width: 109%;
+  height: 109%;
+  background: conic-gradient(
+                  hsla(355, 100%, 60%, 0.95) 0deg,    
+                  hsla(25, 100%, 55%, 0.95) 60deg,    
+                  hsla(320, 100%, 55%, 0.95) 120deg,   
+                  hsla(260, 90%, 60%, 0.95) 180deg,      
+                  hsla(240, 90%, 60%, 0.95) 240deg,     
+                  hsla(330, 100%, 55%, 0.95) 300deg,    
+                  hsla(355, 100%, 60%, 0.95) 360deg     
+  );
+  filter: blur(15px);
+  mix-blend-mode: multiply;
+  z-index: 3;
+  opacity: 0.8;
+  animation: spin 10s linear infinite;
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+}
+
+.nebula_label {
+  z-index: 5;
+  display: flex;
+  width: 50%;
+  height: 20%;
+  color: var(--font-color);
+  font-size: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.swirl_vortex_circle {
+  background-color: var(--vortex-background-colour);
+  z-index: 4;
+  filter: blur(10px);
+  border-radius: 50%;
+  width: 25%;
+  height: 25%;
+  position: absolute;
+}
+
+/**
+ * ---------------------------------------
+ * All other mindmap related stuff
+ * ---------------------------------------
+ */
 .mindmap_planets_grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); // Adjust planet size
@@ -99,134 +322,19 @@
   }
 }
 
-.create_mindmap_nebula_button {
-  $n: 12; 
-  $d: 250px; 
 
-  $hole-size: 30%;
-  $blade-size: 39%;
-  $blade-offset: 23%;
-  
-  $hue-offset: 180;
-
-  $background-color: #312f36;
-
-  // --- Boilerplate styles ---
-  width: $d;
-  height: $d;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-  background-color: $background-color;
-  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.4));
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-
-    $blade-gradients: ();
-    $pi: math.$pi;
-
-    @for $i from 1 through $n {
-      $p: ($i - 1) / $n;
-      $a: $p * 2 * $pi;
-
-      $x: 50% + $blade-offset * math.cos($a);
-      $y: 50% + $blade-offset * math.sin($a);
-      
-      $slice-color: hsl((($p * 360) + $hue-offset) % 360, 90%, 65%);
-
-      $gradient: radial-gradient(
-                      circle at #{$x} #{$y},
-                      #{$slice-color} $blade-size,
-                      transparent $blade-size + 0.5%
-      );
-
-      $blade-gradients: append($blade-gradients, $gradient, comma);
-    }
-
-    $hole-gradient: radial-gradient(
-                    circle at center,
-                    #{$background-color} $hole-size,
-                    transparent $hole-size + 0.5%
-    );
-
-    background-image: $hole-gradient, $blade-gradients;
-  }
-}
-
-// --- New Styling for Mindmap "Planet" Cards ---
 .mindmap_planet_card {
-  border-radius: 50%; // Make it circular
-  width: 180px; // Adjust size
+  border-radius: 50%;
+  width: 180px; 
   height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; // Keep content within circle
+  overflow: hidden;
   position: relative;
   cursor: pointer;
-  background: linear-gradient(135deg, var(--planet-base-color-start), var(--planet-base-color-end)); // Default planet gradient
-  box-shadow: 0 0 15px rgba(0,0,0,0.5); // Planet shadow
-  transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 5px 20px rgba(var(--planet-hover-glow-rgb), 0.8);
-  }
-
-  .planet_core {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-  }
-
-  .mindmap_preview {
-    width: 80px; // Small preview in center
-    height: 80px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 0.5rem;
-    background-color: rgba(255,255,255,0.1); // Placeholder if no image
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-  }
-
-  .planet_info {
-    h3 {
-      font-size: 1.1em;
-      margin: 0;
-      white-space: nowrap; // Prevent wrapping
-      overflow: hidden;
-      text-overflow: ellipsis; // Truncate long names
-      max-width: 90%; // To allow for ellipsis
-    }
-  }
-
-  // Settings dots adjusted for circular card
-  .card_settings_dots {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0,0,0,0.4); // Darker background for contrast
-    color: white;
-    &:hover {
-      background: rgba(0,0,0,0.6);
-    }
-  }
-  // Tags might be removed or simplified for this compact view
-  .mindmap_tags {
-    display: none; // Hide tags for brevity in this view
   }
 }

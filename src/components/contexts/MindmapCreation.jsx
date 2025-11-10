@@ -13,7 +13,6 @@ const MindmapCreationContext = createContext(undefined);
 export function MindmapCreationProvider({ children }) {
     const [mindmaps, setMindmaps] = useState([]);
 
-    // Load metadata on mount
     useEffect(() => {
         (async () => {
             try {
@@ -69,6 +68,7 @@ export function MindmapCreationProvider({ children }) {
             description: updated.description,
             date_modified: updated.date_modified,
             tags: updated.tags || ["[no tags]"],
+            favourited: false,
         });
 
         setMindmaps(prev =>
@@ -81,7 +81,7 @@ export function MindmapCreationProvider({ children }) {
     }
 
     return (
-        <MindmapCreationContext.Provider value={{ mindmaps, createMindmap, updateMindmap }}>
+        <MindmapCreationContext.Provider value={{ mindmaps, setMindmaps, createMindmap, updateMindmap }}>
             {children}
         </MindmapCreationContext.Provider>
     );

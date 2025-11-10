@@ -23,11 +23,24 @@
     --new-card-background-colour: #{colours.$new_card_background_light};
     --new-card-text: #{colours.$new_card_text_light};
     --new-card-text-hover: #{colours.$new_card_text_hover_light};
-    
-    
+
+    //Inputs
+    --input-background: #{colours.$input_bg_light};
+    --input-text: #{colours.$input_text_light};
+    --input-placeholder-text: #{colours.$input_placeholder_text_light};
+
+    //Font
+    --font-color: #{colours.$text-color-light};
+
+    //Vortex
+    --vortex-background-colour: #fff;
+    --vortex-border-colour: #2A003B;
+    --vortex-border-colour-hover: #{colours.$accent_colour};
+
   }
 
   body {
     background: colours.$background_light;
   }
+  
 }

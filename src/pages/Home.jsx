@@ -9,6 +9,7 @@ import React, {useMemo, useState, forwardRef} from 'react';
 import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
 import {useNavigate} from "react-router-dom";
 import idb from "@util/indexed_db.js";
+import Tags from "@util/Tags.jsx";
 
 /**
  * This is the base card for a mindmap.
@@ -26,6 +27,7 @@ const MindmapCard = ({ mindmap }) => {
                 <div><h3>{mindmap.name}</h3></div>
                 <div><img src={`https://picsum.photos/seed/${mindmap.id}/150/150`} alt="mindmap preview" /></div>
             </div>
+            <Tags tags={mindmap.tags}/>
         </div>
     );
 };
@@ -78,29 +80,63 @@ const StarfieldMindmapDisplay = ({ openModal }) => {
      * @returns {React.JSX.Element}
      * @constructor
      */
-    const SearchResultItem = ({ mindmap }) => (
-        <div className="search_result_item" onClick={() => navigate(`/mindmap/${mindmap.id}`)}>
-            <div><h4>{mindmap.name}</h4></div>
-            {mindmap.tags?.length > 0 && (
-                <div className="tags">
-                    {mindmap.tags.map(tag => (
-                        <span key={tag} className="tag" onClick={(e) => { e.stopPropagation(); setSearchQuery(tag); }}>
+    const SearchResultItem = ({ mindmap, navigate, handleToggleFavourite, setSearchQuery }) => {
+        const [isTagsExpanded, setIsTagsExpanded] = useState(false);
+
+        //todo: make more dynamic (not relying on hardcoded number, calc depending on space)
+        const VISIBLE_TAG_LIMIT = 4;
+        const hasTags = mindmap.tags && mindmap.tags.length > 0;
+        const needsPagination = hasTags && mindmap.tags.length > VISIBLE_TAG_LIMIT;
+
+        const tagsToShow = isTagsExpanded ? mindmap.tags : mindmap.tags?.slice(0, VISIBLE_TAG_LIMIT);
+        const remainingTagCount = hasTags ? mindmap.tags.length - VISIBLE_TAG_LIMIT : 0;
+
+        const handleToggleExpand = (e) => {
+            e.stopPropagation();
+            setIsTagsExpanded(prev => !prev);
+        };
+
+        return (
+            <div className="search_result_item" onClick={() => navigate(`/mindmap/${mindmap.id}`)}>
+                <div className="search_item_title">
+                    <h4 title={mindmap.name}>{mindmap.name}</h4>
+                </div>
+
+                {/*todo: migrate to activity tag*/}
+                {hasTags && (
+                    <div className={`tags ${isTagsExpanded ? 'tags-expanded' : ''}`}>
+                        {tagsToShow.map(tag => (
+                            <span key={tag} className="tag" onClick={(e) => { e.stopPropagation(); setSearchQuery(tag); }}>
                             {tag}
                         </span>
-                    ))}
-                </div>
-            )}
-            <div className="options">
-                {mindmap.favourite ? (
-                    <StarFull onClick={(e) => { e.stopPropagation(); handleToggleFavourite(mindmap.id, mindmap.favourite); }} />
-                ) : (
-                    <StarEmpty onClick={(e) => { e.stopPropagation(); handleToggleFavourite(mindmap.id, mindmap.favourite); }} />
-                )}
-                <SettingsDots />
-            </div>
-        </div>
-    );
+                        ))}
 
+                        {/* Collapsed state button */}
+                        {needsPagination && !isTagsExpanded && (
+                            <span className="tag tag-more" onClick={handleToggleExpand}>
+                            +{remainingTagCount}
+                        </span>
+                        )}
+
+                        {/* Expanded state close button */}
+                        {isTagsExpanded && (
+                            <button className="tags-close-button" onClick={handleToggleExpand}>×</button>
+                        )}
+                    </div>
+                )}
+
+                <div className="options">
+                    {mindmap.favourite ? (
+                        <StarFull onClick={(e) => { e.stopPropagation(); handleToggleFavourite(mindmap.id, mindmap.favourite); }} />
+                    ) : (
+                        <StarEmpty onClick={(e) => { e.stopPropagation(); handleToggleFavourite(mindmap.id, mindmap.favourite); }} />
+                    )}
+                    <SettingsDots />
+                </div>
+            </div>
+        );
+    };
+    
     /**
      * This filters the mindmaps based on the active filter and search query.
      * @type {*[]|*}
@@ -163,7 +199,13 @@ const StarfieldMindmapDisplay = ({ openModal }) => {
                 <div className="results_of_filter">
                     {filteredMindmaps.length > 0 ? (
                         filteredMindmaps.map(mindmap => (
-                            <SearchResultItem key={mindmap.id} mindmap={mindmap}/>
+                            <SearchResultItem
+                                key={mindmap.id}
+                                mindmap={mindmap}
+                                navigate={navigate}
+                                handleToggleFavourite={handleToggleFavourite}
+                                setSearchQuery={setSearchQuery}
+                            />
                         ))
                     ) : (
                         searchQuery.length > 0 && <p className="no_results_message">No results for "{searchQuery}"</p>
@@ -198,4 +240,5 @@ const Home = () => {
 
 //TODO: fix mobile and light mode UIs
 //TODO: fix UI for if there are no mindmaps
+//TODO: fix blur when hovering over create mindmap
 export default Home;

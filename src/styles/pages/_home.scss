@@ -1,7 +1,7 @@
 @use "/src/styles/mixins/_variables.scss";
 @use "/src/styles/mixins/_colours.scss";
 @use 'sass:math';
-
+//todo: variable it
 /**
  * ---------------------------------------
  * Containers
@@ -78,130 +78,172 @@
  */
 
 .filtering_section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 550px;
-  border: 1px solid var(--card-border);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  background: var(--card-background-colour);
-  position: relative;
-  border-radius: 30px;
-  height: 95%;
-  
-  .search_bar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 550px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: var(--card-background-colour);
     position: relative;
-    display: flex;
-    align-items: center;
-    background-color: var(--input-background);
-    border: 1px solid colours.$border-color;
-    padding: 14px 20px 14px 50px;
-    border-radius: 30px 30px 0 0;
-    
-    svg {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--input-placeholder-text);
-      font-size: 1.2rem;
+    border-radius: 30px;
+    height: 95%;
+
+    .search_bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-color: var(--input-background);
+        border: 1px solid colours.$border-color;
+        padding: 14px 20px 14px 50px;
+        border-radius: 30px 30px 0 0;
+
+        svg {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--input-placeholder-text);
+            font-size: 1.2rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            color: var(--input-text);
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out;
+
+            &::placeholder {
+                color: var(--input-placeholder-text);
+            }
+
+        }
     }
-    
-    input[type="text"] {
-      width: 100%;
-      background-color: transparent;
-      border: none;
-      color: var(--input-text);
-      font-size: 1rem;
-      transition: all 0.3s ease-in-out;
 
-      &::placeholder {
-        color: var(--input-placeholder-text);
-      }
-      
+    .filter_options {
+        display: flex;
+
+        button {
+            padding: 8px 20px;
+            background-color: transparent;
+            border: 1px solid colours.$border-color;
+            color: var(--input-placeholder-text);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+
+            &:hover {
+                background-color: colours.$inactive-filter-hover-bg;
+                color: colours.$text-color;
+                border-color: colours.$inactive-filter-hover-bg;
+            }
+
+            &.active {
+                background-color: colours.$active-filter-bg;
+                color: colours.$active-filter-text;
+                border-color: colours.$active-filter-bg;
+                font-weight: 600;
+            }
+        }
     }
-  }
 
-  .filter_options {
-    display: flex;
-      
-    button {
-      padding: 8px 20px;
-      background-color: transparent;
-      border: 1px solid colours.$border-color;
-      color: var(--input-placeholder-text);
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      flex: 1;
-      
-      &:hover {
-        background-color: colours.$inactive-filter-hover-bg;
-        color: colours.$text-color;
-        border-color: colours.$inactive-filter-hover-bg;
-      }
+    .results_of_filter {
+        padding-left: 0.5rem;
+        color: #fff;
 
-      &.active {
-        background-color: colours.$active-filter-bg;
-        color: colours.$active-filter-text;
-        border-color: colours.$active-filter-bg;
-        font-weight: 600;
-      }
+        p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
     }
-  }
 
-  .results_of_filter {
-    padding-left: 0.5rem;
-    color: #fff;
+    .search_result_item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        height: 50px;
+        padding: 0 0.5rem;
+        border-bottom: 1px solid var(--card-border);
+        cursor: pointer;
+        position: relative;
 
-    p {
-      margin: 0.5rem 0;
-      font-size: 1rem;
+        .search_item_title {
+            flex-shrink: 0;
+
+            h4 {
+                max-width: 150px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .tags {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            gap: 8px;
+            overflow: hidden;
+
+            .tag {
+                background-color: purple;
+                padding: 0.2rem 0.5rem;
+                border-radius: 10px;
+                white-space: nowrap;
+            }
+
+            .tag-more {
+                background-color: #555;
+                cursor: pointer;
+                font-weight: bold;
+            }
+        }
+
+        //todo: make look better
+        .tags.tags-expanded {
+            position: absolute;
+            z-index: 10;
+            left: 170px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #3a2a49; 
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+            width: 300px; 
+
+            .tags-close-button {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0 5px;
+            }
+        }
+
+        .options {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
     }
-  }
-
-  .search_result_item {
-    display: flex;
-    flex: 1;
-    margin: 0 0.5rem;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--card-border);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    height: 50px;
-    
-    .tags {
-      padding: 0.2rem 0.5rem;
-      display: inline-grid;
-      align-content: center;
-      justify-content: space-between;
-      align-items: center;
-      grid-template-columns: auto auto auto auto;
-      gap: 10px;
-      
-      .tag {
-        background-color: purple;
-        padding: 0.2rem 0.5rem;
-        border-radius: 10px;
-        align-self: center;
-      }
-
-    }
-  }
 }
-
-.options {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  
-  svg {
-    padding: 3px;
-  }
-}
-
 /**
  * ---------------------------------------
  * All create_mindmap related stuff
@@ -307,7 +349,7 @@
     animation: float 15s ease-in-out infinite;
 
     &:nth-child(2) { top: 5%; left: 45%; animation-delay: -2s; animation-duration: 18s; }
-    &:nth-child(3) { top: 70%; left: 5%; animation-delay: -8s; animation-duration: 20s; }
+    &:nth-child(3) { top: 67%; left: 5%; animation-delay: -8s; animation-duration: 20s; }
     &:nth-child(4) { top: 15%; left: 80%; animation-delay: -5s; animation-duration: 16s; }
     &:nth-child(5) { top: 60%; left: 70%; animation-delay: 0s; animation-duration: 22s; }
     &:nth-child(6) { top: 45%; left: 34%; animation-delay: -12s; animation-duration: 19s; }
@@ -362,6 +404,9 @@
         color: white;
         margin: 0 0 10px 0;
         font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     img {
@@ -369,5 +414,88 @@
         height: 100px;
         object-fit: cover;
         border-radius: 8px;
+    }
+}
+
+/**
+ * ---------------------------------------
+ * Mindmap Tags
+ * ---------------------------------------
+ */
+.tags_container {
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 120px);
+    transform: translateY(-50%);
+    z-index: 20;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tags_list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: calc(5 * 28px + 4 * 8px);
+}
+
+.mindmap_tag {
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.tags_nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.tags_arrow_button {
+    background-color: rgba(80, 80, 80, 0.5);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    width: 12px;
+    height: 28px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    right: 50px;
+    position: relative;
+    padding: 0 14px;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        position: absolute;        
+        color: white;
+    }
+    
+    &:first-child {
+        top: 5px;
+        rotate: 320deg;
+    }
+    
+    &:last-child {
+        bottom: 5px;
+        rotate: 332deg;
+    }
+    
+    &:hover {
+        background-color: rgba(100, 100, 100, 0.7);
     }
 }

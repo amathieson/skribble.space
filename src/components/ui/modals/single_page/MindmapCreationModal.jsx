@@ -112,7 +112,7 @@ const MindmapCreationModal = ({ isOpen, closeModal }) => {
                         <ColourPicker
                             label={t('settings_dropdown.page_settings.background_colour')}
                             value={mindmap.background_colour}
-                            onChange={e => { e.preventDefault(); setMindmap({ ...mindmap, background_colour: c })}}
+                            onChange={e => {setMindmap({ ...mindmap, background_colour: e })}}
                         />
                     </div>
                    

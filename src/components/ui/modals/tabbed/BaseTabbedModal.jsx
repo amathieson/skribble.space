@@ -27,10 +27,11 @@ export const BaseTabbedModal = ({
                                 }) => {
     const [activeTab, setActiveTab] = useState(defaultTab || (tabs[0]?.id ?? ""));
 
-    // Reset active tab when modal reopens
     useEffect(() => {
-        if (isOpen) setActiveTab(defaultTab || (tabs[0]?.id ?? ""));
-    }, [isOpen, defaultTab, tabs]);
+        if (isOpen) {
+            setActiveTab(defaultTab || (tabs[0]?.id ?? ""));
+        }
+    }, [isOpen, defaultTab]);
 
     // Escape key support
     useEffect(() => {

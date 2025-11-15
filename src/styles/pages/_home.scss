@@ -32,16 +32,14 @@ display: flex;
   main {
       position: relative;
       z-index: 1;
-      padding: 2rem;
       margin: 0 auto;
       display: flex;
       gap: 4rem;
       width: 100%;
       
-    @media (max-width: variables.$breakpoint-md) {
-      flex-direction: column;
-      gap: 2rem;
-    }
+      @media (min-width: variables.$breakpoint-lg) {
+          padding: 2rem;
+      }
   }
 }
 
@@ -54,7 +52,9 @@ display: flex;
   @media (max-width: variables.$breakpoint-md) {
     flex-direction: column;
     gap: 2rem;
+      height:100%;
   }
+    
 }
 
 .starfield_action_area {
@@ -65,8 +65,9 @@ display: flex;
   max-height: 95%;
   
   @media (max-width: variables.$breakpoint-md) {
-    flex-basis: auto; 
-    height: 250px; 
+      flex-basis: auto; 
+      height: 250px;
+      align-self: center;
   }
 }
 
@@ -79,6 +80,12 @@ display: flex;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: variables.$breakpoint-md) {
+        flex-wrap: wrap;
+        align-content: flex-start;
+        margin-top: 40px;
+    }
 }
 
 /**
@@ -164,7 +171,8 @@ display: flex;
     .results_of_filter {
         padding-left: 0.5rem;
         color: #fff;
-
+        overflow-y: auto;
+        
         p {
             margin: 0.5rem 0;
             font-size: 1rem;
@@ -259,6 +267,11 @@ display: flex;
             margin-left: auto;
         }
     }
+
+    @media (max-width: variables.$breakpoint-md) {
+        flex-direction: column;
+        max-height:55%;
+    }
 }
 /**
  * ---------------------------------------
@@ -280,9 +293,11 @@ display: flex;
     border-width: 4px;
     width: 320px;
     height: 320px;
-    
-    
-    
+
+
+    @media (max-width: variables.$breakpoint-md) {
+        margin-top: 10px;
+    }
     
   &:hover {
     border-color: var(--vortex-border-colour-hover);
@@ -293,6 +308,11 @@ display: flex;
 .create_mindmap_nebula_button.empty-state-large {
     width: 800px;
     height: 800px;
+
+    @media (max-width: variables.$breakpoint-md) {
+        width: 400px;
+        height: 400px;
+    }
 }
 
 .swirl_vortex {
@@ -377,6 +397,11 @@ display: flex;
     &:nth-child(4) { top: 15%; left: 80%; animation-delay: -5s; animation-duration: 16s; }
     &:nth-child(5) { top: 60%; left: 70%; animation-delay: 0s; animation-duration: 22s; }
     &:nth-child(6) { top: 45%; left: 34%; animation-delay: -12s; animation-duration: 19s; }
+
+    // If too small, hides the recently viewed mindmaps
+    @media (max-width: variables.$breakpoint-md) {
+        display: none;
+    }
 }
 
 .mindmap_card {

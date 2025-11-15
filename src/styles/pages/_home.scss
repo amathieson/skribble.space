@@ -15,7 +15,8 @@
 }
 
 .home_container.starfield_background {
-  flex-grow: 1;
+display: flex;
+    flex: 1;
   background: var(--background-colour); 
   position: relative;
   overflow: hidden;
@@ -29,16 +30,14 @@
   }
 
   main {
-    position: relative;
-    z-index: 1;
-    padding: 2rem;
-    max-width: 100%;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-    display: flex; 
-    gap: 4rem; 
-
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+      margin: 0 auto;
+      display: flex;
+      gap: 4rem;
+      width: 100%;
+      
     @media (max-width: variables.$breakpoint-md) {
       flex-direction: column;
       gap: 2rem;
@@ -47,11 +46,10 @@
 }
 
 .starfield_display_area {
-  display: flex;         
-  flex-direction: row;   
-  width: 100%;           
-  height: 100%;        
-  gap: 4rem;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 4rem;
 
   @media (max-width: variables.$breakpoint-md) {
     flex-direction: column;
@@ -70,6 +68,17 @@
     flex-basis: auto; 
     height: 250px; 
   }
+}
+
+/**
+* CSS Styling for if there are no mindmaps stored
+ */
+.starfield_action_area_empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /**
@@ -258,24 +267,32 @@
  */
 
 .create_mindmap_nebula_button {
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
-  position: relative;
-  background-color: red;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  border-color: var(--vortex-border-colour);
-  border-style: solid;
-  border-width: 4px;
-  
+    border-radius: 50%;
+    position: relative;
+    background-color: red;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-color: var(--vortex-border-colour);
+    border-style: solid;
+    border-width: 4px;
+    width: 320px;
+    height: 320px;
+    
+    
+    
+    
   &:hover {
     border-color: var(--vortex-border-colour-hover);
     transform: scale(1.05);
   }
+}
+// For when there are no mindmaps, makes it bigger
+.create_mindmap_nebula_button.empty-state-large {
+    width: 800px;
+    height: 800px;
 }
 
 .swirl_vortex {

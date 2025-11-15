@@ -35,12 +35,15 @@ const MindmapCard = ({ mindmap }) => {
 
 /**
  * This displays a create mindmap card, and opens a modal when clicked.
+ * @param onClick
+ * @param className - optional class name. Used for resizing when the number of mindmaps change
  */
-const CreateMindmapCard = forwardRef(({ onClick }, ref) => {
+const CreateMindmapCard = forwardRef(({ onClick,className}, ref) => {
     const { t } = useTranslation("common");
+    const combinedClassName = `create_mindmap_nebula_button ${className || ''}`;
 
     return (
-        <button ref={ref} className="create_mindmap_nebula_button" onClick={onClick} tabIndex={0} role="button">
+        <button ref={ref} className={combinedClassName} onClick={onClick} tabIndex={0} role="button">
             <video autoPlay muted loop className={"swirl_vortex"}><source src="/renders/swirl_vortex.webm" type="video/mp4"/></video>
             <div className="swirl_vortex_overlay"></div>
             <div className="nebula_label">{t("create_modal.title")}</div>
@@ -165,8 +168,9 @@ const StarfieldMindmapDisplay = ({ openModal }) => {
 
     return (
         <div className="starfield_display_area">
-            <div className="starfield_action_area">
-                <CreateMindmapCard onClick={openModal}/>
+            <div className={`${mindmaps.length > 0 ? 'starfield_action_area' : 'starfield_action_area_empty'}`}>
+                <CreateMindmapCard onClick={openModal} className={mindmaps.length > 0? '' : 'empty-state-large'}
+                />
                 {recentMindmaps.map((mindmap) => (
                     <MindmapCard
                         key={mindmap.id}

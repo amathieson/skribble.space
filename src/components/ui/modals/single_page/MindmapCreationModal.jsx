@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import '@scss/ui/modals/_mindmapCreationModal.scss';
 import ColourPicker from '@util/ColourPicker.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useMindmapCreation } from '@ctx/MindmapCreation.jsx';
@@ -21,6 +20,12 @@ const MindmapCreationModal = ({ isOpen, closeModal }) => {
     });
 
     const handleSubmit = async () => {
+        // TODO: Make this prettier
+        if (!mindmap.name) {
+            alert("Please enter a mindmap name.")
+            return;
+        }
+        
         closeModal();
         const id = await createMindmap(mindmap);
         navigate(`/mindmap/${id}`);
@@ -103,11 +108,14 @@ const MindmapCreationModal = ({ isOpen, closeModal }) => {
             label: t('create_modal.tabs.appearance'),
             content: (
                 <div className="tab_content">
-                    <ColourPicker
-                        label={t('settings_dropdown.page_settings.background_colour')}
-                        value={mindmap.background_colour}
-                        onChange={c => setMindmap({ ...mindmap, background_colour: c })}
-                    />
+                    <div className={"colour_picker_container"}>
+                        <ColourPicker
+                            label={t('settings_dropdown.page_settings.background_colour')}
+                            value={mindmap.background_colour}
+                            onChange={e => { e.preventDefault(); setMindmap({ ...mindmap, background_colour: c })}}
+                        />
+                    </div>
+                   
                 </div>
             )
         }
@@ -121,6 +129,7 @@ const MindmapCreationModal = ({ isOpen, closeModal }) => {
             closeModal={closeModal}
             onSubmit={handleSubmit}
             submitLabel={t('create_modal.submit')}
+            className={'mindmap_create_modal'}
         />
     );
 };

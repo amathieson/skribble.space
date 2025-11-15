@@ -13,6 +13,7 @@ import "@scss/ui/modals/_baseModal.scss";
  * @param {function} props.closeModal - Function to close modal.
  * @param {function} [props.onSubmit] - Optional submit handler (if modal has a form).
  * @param {string} [props.submitLabel] - Text for submit button (optional).
+ * @param {string} [props.className] - Additional CSS class for modal content.
  */
 export const BaseTabbedModal = ({
                                     isOpen,
@@ -21,7 +22,8 @@ export const BaseTabbedModal = ({
                                     defaultTab,
                                     closeModal,
                                     onSubmit,
-                                    submitLabel
+                                    submitLabel,
+                                    className,
                                 }) => {
     const [activeTab, setActiveTab] = useState(defaultTab || (tabs[0]?.id ?? ""));
 
@@ -45,7 +47,7 @@ export const BaseTabbedModal = ({
 
     return (
         <div className="modal_backdrop" onClick={closeModal}>
-            <div className="modal_content" onClick={(e) => e.stopPropagation()}>
+            <div className={`modal_content ${className}`} onClick={(e) => e.stopPropagation()}>
                 {/* Header */}
                 <div className="modal_header">
                     <h2 className="modal_title">{title}</h2>

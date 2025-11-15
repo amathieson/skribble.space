@@ -5,11 +5,12 @@ import StarEmpty from '~icons/ph/star-bold';
 import StarFull from '~icons/ph/star-fill';
 import MindmapCreationModal from '@ui/modals/single_page/MindmapCreationModal.jsx';
 import {useTranslation} from 'react-i18next';
-import React, {useMemo, useState, forwardRef} from 'react';
+import React, {useMemo, useState, forwardRef, Activity} from 'react';
 import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
 import {useNavigate} from "react-router-dom";
 import idb from "@util/indexed_db.js";
 import Tags from "@util/Tags.jsx";
+import '@scss/ui/modals/_mindmapCreationModal.scss';
 
 /**
  * This is the base card for a mindmap.
@@ -175,43 +176,46 @@ const StarfieldMindmapDisplay = ({ openModal }) => {
             </div>
 
             {/*This is the filtering section. It contains the search bar, filter options and the results of the filter.*/}
-            <div className="filtering_section">
-                <span className="search_bar">
-                    <MagnifyingGlass/>
-                    <input
-                        type="text"
-                        placeholder={t("home.filter.placeholder")}
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </span>
-                <div className="filter_options">
-                    <button className={activeFilter === 'all' ? 'active' : ''} onClick={() => { setActiveFilter('all'); setSearchQuery(''); }}>
-                        {t("home.filter.all")}
-                    </button>
-                    <button className={activeFilter === 'favourites' ? 'active' : ''} onClick={() => { setActiveFilter('favourites'); setSearchQuery(''); }}>
-                        {t("home.filter.favourites")}
-                    </button>
-                    <button className={activeFilter === 'recent' ? 'active' : ''} onClick={() => { setActiveFilter('recent'); setSearchQuery(''); }}>
-                        {t("home.filter.recent")}
-                    </button>
+            {/*This is automatically hidden if there are no mindmaps*/}
+            <Activity mode={mindmaps.length === 0 ? "hidden" : "visible"}>
+                <div className="filtering_section">
+                    <span className="search_bar">
+                        <MagnifyingGlass/>
+                        <input
+                            type="text"
+                            placeholder={t("home.filter.placeholder")}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </span>
+                    <div className="filter_options">
+                        <button className={activeFilter === 'all' ? 'active' : ''} onClick={() => { setActiveFilter('all'); setSearchQuery(''); }}>
+                            {t("home.filter.all")}
+                        </button>
+                        <button className={activeFilter === 'favourites' ? 'active' : ''} onClick={() => { setActiveFilter('favourites'); setSearchQuery(''); }}>
+                            {t("home.filter.favourites")}
+                        </button>
+                        <button className={activeFilter === 'recent' ? 'active' : ''} onClick={() => { setActiveFilter('recent'); setSearchQuery(''); }}>
+                            {t("home.filter.recent")}
+                        </button>
+                    </div>
+                    <div className="results_of_filter">
+                        {filteredMindmaps.length > 0 ? (
+                            filteredMindmaps.map(mindmap => (
+                                <SearchResultItem
+                                    key={mindmap.id}
+                                    mindmap={mindmap}
+                                    navigate={navigate}
+                                    handleToggleFavourite={handleToggleFavourite}
+                                    setSearchQuery={setSearchQuery}
+                                />
+                            ))
+                        ) : (
+                            searchQuery.length > 0 && <p className="no_results_message">No results for "{searchQuery}"</p>
+                        )}
+                    </div>
                 </div>
-                <div className="results_of_filter">
-                    {filteredMindmaps.length > 0 ? (
-                        filteredMindmaps.map(mindmap => (
-                            <SearchResultItem
-                                key={mindmap.id}
-                                mindmap={mindmap}
-                                navigate={navigate}
-                                handleToggleFavourite={handleToggleFavourite}
-                                setSearchQuery={setSearchQuery}
-                            />
-                        ))
-                    ) : (
-                        searchQuery.length > 0 && <p className="no_results_message">No results for "{searchQuery}"</p>
-                    )}
-                </div>
-            </div>
+            </Activity>
         </div>
     );
 };
@@ -241,4 +245,5 @@ const Home = () => {
 //TODO: fix mobile and light mode UIs
 //TODO: fix UI for if there are no mindmaps
 //TODO: fix blur when hovering over create mindmap
+//todo: refactor, this is rly messay
 export default Home;

@@ -21,6 +21,9 @@
     color: colours.$purple_primary_dark_highlight_light;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: auto;
 }
 
 .modal_header {
@@ -61,6 +64,8 @@
 
 // Styling for form elements within modals
 .modal_body {
+    flex-grow: 1;
+    
     input[type="text"],
     input[type="number"],
     textarea,

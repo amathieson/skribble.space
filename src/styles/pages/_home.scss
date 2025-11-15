@@ -2,6 +2,7 @@
 @use "/src/styles/mixins/_colours.scss";
 @use 'sass:math';
 //todo: variable it
+
 /**
  * ---------------------------------------
  * Containers
@@ -194,6 +195,7 @@
                 padding: 0.2rem 0.5rem;
                 border-radius: 10px;
                 white-space: nowrap;
+                text-align: center;
             }
 
             .tag-more {
@@ -210,8 +212,8 @@
             left: 170px;
             top: 50%;
             transform: translateY(-50%);
-            background: #3a2a49; 
-            padding: 10px;
+            background: #3a2a49;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 
@@ -224,14 +226,19 @@
 
             .tags-close-button {
                 position: absolute;
-                top: 0px;
-                right: 0px;
+                top: 0;
+                right: 0;
                 background: none;
                 border: none;
                 color: white;
                 font-size: 1.5rem;
                 cursor: pointer;
                 padding: 0 5px;
+                
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #ffffff;
+                }
             }
         }
 
@@ -384,7 +391,6 @@
     
     //Glassy effect
     background: rgba(30, 30, 30, 0.4);
-    backdrop-filter: blur(10px);
     padding: 15px;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);

@@ -50,7 +50,7 @@ export default [
         },
         languageOptions: {
             globals: {
-                ...vitest.environments.env.globals, // Important for globals
+                ...vitest.environments.env.globals,
             }
         }
     },

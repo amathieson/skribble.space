@@ -38,7 +38,8 @@ $orbit_radius: 77px;
 * Screen Sizes
 * ---------------------------------------
 */
-$breakpoint-xs: 480px;   // Phones
+$breakpoint-xs: 576px;   // Phones
 $breakpoint-sm: 768px;   // Tablets
-$breakpoint-md: 1024px;  // Laptops
-$breakpoint-lg: 1440px;  // Desktop
+$breakpoint-md: 992px;  
+$breakpoint-lg: 1200px;  // Laptops
+$breakpoint-xl: 1400px;  // Desktop

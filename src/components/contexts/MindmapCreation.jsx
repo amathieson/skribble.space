@@ -24,8 +24,27 @@ export function MindmapCreationProvider({ children }) {
         })();
     }, []);
 
+    /**
+     * Uses crypto for a UUID
+     * Falls back to maths function if fails
+     * @returns {`${string}-${string}-${string}-${string}-${string}`|string}
+     */
+    function generateUUID() {
+        // Use the modern, secure method if it's available
+        if (crypto?.randomUUID) {
+            return crypto.randomUUID();
+        }
+
+        // Fallback for insecure contexts (like HTTP on mobile) or older browsers
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0,
+                v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+    
     async function createMindmap(mindmap) {
-        const id = crypto.randomUUID();
+        const id = generateUUID();
         const now = new Date().toISOString();
 
         const mindmapData = {
@@ -67,7 +86,7 @@ export function MindmapCreationProvider({ children }) {
             name: updated.name,
             description: updated.description,
             date_modified: updated.date_modified,
-            tags: updated.tags || ["[no tags]"],
+            tags: updated.tags || [],
             favourited: false,
         });
 

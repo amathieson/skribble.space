@@ -5,7 +5,7 @@ import StarEmpty from '~icons/ph/star-bold';
 import StarFull from '~icons/ph/star-fill';
 import MindmapCreationModal from '@ui/modals/single_page/MindmapCreationModal.jsx';
 import {useTranslation} from 'react-i18next';
-import React, {useMemo, useState, forwardRef, Activity} from 'react';
+import React, {useMemo, useState, forwardRef, Activity, useRef, useEffect} from 'react';
 import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
 import {useNavigate} from "react-router-dom";
 import idb from "@util/indexed_db.js";
@@ -62,6 +62,27 @@ const StarfieldMindmapDisplay = ({ openModal }) => {
     const { t } = useTranslation("common");
     const navigate = useNavigate();
     const [activeFilter, setActiveFilter] = useState('all');
+    const [circleLimit, setCircleLimit] = useState(5); 
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        const containerElement = containerRef.current;
+        if (!containerElement) return;
+
+        const updateLimit = () => {
+            const limitStr = getComputedStyle(containerElement).getPropertyValue('--circle-limit');
+            const limitNum = parseInt(limitStr.trim(), 10);
+            if (!isNaN(limitNum)) {
+                setCircleLimit(limitNum);
+            }
+        };
+        
+        const resizeObserver = new ResizeObserver(updateLimit);
+        resizeObserver.observe(containerElement);
+        updateLimit();
+
+        return () => resizeObserver.disconnect();
+    }, []); 
     
     // Toggles favourite status of a mindmap and updates the local state
     const handleToggleFavourite = async (mindmapId, currentStatus) => {
@@ -155,20 +176,20 @@ const StarfieldMindmapDisplay = ({ openModal }) => {
     }, [mindmaps, activeFilter, searchQuery]);
 
     /**
-     * This returns the most recent 5 mindmaps.
-     * TODO: change how many it returns depending on screen size.
+     * This returns the most recent however many mindmaps.
+     * This is controlled by screen size and css selectors
      */
     const recentMindmaps = useMemo(() => {
         return mindmaps
             .slice()
             .sort((a, b) => new Date(b.date_modified) - new Date(a.date_modified))
-            .slice(0, 5);
-    }, [mindmaps]);
+            .slice(0, circleLimit);
+    }, [mindmaps, circleLimit]);
 
 
     return (
         <div className="starfield_display_area">
-            <div className={`${mindmaps.length > 0 ? 'starfield_action_area' : 'starfield_action_area_empty'}`}>
+            <div ref={containerRef} className={`${mindmaps.length > 0 ? 'starfield_action_area' : 'starfield_action_area_empty'}`}>
                 <CreateMindmapCard onClick={openModal} className={mindmaps.length > 0? '' : 'empty-state-large'}
                 />
                 {recentMindmaps.map((mindmap) => (
@@ -248,6 +269,5 @@ const Home = () => {
 
 //TODO: fix mobile and light mode UIs
 //TODO: fix UI for if there are no mindmaps
-//TODO: fix blur when hovering over create mindmap
 //todo: refactor, this is rly messay
 export default Home;

@@ -10,8 +10,9 @@
  */
 
 .app_container {
-  display: flex;
-  height: 90%;
+    display: flex;
+    flex-grow: 1;
+    min-height: 0;
 }
 
 .home_container.starfield_background {
@@ -46,9 +47,10 @@
 .starfield_display_area {
     display: flex;
     flex-direction: row;
-    width: 100%;
     gap: 4rem;
+    flex: 1;
 
+    //Phone
     @media (max-width: variables.$breakpoint-xs) {
         
         //Phone Vertical Orientation
@@ -60,7 +62,14 @@
         }
     }
     
-        @media (max-width: variables.$breakpoint-md) {
+    //Tablet
+    @media (max-width: variables.$breakpoint-md) {
+
+        //Phone Vertical Orientation
+        @media (max-height: variables.$breakpoint-lg) {
+            flex-direction: column;
+            gap: 0;
+        }
         
         //Phone Landscape Orientation
         @media (max-height: variables.$breakpoint-xs) {
@@ -68,24 +77,72 @@
             align-items: center;
             padding: 0 10px;
             flex-direction: row;
+            display: flex;
 
         }
     }
+    
+    @media (max-width: variables.$breakpoint-lg) {
+        @media (max-height: variables.$breakpoint-sm) and (min-height: 766px) {
+            padding: 2rem;
+        }
+        
+        @media (max-height: variables.$breakpoint-xl) {
+            padding: 2rem;
+            flex-direction: column;
+            flex-wrap: nowrap;
+        }
+    }
+
+    @media (max-width: variables.$breakpoint-xs) {
+        @media (max-height: variables.$breakpoint-md) {
+            padding: 0;
+        }
+    }
+    
 }
 
 .starfield_action_area {
-  flex-grow: 1;              
-  position: relative;
-  max-width: 1200px;
-  max-height: 95%;
+    flex-grow: 1;              
+    position: relative;
+    max-width: 1200px;
+    max-height: 95%;
+    --circle-limit: 5;
 
 
+
+    
+    
+    @media (max-width: variables.$breakpoint-sm) {
+
+        //Phone Vertical Orientation
+        @media (max-height: variables.$breakpoint-lg) {
+            --circle-limit: 1;
+        }
+    }
+
+    @media (max-width: variables.$breakpoint-md) {
+
+        @media (max-height: variables.$breakpoint-lg) {
+            --circle-limit: 2;
+        }}
+
+    @media (max-width: variables.$breakpoint-lg) {
+
+        @media (max-height: variables.$breakpoint-sm) {
+            --circle-limit: 2;
+        }
+
+        @media (max-height: variables.$breakpoint-md) {
+            --circle-limit: 2;
+
+        }
+    }
     @media (max-width: variables.$breakpoint-xs) {
 
         //Phone Vertical Orientation
         @media (max-height: variables.$breakpoint-md) {
-            height: 80%;
-
+            --circle-limit: 0;
         }
     }
 }
@@ -116,14 +173,18 @@
 .filtering_section {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 550px;
     border: 1px solid var(--card-border);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     background: var(--card-background-colour);
     position: relative;
     border-radius: 30px;
     height: 95%;
+    min-height: 0;
+    overflow-y: auto;
+    //Phone Vertical Orientation
+    @media (max-width: variables.$breakpoint-sm) {
+        width: 95%;
+    }
     
     @media (max-width: variables.$breakpoint-md) {
 
@@ -131,6 +192,28 @@
         @media (max-height: variables.$breakpoint-xs) {
            max-height: 85%;
             overflow-x: hidden;
+        }
+
+        //Tablet Vertical Orientation
+        @media (max-height: variables.$breakpoint-lg) {
+            margin: 20px;
+            flex-grow:1;
+            min-height: 0;
+            overflow-y: hidden;
+        }
+    }
+    
+    @media (max-width: variables.$breakpoint-lg) {
+        @media (max-height: variables.$breakpoint-xl) {
+            max-height: 45%;
+        }
+        
+    }
+    
+    @media (min-width: variables.$breakpoint-xl)  {
+        @media (max-height: variables.$breakpoint-lg) {
+            width: 100%;
+            max-width: 550px;
         }
     }
     
@@ -323,25 +406,71 @@
         transform: scale(1.05);
     }
     
-    //Responsiveness
-    
+    //Tablet Portrait
+    @media (max-width: variables.$breakpoint-sm) {
+        @media (max-height: variables.$breakpoint-lg) {
+            margin: 15px 0 0 15px
+        }
+        
+        @media (max-height: variables.$breakpoint-xs) {
+            width: 200px;
+            height: 200px;
+        }
+    }
     //Small
     @media (max-width: variables.$breakpoint-xs)  {
-        @media (orientation: portrait) {
-            margin-top: 25px;
+        @media (max-height: variables.$breakpoint-sm) {
+            margin-top: 55px;
+            width: 250px;
+            height: 250px;
         }
-        
-        @media (orientation: landscape) {
-            
-        }
-        
-        
     }
+    
+  
+    
 }
 // For when there are no mindmaps, makes it bigger
 .create_mindmap_nebula_button.empty-state-large {
     width: 800px;
     height: 800px;
+ 
+    @media (max-width: variables.$breakpoint-lg) {
+        @media (max-height: variables.$breakpoint-xl) {
+            width: 900px;
+            height: 900px;
+        }
+    }
+    @media (max-width: variables.$breakpoint-md) {
+        @media (max-height: variables.$breakpoint-xl) {
+            width: 800px;
+            height: 800px;
+        }
+        @media (max-height: variables.$breakpoint-lg) {
+            width: 700px;
+            height: 700px;
+        }
+      
+    }
+    @media (max-width: variables.$breakpoint-sm) {
+        @media (max-height: variables.$breakpoint-lg) {
+            width: 700px;
+            height: 700px;
+        }
+    }
+    @media (max-width: variables.$breakpoint-xs) {
+        @media (max-height: variables.$breakpoint-md) {
+            width: 300px;
+            height: 300px;
+        }
+        @media (max-height: variables.$breakpoint-sm) {
+            width: 300px;
+            height: 300px;
+        }
+       
+    }
+
+
+
 }
 
 .swirl_vortex {
@@ -390,6 +519,23 @@
   font-size: 1.5rem;
   justify-content: center;
   align-items: center;
+
+    @media (max-width: variables.$breakpoint-lg) {
+        @media (max-height: variables.$breakpoint-xl) {
+            font-size: 4rem;
+        }
+    }
+    @media (max-width: variables.$breakpoint-xs) {
+        @media (max-width: variables.$breakpoint-sm) {
+            font-size:2rem;
+
+        }
+    }
+
+    @media (min-width: variables.$breakpoint-xl) {
+        font-size: 3rem;
+    }
+
 }
 
 .swirl_vortex_circle {
@@ -423,14 +569,58 @@
 
     &:nth-child(2) { top: 5%; left: 45%; animation-delay: -2s; animation-duration: 18s; }
     &:nth-child(3) { top: 67%; left: 5%; animation-delay: -8s; animation-duration: 20s; }
-    &:nth-child(4) { top: 15%; left: 80%; animation-delay: -5s; animation-duration: 16s; }
+    &:nth-child(4) { top: 15%; left: 76%; animation-delay: -5s; animation-duration: 16s; }
     &:nth-child(5) { top: 60%; left: 70%; animation-delay: 0s; animation-duration: 22s; }
     &:nth-child(6) { top: 45%; left: 34%; animation-delay: -12s; animation-duration: 19s; }
 
-    // If too small, hides the recently viewed mindmaps
-    @media (max-width: variables.$breakpoint-md) {
-        display: none;
+    @media (max-width: variables.$breakpoint-sm) {
+
+        //Phone Vertical Orientation
+        @media (max-height: variables.$breakpoint-lg) {
+            &:nth-child(2) { top: 19%; left: 60%; animation-delay: -2s; animation-duration: 18s; }
+        }
     }
+    @media (max-width: variables.$breakpoint-md) {
+
+        @media (max-height: variables.$breakpoint-lg) {
+            &:nth-child(2) { top: 44%; left: 55%; animation-delay: -2s; animation-duration: 18s; }
+            &:nth-child(3) { top: -5%; left: 50%; animation-delay: -8s; animation-duration: 20s; }
+        }}
+    
+    @media (max-width: variables.$breakpoint-lg) {
+
+        @media (max-height: variables.$breakpoint-sm) {
+            &:nth-child(2) {
+                top: 34%;
+                left: 70%;
+                animation-delay: -2s;
+                animation-duration: 18s;
+            }
+            &:nth-child(3) {
+                top: -18%;
+                left: 40%;
+                animation-delay: -8s;
+                animation-duration: 20s;
+            }
+        }
+
+
+        @media (max-height: variables.$breakpoint-md) {
+            &:nth-child(2) {
+                top: 34%;
+                left: 70%;
+                animation-delay: -2s;
+                animation-duration: 18s;
+            }
+            &:nth-child(3) {
+                top: -10%;
+                left: 35%;
+                animation-delay: -8s;
+                animation-duration: 20s;
+            }
+        }
+    }
+    
 }
 
 .mindmap_card {
@@ -449,6 +639,13 @@
     .mindmap_card_wrapper:nth-child(4) & { background-color: #f1a13b; }
     .mindmap_card_wrapper:nth-child(5) & { background-color: #43dcfe; }
     .mindmap_card_wrapper:nth-child(6) & { background-color: #8bf183; }
+
+    @media (max-width: variables.$breakpoint-lg) {
+
+        @media (max-height: variables.$breakpoint-sm) {
+            height: 180px;
+            width: 180px;
+        }}
 }
 
 .mindmap_card_side_panel {

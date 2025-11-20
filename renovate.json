@@ -1,63 +1,75 @@
 {
   "$schema": "https://docs.renovate.json/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "branchPrefix": "renovate/",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "repositories": [
     "amathieson/skribble.space"
   ],
-  // A safe limit on the number of open PRs to prevent being overwhelmed.
   "prConcurrentLimit": 5,
-
   "packageRules": [
-    // GROUP 1: The most important rule. Group all non-major dev dependency updates.
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
       "groupName": "all devDependencies (non-major)"
     },
-
-    // GROUP 2: Keep React and react-dom in sync. This is critical.
     {
-      "matchPackageNames": ["react", "react-dom"],
+      "matchPackageNames": [
+        "react",
+        "react-dom"
+      ],
       "groupName": "react core packages"
     },
-
-    // GROUP 3: Group all Vite-related packages and plugins.
     {
-      "matchPackagePatterns": ["^vite", "^@vitejs/"],
-      "groupName": "vite ecosystem"
+      "groupName": "vite ecosystem",
+      "matchPackageNames": [
+        "/^vite/",
+        "/^@vitejs//"
+      ]
     },
-
-    // GROUP 4: Group all ESLint packages together for easier config updates.
     {
-      "matchPackagePatterns": ["^eslint", "^@eslint/"],
-      "groupName": "eslint ecosystem"
+      "groupName": "eslint ecosystem",
+      "matchPackageNames": [
+        "/^eslint/",
+        "/^@eslint//"
+      ]
     },
-
-    // GROUP 5: Group all testing-related packages.
     {
-      "matchPackagePatterns": ["^vitest", "^@vitest/", "^@testing-library/", "jsdom"],
-      "groupName": "testing libraries"
+      "groupName": "testing libraries",
+      "matchPackageNames": [
+        "/^vitest/",
+        "/^@vitest//",
+        "/^@testing-library//",
+        "/jsdom/"
+      ]
     },
-
-    // GROUP 6: Group all styling and CSS linting packages.
     {
-      "matchPackageNames": ["sass", "stylelint", "postcss-scss"],
+      "matchPackageNames": [
+        "sass",
+        "stylelint",
+        "postcss-scss"
+      ],
       "groupName": "styling & linting tools"
     },
-
-    // GROUP 7: Group icon-related packages.
     {
-      "matchPackagePatterns": ["^@iconify-json/", "unplugin-icons"],
-      "groupName": "icon libraries"
+      "groupName": "icon libraries",
+      "matchPackageNames": [
+        "/^@iconify-json//",
+        "/unplugin-icons/"
+      ]
     },
-
-    // GROUP 8: Group internationalization (i18n) packages.
     {
-      "matchPackageNames": ["i18next", "react-i18next"],
+      "matchPackageNames": [
+        "i18next",
+        "react-i18next"
+      ],
       "groupName": "internationalisation (i18n)"
     }
   ]

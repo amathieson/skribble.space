@@ -451,6 +451,9 @@
     border-width: 4px;
     width: 320px;
     height: 320px;
+    transition: transform 50ms
+    ease-out, border-color 50ms
+    ease-out;
     
     @media (prefers-color-scheme: light) {
         box-shadow: 14px 1px 16px 6px rgba(0, 0, 0, 0.2);
@@ -488,7 +491,10 @@
 .create_mindmap_nebula_button.empty-state-large {
     width: 800px;
     height: 800px;
- 
+    transition: transform 50ms
+    ease-out, border-color 50ms
+    ease-out;
+    
     @media (max-width: variables.$breakpoint-lg) {
         @media (max-height: variables.$breakpoint-xl) {
             width: 900px;

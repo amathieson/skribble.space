@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   server: {
     host: '0.0.0.0',
-    port: 5173, 
+    port: 5174, 
   },
   resolve: {
     alias: {
@@ -27,7 +27,8 @@ export default defineConfig({
       '@ctx': path.resolve(__dirname, 'src/components/contexts'),
       '@nav': path.resolve(__dirname, 'src/components/navigation'),
       '@pages': path.resolve(__dirname, 'src/pages'),
-      '@util': path.resolve(__dirname, 'src/components/utilities')
+      '@util': path.resolve(__dirname, 'src/components/utilities'),
+      '@ui': path.resolve(__dirname, 'src/components/ui')
     }
   },
   build: {
@@ -51,15 +52,9 @@ export default defineConfig({
       }
     }
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
-          @use "/src/styles/mixins/_variables.scss";
-          @use "/src/styles/mixins/_colours.scss";
-        `
-      }
-    }
+  // --- Vitest config ---
+  test: {
+    globals: true,         
+    environment: 'jsdom',  
   },
-
 })

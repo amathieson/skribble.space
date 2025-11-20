@@ -1,7 +1,13 @@
 {
   "title": "Skribble.Space",
   "home": {
-    "title": "Create A Mindmap"
+    "title": "Create A Mindmap",
+    "filter": {
+      "placeholder": "Search by name or tag...",
+      "all": "All",
+      "favourites": "Favourites",
+      "recent": "Recent"
+    }
   },
   "settings_dropdown": {
     "title": "Settings",
@@ -17,6 +23,8 @@
         "description": "Here you can change your grid display settings.",
         "snap_grid": "Enable Snap to Grid",
         "enable_grid": "Show Grid",
+        "basic_settings": "Basic Settings",
+        "appearance": "Appearance",
         "style_of_line": {
             "title": "Line Style:", 
             "solid": "Solid",
@@ -33,6 +41,7 @@
           "hexagon": "Hexagons"
         },
         "size_of_grid": {
+          "title": "Grid Size",
           "x": "X Axis:",
           "y": "Y Axis:"
         }
@@ -48,6 +57,10 @@
       "title": "Create A Mindmap",
       "description": "Here you can create a mindmap.",
       "submit": "Create Mindmap",
+      "tabs": {
+        "general": "General",
+        "appearance": "Appearance"
+      },
       "mindmap_name": {
         "name": "Mindmap Name",
         "placeholder": "Enter your mindmap name here"
@@ -58,7 +71,11 @@
       },
       "mindmap_tags": {
         "name": "Add Mindmap Tags",
-        "placeholder": "Enter your mindmap tags here (optional)"
+        "placeholder": "Enter your mindmap tags here (optional). Press enter to submit a tag."
       }
-    }
+    },
+  "deletion_modal": {
+    "title": "Confirm Deletion",
+    "description": "Are you sure you want to delete this mindmap?"
+  }
 }

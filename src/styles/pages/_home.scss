@@ -1,179 +1,845 @@
-.mindmap_card {
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  background: colours.$card_background;
-  display: grid;
-  grid-template-rows: auto;
-  position: relative;
+@use "/src/styles/mixins/_variables.scss";
+@use "/src/styles/mixins/_colours.scss";
+@use 'sass:math';
+//todo: variable it
 
-  &:hover, &:focus {
-    box-shadow: 0 0 0 2px #b04bff;
-    border-color: #3b1660;
-  }
-  
-  @media (min-width: variables.$breakpoint-sm) {
-    flex-direction: column;
-    
-    .mindmap_preview {
-      display: flex;
-      justify-content: center;
-    }
-  }
+/**
+ * ---------------------------------------
+ * Containers
+ * ---------------------------------------
+ */
 
-  @media (min-width: variables.$breakpoint-md) {
-    flex-direction: column;
-
-  }
-
-  @media (min-width: variables.$breakpoint-lg) {
-    flex-direction: column-reverse;
-  }
-
-  .card_settings_dots {
-    position: absolute;
-    top: 0.75rem;    
-    right: 0.75rem;
-    z-index: 2;
-    cursor: pointer;
-    background: rgba(32, 2, 40, 0.29);
-    color: rgb(32, 2, 40);
-    border-radius: 25%;
-    padding: 0.2rem;
-    transition: background 0.2s;
-    font-size: 1.5rem;
-    align-items: center;
+.app_container {
     display: flex;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.home_container.starfield_background {
+    display: flex;
+    flex: 1;
+  background: var(--background-colour); 
+  position: relative;
+  overflow: hidden;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  main {
+      position: relative;
+      z-index: 1;
+      margin: 0 auto;
+      display: flex;
+      gap: 4rem;
+      width: 100%;
+      
+      @media (min-width: variables.$breakpoint-lg) {
+          padding: 2rem;
+      }
+  }
+}
+
+.starfield_display_area {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+    flex: 1;
+
+    //Phone
+    @media (max-width: variables.$breakpoint-xs) {
+        
+        //Phone Vertical Orientation
+        @media (max-height: variables.$breakpoint-md) {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap:0;
+        }
+    }
+    
+    //Tablet
+    @media (max-width: variables.$breakpoint-md) {
+
+        //Phone Vertical Orientation
+        @media (max-height: variables.$breakpoint-lg) {
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        //Phone Landscape Orientation
+        @media (max-height: variables.$breakpoint-xs) {
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+            flex-direction: row;
+            display: flex;
+
+        }
+    }
+    
+    @media (max-width: variables.$breakpoint-lg) {
+        @media (max-height: variables.$breakpoint-sm) and (min-height: 766px) {
+            padding: 2rem;
+        }
+        
+        @media (max-height: variables.$breakpoint-xl) {
+            padding: 2rem;
+            flex-direction: column;
+            flex-wrap: nowrap;
+        }
+    }
+
+    @media (max-width: variables.$breakpoint-xs) {
+        @media (max-height: variables.$breakpoint-md) {
+            padding: 0;
+        }
+    }
+    
+}
+
+.starfield_action_area {
+    flex-grow: 1;              
+    position: relative;
+    max-width: 1200px;
+    max-height: 95%;
+    --circle-limit: 5;
+
+
+
+    
+    
+    @media (max-width: variables.$breakpoint-sm) {
+
+        //Phone Vertical Orientation
+        @media (max-height: variables.$breakpoint-lg) {
+            --circle-limit: 1;
+        }
+    }
+
+    @media (max-width: variables.$breakpoint-md) {
+
+        @media (max-height: variables.$breakpoint-lg) {
+            --circle-limit: 2;
+        }}
+
+    @media (max-width: variables.$breakpoint-lg) {
+
+        @media (max-height: variables.$breakpoint-sm) {
+            --circle-limit: 2;
+        }
+
+        @media (max-height: variables.$breakpoint-md) {
+            --circle-limit: 2;
+
+        }
+    }
+    @media (max-width: variables.$breakpoint-xs) {
+
+        //Phone Vertical Orientation
+        @media (max-height: variables.$breakpoint-md) {
+            --circle-limit: 0;
+        }
+    }
+}
+
+/**
+* CSS Styling for if there are no mindmaps stored
+ */
+.starfield_action_area_empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: variables.$breakpoint-md) {
+        flex-wrap: wrap;
+        align-content: flex-start;
+        margin-top: 40px;
+    }
+}
+
+/**
+ * ---------------------------------------
+ * All filtering-section related stuff
+ * ---------------------------------------
+ */
+
+.filtering_section {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: var(--card-background-colour);
+    position: relative;
+    border-radius: 30px;
+    height: 95%;
+    min-height: 0;
+    overflow: hidden;
+    @media (prefers-color-scheme: light) {
+        box-shadow: 13px 8px 10px 9px rgba(0, 0, 0, 0.1);
+    }
+    
+    //Phone Vertical Orientation
+    @media (max-width: variables.$breakpoint-sm) {
+        width: 95%;
+    }
+    
+    @media (max-width: variables.$breakpoint-md) {
+
+        //Phone Landscape Orientation
+        @media (max-height: variables.$breakpoint-xs) {
+           max-height: 85%;
+            overflow-x: hidden;
+        }
+
+        //Tablet Vertical Orientation
+        @media (max-height: variables.$breakpoint-lg) {
+            margin: 20px;
+            flex-grow:1;
+            min-height: 0;
+            overflow-y: hidden;
+        }
+    }
+    
+    @media (max-width: variables.$breakpoint-lg) {
+        @media (max-height: variables.$breakpoint-xl) {
+            max-height: 45%;
+        }
+        
+    }
+    
+    @media (min-width: variables.$breakpoint-xl)  {
+        @media (max-height: variables.$breakpoint-lg) {
+            width: 100%;
+            max-width: 550px;
+        }
+    }
+    
+    .search_bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-color: var(--input-background);
+        border: 1px solid colours.$border-color;
+        padding: 14px 20px 14px 50px;
+        border-radius: 30px 30px 0 0;
+
+        svg {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--input-placeholder-text);
+            font-size: 1.2rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            color: var(--input-text);
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out;
+
+            &::placeholder {
+                color: var(--input-placeholder-text);
+            }
+
+        }
+    }
+
+    .filter_options {
+        display: flex;
+
+        button {
+            padding: 8px 20px;
+            background-color: var(--filtering_section_options);
+            border: 1px solid colours.$border-color;
+            color: var(--inactive_filter_text);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+
+            &:hover {
+                background-color: var(--inactive_filter_bg);
+                border-color: var(--inactive_filter_bg);
+            }
+
+            &.active {
+                background-color: var(--active_filter_bg);
+                color: var(--active_filter_text);
+                border-color: var(--active_filter_bg);
+                font-weight: 600;
+            }
+        }
+    }
+
+    .results_of_filter {
+        color: var(--filter_result_text);
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex-grow: 1;
+
+        p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+    }
+
+    .search_result_item {
+        position: relative;
+        min-height: 50px;
+        width: 100%;
+        border-bottom: 1px solid var(--card-border);
+        cursor: pointer;
+        overflow: hidden;
+
+        .search_item_actions {
+            position: absolute;
+            right: 0;
+            display: flex;
+            height: 100%;
+            align-items: center;
+            z-index: 1;
+
+            .action-button {
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                display: flex;
+                border: none;
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                
+                &.edit {
+                    background-color: #3498db; 
+                }
+                &.delete {
+                    background-color: #e74c3c; 
+                }
+            }
+        }
+        .search_item_content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            background: var(--card-background-colour); 
+
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0 0.5rem;
+            border:none;
+            transition: transform 0.3s ease-out;
+
+            &.revealed {
+                transform: translateX(-170px);
+            }
+        }
+        .search_item_title {
+            flex-shrink: 0;
+
+            h4 {
+                max-width: 150px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .tags {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            gap: 8px;
+            overflow: hidden;
+            flex-wrap: wrap;
+            .tag {
+                background-color: purple;
+                color: white;
+                padding: 0.2rem 0.5rem;
+                border-radius: 10px;
+                white-space: nowrap;
+                text-align: center;
+                font-weight: bold;
+                
+                &:hover {
+                    background-color: var(--tag-hover);
+                }
+            }
+
+            .tag-more {
+                background-color: #555;
+                cursor: pointer;
+                font-weight: bold;
+            }
+        }
+
+        //todo: make look better
+        .tags.tags-expanded {
+            position: absolute;
+            z-index: 10;
+            left: 170px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #3a2a49;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+            width: 300px; 
+
+            .tags-close-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0 5px;
+                
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #ffffff;
+                }
+            }
+        }
+
+        .options {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+    }
+}
+/**
+ * ---------------------------------------
+ * All create_mindmap related stuff
+ * ---------------------------------------
+ */
+
+.create_mindmap_nebula_button {
+    border-radius: 50%;
+    position: relative;
+    background-color: red;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-color: var(--vortex-border-colour);
+    border-style: solid;
+    border-width: 4px;
+    width: 320px;
+    height: 320px;
+    
+    @media (prefers-color-scheme: light) {
+        box-shadow: 14px 1px 16px 6px rgba(0, 0, 0, 0.2);
+    }
     
     &:hover {
-      background: rgba(230,230,230,0.85);
+        border-color: var(--vortex-border-colour-hover);
+        transform: scale(1.05);
+    }
+    
+    //Tablet Portrait
+    @media (max-width: variables.$breakpoint-sm) {
+        @media (max-height: variables.$breakpoint-lg) {
+            margin: 15px 0 0 15px
+        }
+        
+        @media (max-height: variables.$breakpoint-xs) {
+            width: 200px;
+            height: 200px;
+        }
+    }
+    //Small
+    @media (max-width: variables.$breakpoint-xs)  {
+        @media (max-height: variables.$breakpoint-sm) {
+            margin-top: 55px;
+            width: 250px;
+            height: 250px;
+        }
+    }
+    
+  
+    
+}
+// For when there are no mindmaps, makes it bigger
+.create_mindmap_nebula_button.empty-state-large {
+    width: 800px;
+    height: 800px;
+ 
+    @media (max-width: variables.$breakpoint-lg) {
+        @media (max-height: variables.$breakpoint-xl) {
+            width: 900px;
+            height: 900px;
+        }
+    }
+    @media (max-width: variables.$breakpoint-md) {
+        @media (max-height: variables.$breakpoint-xl) {
+            width: 800px;
+            height: 800px;
+        }
+        @media (max-height: variables.$breakpoint-lg) {
+            width: 700px;
+            height: 700px;
+        }
+      
+    }
+    @media (max-width: variables.$breakpoint-sm) {
+        @media (max-height: variables.$breakpoint-lg) {
+            width: 700px;
+            height: 700px;
+        }
+    }
+    @media (max-width: variables.$breakpoint-xs) {
+        @media (max-height: variables.$breakpoint-md) {
+            width: 300px;
+            height: 300px;
+        }
+        @media (max-height: variables.$breakpoint-sm) {
+            width: 300px;
+            height: 300px;
+        }
+       
+    }
+
+
+
+}
+
+.swirl_vortex {
+  position: absolute;
+  border-radius: 50%;
+  width: 109%;
+  height: 109%;
+}
+
+.swirl_vortex_overlay {
+  position: absolute;
+  border-radius: 50%;
+  width: 109%;
+  height: 109%;
+  background: conic-gradient(
+                  hsla(355, 100%, 60%, 0.95) 0deg,    
+                  hsla(25, 100%, 55%, 0.95) 60deg,    
+                  hsla(320, 100%, 55%, 0.95) 120deg,   
+                  hsla(260, 90%, 60%, 0.95) 180deg,      
+                  hsla(240, 90%, 60%, 0.95) 240deg,     
+                  hsla(330, 100%, 55%, 0.95) 300deg,    
+                  hsla(355, 100%, 60%, 0.95) 360deg     
+  );
+  filter: blur(15px);
+  mix-blend-mode: multiply;
+  z-index: 3;
+  opacity: 0.8;
+  animation: spin 10s linear infinite;
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
     }
   }
 }
 
-.mindmap_container {
-  display: grid;
-  align-items: stretch;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-  scrollbar-width: thin;
-  scrollbar-color: #c9c9d0 #f6f6f8;
-  padding: 16px;
-  gap: 20px 16px;
-  
-  @media (max-width: variables.$breakpoint-xs) {
-    grid-template-columns: 1fr;
-    margin: 10px;
-    overflow-x: hidden;  
-    box-sizing: border-box;
-  }
-  
-  @media (min-width: variables.$breakpoint-sm) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (min-width: variables.$breakpoint-md) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-  @media (min-width: variables.$breakpoint-lg) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-}
-
-.mindmap_card_header {
-  border-bottom: 2px dashed #200228;
-  margin-bottom: 1em;
-}
-
-
-
-/**
-* ---------------------------------------
-* New Mindmap Card
-* ---------------------------------------
-*/
-.mindmap_card--new {
-  border: 2px dashed #210434;
-  background: rgba(184, 134, 245, 0.56);
-  color: var(--new-card-text);
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: box-shadow 0.2s, border-color 0.2s;
-  
-  &:hover, &:focus {
-    color: var(--new-card-text-hover);
-  }
-}
-
-.mindmap_card_new_content {
+.nebula_label {
+  z-index: 5;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mindmap_card_plus {
-  font-size: 3em;
-  line-height: 1;
-}
-
-.mindmap_card_label {
-  margin-top: 0.5em;
-  font-size: 1.1em;
-  font-weight: 500;
-}
-
-.mindmap_container--empty {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 60vh;
-  padding: 0;
-  width: 100%;
-}
-
-.mindmap_card--expanded {
+  width: 50%;
+  height: 20%;
+  color: var(--font-color);
   font-size: 1.5rem;
-  width: 70%;
-  height: 200px;
+  justify-content: center;
+  align-items: center;
+    font-family: "ADLaM Display", Verdana, Geneva, Tahoma, sans-serif;
+    @media (prefers-color-scheme: light) {
+        text-shadow: 0 2px 4px rgb(0, 0, 0); /* X-offset, Y-offset, blur, color */
+        color: #fdfcfd
+    }
+    @media (max-width: variables.$breakpoint-lg) {
+        @media (max-height: variables.$breakpoint-xl) {
+            font-size: 4rem;
+        }
+    }
+    @media (max-width: variables.$breakpoint-xs) {
+        @media (max-width: variables.$breakpoint-sm) {
+            font-size:2rem;
+
+        }
+    }
+
+    @media (min-width: variables.$breakpoint-xl) {
+        font-size: 3rem;
+    }
+
+}
+
+.swirl_vortex_circle {
+  background-color: var(--vortex-background-colour);
+  z-index: 4;
+  filter: blur(10px);
+  border-radius: 50%;
+  width: 25%;
+  height: 25%;
+  position: absolute;
 }
 
 /**
-* ---------------------------------------
-* Tags
-* ---------------------------------------
-*/
+ * ---------------------------------------
+ * Mindmap Cards - Created
+ * ---------------------------------------
+ */
+@keyframes float {
+    0% { transform: translateY(0px) translateX(0px); }
+    25% { transform: translateY(-10px) translateX(5px); }
+    50% { transform: translateY(5px) translateX(-5px); }
+    75% { transform: translateY(-5px) translateX(10px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
 
-.mindmap_tags {
-  display: inline-block;
-  background-color: var(--tag-bg);
-  color: var(--tag-text);
-  border-radius: 5px;
-  padding: 0.2em 0.8em;
-  font-size: 0.85em;
-  margin-right: 0.5em;
-  margin-top: 0.8em;
-  text-transform: uppercase;
-  font-weight: 550;
+.mindmap_card_wrapper {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    animation: float 15s ease-in-out infinite;
+    
+    &:hover, &:nth-child(2):hover, &:nth-child(3):hover, &:nth-child(4):hover, &:nth-child(5):hover, &:nth-child(6):hover {
+        .mindmap_card { background-color: rgba(255, 255, 255, 0.04); }
+        .mindmap_card_side_panel { outline-color: var(--card-hover-colour); }
+    }
+    
 
+    &:nth-child(2) { top: 5%; left: 45%; animation-delay: -2s; animation-duration: 18s; }
+    &:nth-child(3) { top: 67%; left: 5%; animation-delay: -8s; animation-duration: 20s; }
+    &:nth-child(4) { top: 15%; left: 76%; animation-delay: -5s; animation-duration: 16s; }
+    &:nth-child(5) { top: 60%; left: 70%; animation-delay: 0s; animation-duration: 22s; }
+    &:nth-child(6) { top: 45%; left: 34%; animation-delay: -12s; animation-duration: 19s; }
+
+    @media (max-width: variables.$breakpoint-sm) {
+
+        //Phone Vertical Orientation
+        @media (max-height: variables.$breakpoint-lg) {
+            &:nth-child(2) { top: 19%; left: 60%; animation-delay: -2s; animation-duration: 18s; }
+        }
+    }
+    @media (max-width: variables.$breakpoint-md) {
+
+        @media (max-height: variables.$breakpoint-lg) {
+            &:nth-child(2) { top: 44%; left: 55%; animation-delay: -2s; animation-duration: 18s; }
+            &:nth-child(3) { top: -5%; left: 50%; animation-delay: -8s; animation-duration: 20s; }
+        }}
+    
+    @media (max-width: variables.$breakpoint-lg) {
+
+        @media (max-height: variables.$breakpoint-sm) {
+            &:nth-child(2) {
+                top: 34%;
+                left: 70%;
+                animation-delay: -2s;
+                animation-duration: 18s;
+            }
+            &:nth-child(3) {
+                top: -18%;
+                left: 40%;
+                animation-delay: -8s;
+                animation-duration: 20s;
+            }
+        }
+
+
+        @media (max-height: variables.$breakpoint-md) {
+            &:nth-child(2) {
+                top: 34%;
+                left: 70%;
+                animation-delay: -2s;
+                animation-duration: 18s;
+            }
+            &:nth-child(3) {
+                top: -10%;
+                left: 35%;
+                animation-delay: -8s;
+                animation-duration: 20s;
+            }
+        }
+    }
+}
+
+.mindmap_card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    z-index: 1; 
+
+    background: radial-gradient(circle at 40% 30%,#0000 4%,57%,#000 90%) #FE4365;
+
+    .mindmap_card_wrapper:nth-child(3) & { background-color: #8953ff; }
+    .mindmap_card_wrapper:nth-child(4) & { background-color: #f1a13b; }
+    .mindmap_card_wrapper:nth-child(5) & { background-color: #43dcfe; }
+    .mindmap_card_wrapper:nth-child(6) & { background-color: #8bf183; }
+
+    @media (max-width: variables.$breakpoint-lg) {
+
+        @media (max-height: variables.$breakpoint-sm) {
+            height: 180px;
+            width: 180px;
+        }}
+}
+
+.mindmap_card_side_panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-80%, -50%);
+    z-index: 2; 
+    width: 200px;
+    cursor: pointer;
+    
+    //Glassy effect
+    background: var(--mindmap_side_panel_bg);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    outline: 1px solid;
+  
+    
+    .mindmap_card_wrapper:nth-child(2) & { outline-color: #FE4365;
+        outline-offset: -6px; }
+    .mindmap_card_wrapper:nth-child(3) & {  outline-color: #8953ff;
+        outline-offset: -6px; }
+    .mindmap_card_wrapper:nth-child(4) & {  outline-color: #f1a13b;
+        outline-offset: -6px; }
+    .mindmap_card_wrapper:nth-child(5) & {  outline-color: #43dcfe;
+        outline-offset: -6px; }
+    .mindmap_card_wrapper:nth-child(6) & {  outline-color: #8bf183;
+        outline-offset: -6px; }
+
+    @media(prefers-color-scheme: light) {
+        outline: 3px solid;
+    }
+    
+    h3 {
+        color: white;
+        margin: 0 0 10px 0;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
 }
 
 /**
-* ---------------------------------------
-* Misc
-* ---------------------------------------
-*/
-main {
-  display: flex;
-  overflow: hidden;
+ * ---------------------------------------
+ * Mindmap Tags
+ * ---------------------------------------
+ */
+.tags_container {
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 120px);
+    transform: translateY(-50%);
+    z-index: 20;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.home_container {
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
+.tags_list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: calc(5 * 28px + 4 * 8px);
 }
 
+.mindmap_tag {
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.tags_nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.tags_arrow_button {
+    background-color: var(--tag_arrow_bg);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    width: 12px;
+    height: 28px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    right: 50px;
+    position: relative;
+    padding: 0 14px;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        position: absolute;        
+        color: white;
+    }
+    
+    &:first-child {
+        top: 5px;
+        rotate: 320deg;
+    }
+    
+    &:last-child {
+        bottom: 5px;
+        rotate: 332deg;
+    }
+    
+    &:hover {
+        background-color: rgba(100, 100, 100, 0.7);
+    }
+}

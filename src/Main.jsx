@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import '@scss/_style.scss';
 import App from './App.jsx';
 import {initI18n} from "./components/utilities/i18n.js";
-import StorageManager from "./storage_manager.js";
+import idb from "@util/indexed_db.js";
 
 // Initialise i18next with the default language
 initI18n('en').then(() => {
@@ -17,5 +17,5 @@ initI18n('en').then(() => {
         </StrictMode>
     );
 });
-StorageManager.ReadyCallBack(()=>{
+idb.ReadyCallBack(()=>{
 })

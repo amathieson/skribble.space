@@ -1,16 +1,52 @@
+@use "/src/styles/mixins/_colours.scss";
+
 @media (prefers-color-scheme: light) { 
   :root, input, input::placeholder {
-    color: colours.$foreground_dark;
 
+    //Background
+    --background-colour: #{colours.$background_light};
+    
     //Card
-    --card-border: #000;
+    --card-border: #{colours.$card_border_light};
+    --card-border-hover: #{colours.$card_border_hover_light};
+    --card-background-colour: #{colours.$card_background_light};
+    --card-text: #{colours.$card_text_light};
+    --card-text-hover: #{colours.$card_text_hover_light};
+    --card-settings-colour: #{colours.$purple_tertiary_dark};
+    --card-settings-background: rgba(0, 0, 0, 0.11);
+    --card-settings-colour-hover: #{colours.$purple_primary_dark};
+    --card-settings-background-hover: rgba(0, 0, 0, 0.1);
 
-    //New Card
-    --new-card-text: #000;
-    --new-card-text-hover: #8334cc;
+    //Inputs
+    --input-background: #{colours.$input_bg_light};
+    --input-text: #{colours.$input_text_light};
+    --input-placeholder-text: #{colours.$input_placeholder_text_light};
+
+    //Font
+    --font-color: #{colours.$text_color_light};
+      --tag-hover: #{colours.$tag_hover_light};
+    //Vortex
+    --vortex-background-colour: rgba(255, 255, 255, 0.84);
+    --vortex-border-colour: #2A003B;
+    --vortex-border-colour-hover: #{colours.$accent_colour};
+      
+      //Filtering Section Home
+    --filtering_section_options: #{colours.$filtering_section_options_light};
+      --active_filter_bg: #{colours.$active_filter_bg_light};
+      --active_filter_text: #{colours.$active_filter_text_light};
+      --inactive_filter_text: #{colours.$inactive_filter_text_light};
+      --inactive_filter_bg: #{colours.$inactive_filter_hover_bg_light};
+      --filter_result_text: #{colours.$results_of_filter_text_light};
+
+      //Side Panel
+      --mindmap_side_panel_bg: #{colours.$mindmap_side_panel_colour_light};
+
+      //Tags
+      --tag_arrow_bg: #{colours.$tag_arrow_bg_light};
   }
 
   body {
     background: colours.$background_light;
   }
+  
 }

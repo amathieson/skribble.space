@@ -1,0 +1,67 @@
+@use "/src/styles/mixins/_colours.scss";
+
+.card_dropdown {
+    top: 24px;
+    right: 28px;
+    position: absolute;
+    height: auto;
+    padding: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    background: colours.$purple_primary_dark;
+    z-index: 1;
+    width: 400px;
+    display: none;
+
+    &.open {
+        display: flex; /* Dropdown becomes visible when 'open' class is present */
+    }
+
+
+    button:first-of-type {
+        margin-bottom: 8px;
+    }
+    
+    button {
+        display: flex;
+        align-items: center;
+        gap: 8px; /* Space between icon and text */
+        width: 100%;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        font-size: 14px;
+        font-weight: 600;
+
+        /* Common text styling */
+        color: #fff;
+
+        /* Hover Effect */
+        &:hover {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+
+    /* Edit Button */
+    .edit_button {
+        background-color: #6a0dad; /* Purple tone for edit */
+        &:hover {
+            background-color: #7a1bcc; /* Slightly brighter on hover */
+        }
+    }
+
+    /* Delete Button */
+    .delete_button {
+        background-color: #aa0000; /* Red tone to symbolize delete/danger */
+        &:hover {
+            background-color: #cc0000; /* Brighter red on hover */
+        }
+    }
+}

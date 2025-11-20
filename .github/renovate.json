@@ -1,0 +1,59 @@
+{
+  "$schema": "https://docs.renovate.json/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  // A safe limit on the number of open PRs to prevent being overwhelmed.
+  "prConcurrentLimit": 5,
+
+  "packageRules": [
+    // GROUP 1: The most important rule. Group all non-major dev dependency updates.
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "all devDependencies (non-major)"
+    },
+
+    // GROUP 2: Keep React and react-dom in sync. This is critical.
+    {
+      "matchPackageNames": ["react", "react-dom"],
+      "groupName": "react core packages"
+    },
+
+    // GROUP 3: Group all Vite-related packages and plugins.
+    {
+      "matchPackagePatterns": ["^vite", "^@vitejs/"],
+      "groupName": "vite ecosystem"
+    },
+
+    // GROUP 4: Group all ESLint packages together for easier config updates.
+    {
+      "matchPackagePatterns": ["^eslint", "^@eslint/"],
+      "groupName": "eslint ecosystem"
+    },
+
+    // GROUP 5: Group all testing-related packages.
+    {
+      "matchPackagePatterns": ["^vitest", "^@vitest/", "^@testing-library/", "jsdom"],
+      "groupName": "testing libraries"
+    },
+
+    // GROUP 6: Group all styling and CSS linting packages.
+    {
+      "matchPackageNames": ["sass", "stylelint", "postcss-scss"],
+      "groupName": "styling & linting tools"
+    },
+
+    // GROUP 7: Group icon-related packages.
+    {
+      "matchPackagePatterns": ["^@iconify-json/", "unplugin-icons"],
+      "groupName": "icon libraries"
+    },
+
+    // GROUP 8: Group internationalization (i18n) packages.
+    {
+      "matchPackageNames": ["i18next", "react-i18next"],
+      "groupName": "internationalisation (i18n)"
+    }
+  ]
+}

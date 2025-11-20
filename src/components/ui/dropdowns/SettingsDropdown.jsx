@@ -1,11 +1,10 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { useModal } from "@ctx/Modal";
-
-import '@scss/navigation/_settingsDropdown.scss';
-import GridOverlayModal from "../modals/GridOverlayModal.jsx";
+import React, {useState} from 'react';
+import { useTranslation } from 'react-i18next';
+import GridOverlayModal from '@ui/modals/single_page/GridOverlayModal.jsx';
 import ColourPicker from '@util/ColourPicker.jsx';
-import { exportSvgToPdf } from '@util/export_mindmap.js'; 
+import { exportSvgToPdf } from '@util/export_mindmap.js';
+import BaseDropdown from './BaseDropdown.jsx'; 
+import '@scss/ui/dropdowns/_settingsDropdown.scss';
 
 /**
  * This is the dropdown menu shown by clicking on the three dots in the nav
@@ -14,23 +13,30 @@ import { exportSvgToPdf } from '@util/export_mindmap.js';
  * @returns {Element}
  * @constructor
  */
-const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
+//TODO: fix the flickery dropdown when the settings button is pressed twice- once to close, once to open
+const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, closeDropdown,isDebugEnabled,onDebugToggle      }) => {
     const { t } = useTranslation("common");
-    const { openModal } = useModal();
+    
+    // Modal States. Etc
+    const [modalOpen, setModalOpen] = useState(false);
+    const [debug, setDebugValue] = useState(false);
 
-    return (
-        <div className="settings_dropdown" role="menu" aria-label="Settings">
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
+
+
+    const dropdownContent = (
+        <>
             <div className="settings_section" role="group" aria-labelledby="page-settings">
                 <h4 id="page-settings">{t('settings_dropdown.skribble_settings.title')}</h4>
                 <ul>
                     <li onClick={()=>{document.getElementById('debugoverlaycheck').click()}}>
-                        <label htmlFor="background-color-picker">Debug Overlay</label>
+                        <label htmlFor="debugoverlaycheck">Debug Overlay</label>
                         <input
                             id="debugoverlaycheck"
                             type="checkbox"
-                            value={backgroundColour}
-                            onChange={(e) => setBackgroundColour(e.target.value)}
-                            aria-label="Background Colour Picker"
+                            value={isDebugEnabled}
+                            onChange={(e) => onDebugToggle(e.target.checked)}
                         />
                     </li>
                 </ul>
@@ -39,7 +45,6 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                 <h4 id="page-settings">{t('settings_dropdown.page_settings.title')}</h4>
                 <ul>
                     <li>
-                        <label htmlFor="background-color-picker">{t('settings_dropdown.page_settings.background_colour')}</label>
                         <ColourPicker
                             value={backgroundColour}
                             id={"background-color-picker"}
@@ -47,7 +52,7 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                             label={t('settings_dropdown.page_settings.background_colour')}
                         />
                     </li>
-                    <li tabIndex={0} onClick={() => openModal(<GridOverlayModal />, t("settings_dropdown.page_settings.grid_overlay_modal.title"))}>{t("settings_dropdown.page_settings.grid_display")}</li>
+                    <li tabIndex={0} onClick={openModal}>{t("settings_dropdown.page_settings.grid_overlay_modal.title")}</li>
                 </ul>
             </div>
             <div className="settings_section" role="group" aria-labelledby="page-settings">
@@ -58,7 +63,24 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour }) => {
                     >{t("settings_dropdown.import_export_settings.export")}</li>
                 </ul>
             </div>
+        </>
+    )
+    
+    return (
+        <div className={"settings_dropdown"}>
+            <BaseDropdown
+                isOpen={isOpen}
+                content={dropdownContent}
+                closeDropdown={closeDropdown}
+                unfurlDirection={"bottom"}
+            />
+
+            <GridOverlayModal
+                isOpen={modalOpen}
+                closeModal={closeModal}
+            />
         </div>
+     
     );
 };
 

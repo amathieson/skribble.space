@@ -1,0 +1,200 @@
+.mindmap_create_modal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-x: clip;
+    max-height: 80vh;
+    min-height: 65vh;
+    overflow-y: auto; 
+    width: 600px;
+    box-shadow: 0 0 20px 0 var(--vortex-border-colour-hover);
+    
+    .colour_picker_container {
+        display: block;
+        align-items: center;
+        
+        .modal_option {
+            align-self: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            span {
+                margin-left: 0.5rem;
+            }
+        }
+       
+    }
+    .modal_description {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+        
+    }
+
+    .modal_option {
+        background-color: rgba(0, 0, 0, 0.1098039216);
+        padding: 10px;
+        border-radius: 12px;
+    }
+    
+    .modal_options:nth-of-type(3) {
+        display: flex;
+        justify-content: center;
+    }
+
+    .modal_options:nth-of-type(2) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        border-bottom: 1px solid #ccc;
+
+        .modal_option {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        span {
+            margin-left: 0.5rem;
+        }
+    }
+
+
+    .modal_options:first-of-type {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #ccc;
+
+        .modal_option:first-of-type {
+            input {
+                width: 100%;
+                margin-top:0.5rem;
+            }
+        }
+
+        .modal_option:last-of-type {
+            textarea {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+
+    }
+
+    //Generic styling for the inputs
+    input[type="checkbox"],
+    input[type="color"] {
+        width: 1.5rem;
+        height: 1.5rem;
+        flex-shrink: 0;
+        margin: 0;
+        border: none;
+        cursor: pointer;
+    }
+
+    //Attempt to make the colour wheel more in style with the check boxes
+    input[type="color"] {
+        appearance: none;
+        border: 1px solid rgb(118, 118, 118);
+        border-radius: 3px;
+        padding: 0;
+        background-color: transparent;
+
+        &::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        &::-webkit-color-swatch {
+            border: none;
+            border-radius: 3px;
+            background-color: inherit;
+        }
+
+        // For Firefox
+        &::-moz-color-swatch {
+            border: none;
+            border-radius: 3px;
+            background-color: inherit;
+        }
+    }
+
+    .submit_button {
+        background: #af75e5;
+        height: 4vh;
+        font-weight: 700;
+        color: white;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+    }
+
+    .submit_button:hover {
+        background: #9950c8;
+    }
+    
+    #description, #tags, #name {
+        margin-top:0.5rem;
+    }
+
+    .tags_section {
+        display: flex;
+        flex-direction: column;
+
+        .tags_input_container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            input#tags-input {
+                border: none;
+                background: transparent;
+                outline: none;
+                flex-grow: 1;
+                font-size: 0.95rem;
+                color: #ddd;
+
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.5);
+                }
+            }
+
+            .tag {
+                display: flex;
+                align-items: center;
+                padding: 0.4rem 0.6rem;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 6px;
+                font-size: 0.9rem;
+                color: #fff;
+
+                .remove_tag {
+                    margin-left: 0.5rem;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    color: #f55;
+                    font-size: 1rem;
+
+                    &:hover {
+                        color: #ff8888;
+                    }
+                }
+
+                .remove_tag_icon {
+                    font-size: 0.7rem;
+                    display: flex;
+                }
+            }
+        }
+    }
+}

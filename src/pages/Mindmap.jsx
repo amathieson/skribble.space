@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import WebMindMap from "/src/WebMindmap.jsx";
 import ToolFAB from "/src/components/navigation/ToolFAB.jsx";
-import Storage_manager from "../storage_manager.js";
+import idb from "@util/indexed_db.js";
 import LZString from 'lz-string';
 import {useParams} from "react-router-dom";
-import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";
+import { useAppContext } from "@ctx/AppContext.jsx";
+import {useColourSettings} from "@ctx/MindmapDrawingContext.jsx";
 
 function minifyXML(xmlString) {
     return xmlString
@@ -15,26 +16,40 @@ function minifyXML(xmlString) {
 }
 function Mindmap() {
     const { id } = useParams();
-    const { mindmaps} = useMindmapCreation();
+    const [mindmapData, setMindmapData] = useState(null);
+    const { setCurrentMindmap } = useAppContext();
 
-    let mindmapData;
-    if (id) {
-        mindmapData = mindmaps.find(m => m.id === id);
-    }
-
-    // fallback or initial values
-    const [penColor] = useState('#000000');
-    const [backgroundColour, setBackgroundColour] = useState(mindmapData?.background_colour || "#ffffff");
+    const {
+        penColor,
+        backgroundColour,
+        setBackgroundColour,
+        isDebugMode
+    } = useColourSettings();
 
     useEffect(() => {
-        setBackgroundColour(mindmapData?.background_colour || "#ffffff");
-    }, [mindmapData]);
+        if (!id) return;
+
+        (async () => {
+            try {
+                const data = await idb.GetMindmapData(id);
+                if (data) {
+                    setMindmapData({
+                        ...data,
+                        paths: LZString.decompressFromBase64(data.paths)
+                    });
+                    setBackgroundColour(data.background_colour || "#ffffff");
+                    setCurrentMindmap(data);
+                }
+            } catch (err) {
+                console.error("Failed to load mindmap data:", err);
+            }
+        })();
+    }, [id]);
     
-    function handleMinMapAction(e, document_content) {
-        // Save logic as before
-        Storage_manager.SaveDocument(
-            id || 1,
-            LZString.compressToBase64(minifyXML(document_content))
+    function handleMinMapAction(e, paths) {
+        idb.SaveDocument(
+            id,
+            LZString.compressToBase64(minifyXML(paths))
         ).catch(err => {console.error(err)});
     }
 
@@ -46,9 +61,11 @@ function Mindmap() {
     return (
         <>
             <WebMindMap
+                debugMode={isDebugMode}
                 penColor={penColor}
                 backgroundColour={backgroundColour}
                 actionDone={handleMinMapAction}
+                initialSVG={mindmapData?.paths || ""}
             />
             <ToolFAB />
         </>

@@ -1,26 +1,33 @@
-import React from "react";
+import React, {useState} from 'react';
 import '@scss/navigation/navbars/_navbarMindmap.scss';
 import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import LeftArrow from '~icons/ph/arrow-left-bold';
 import RightArrow from '~icons/ph/arrow-right-bold';
-import { useDropdown } from "@ctx/Dropdown.jsx";
-import SettingsDropdown from "../dropdowns/SettingsDropdown.jsx";
-import {Link} from "react-router-dom";
-import ColourPicker from "@util/ColourPicker.jsx";
-import { useColourSettings } from "@ctx/MindmapDrawingContext.jsx";
-import { useAppContext } from "@ctx/AppContext.jsx";
-import {useTranslation} from "react-i18next";
+import SettingsDropdown from '@ui/dropdowns/SettingsDropdown.jsx';
+import {Link} from 'react-router-dom';
+import ColourPicker from '@util/ColourPicker.jsx';
+import { useColourSettings } from '@ctx/MindmapDrawingContext.jsx';
+import { useAppContext } from '@ctx/AppContext.jsx';
+import {useTranslation} from 'react-i18next';
 
-
+/**
+ * This is the mindmap page navbar. It contains the mindmap name, colour picker
+ * and other tools for the mindmap page.
+ * @returns {Element}
+ * @constructor
+ */
 const NavbarMindmap = () => {
-    const { toggleDropdown, isDropdownOpen } = useDropdown();
-    const { penColor, setPenColor, backgroundColour, setBackgroundColour } = useColourSettings();
+    const { penColor, setPenColor, backgroundColour, setBackgroundColour,  isDebugMode,
+        setIsDebugMode } = useColourSettings();
     const { currentMindmap } = useAppContext();
     const { t } = useTranslation("common");
-    const isOpen = isDropdownOpen("settingsMenu");
 
+    // Dropdown States. Etc
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const closeDropdown = () => setDropdownOpen(false);
+    const toggleDropdown = () => setDropdownOpen(prev => !prev);
     return (
-        <header>
+        <header className={"navbar_mindmap"}>
             <div className="toolbar">
                 <Link to="/" className="nav_icons"><LeftArrow className="nav_icons" /></Link>
                 <h1>{currentMindmap?.name || t("title")}</h1>
@@ -35,22 +42,24 @@ const NavbarMindmap = () => {
                     <div className="nav_icon_with_dropdown">
                         <SettingsDots
                             className="nav_icons"
-                            onClick={() => toggleDropdown("settingsMenu")}
+                            onClick={toggleDropdown}
                         />
-                        {isOpen && (
                             <div className="dropdown_container">
                                 <SettingsDropdown
                                     backgroundColour={backgroundColour}
                                     setBackgroundColour={setBackgroundColour}
+                                    isOpen={dropdownOpen}
+                                    closeDropdown={closeDropdown}
+                                    isDebugEnabled={isDebugMode}
+                                    onDebugToggle={setIsDebugMode}
                                 />
                             </div>
-                        )}
                     </div>
                 </div>
             </div>
 
             <div className="toolbar_sub">
-                <LeftArrow id={"leftarrow"} />
+                <LeftArrow id={"leftarrow"}/>
                 <h3>PAGE 1</h3>
                 <RightArrow id={"rightarrow"} />
             </div>

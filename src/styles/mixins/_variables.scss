@@ -9,10 +9,11 @@ $tool_bar_height: 36pt;
 $toolbar_icon_size: $tool_bar_height * 0.6;
 
 //Sub Tool Bar
-$sub_toolbar_height: 20pt;
+$sub_toolbar_height_mindmap: 20pt;
+$sub_toolbar_height_home: 6pt;
 
 //Header
-$nav_height: $sub_toolbar_height + $tool_bar_height;
+$nav_height: $sub_toolbar_height_mindmap + $tool_bar_height;
 
 /**
 * ---------------------------------------
@@ -37,7 +38,8 @@ $orbit_radius: 77px;
 * Screen Sizes
 * ---------------------------------------
 */
-$breakpoint-xs: 480px;   // Phones
+$breakpoint-xs: 576px;   // Phones
 $breakpoint-sm: 768px;   // Tablets
-$breakpoint-md: 1024px;  // Laptops
-$breakpoint-lg: 1440px;  // Desktop
+$breakpoint-md: 992px;  
+$breakpoint-lg: 1200px;  // Laptops
+$breakpoint-xl: 1400px;  // Desktop

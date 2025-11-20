@@ -5,7 +5,10 @@
       "@scss/*": ["src/styles/*"],
       "@lang/*": ["src/locales/*"],
       "@ctx/*": ["src/components/contexts/*"],
-      "@pages/*": ["src/pages/*"]
+      "@nav/*": ["src/components/navigation/*"],
+      "@pages/*": ["src/pages/*"],
+      "@util/*": ["src/components/utilities/*"],
+      "@ui/*": ["src/components/ui/*"]
     }
   }
 }

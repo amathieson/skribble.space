@@ -39,8 +39,9 @@ export default defineConfig({
             return null;
           if (id.includes('iconify'))
             return 'iconify'
-          if (id.includes('react') && id.includes('node_modules'))
-            return 'react'
+          //   TODO: Fix this later cause it breaks things
+          // if (id.includes('react') && id.includes('node_modules'))
+          //   return 'react'
           if (id.includes('node_modules')) {
             return 'vendor';
           }

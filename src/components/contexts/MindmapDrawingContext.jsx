@@ -16,7 +16,8 @@ export const MindmapDrawingProvider = ({ children }) => {
 
   // The background colour of the mindmap
   const [backgroundColour, _setBackgroundColour] = useState("#ffffff");
-
+    const [isDebugMode, setIsDebugMode] = useState(false);
+    
   // Load saved background color when currentMindmap changes
   useEffect(() => {
     if (currentMindmap?.id) {
@@ -36,7 +37,8 @@ export const MindmapDrawingProvider = ({ children }) => {
     }
   };
 
-  const value = { penColor, setPenColor, backgroundColour, setBackgroundColour };
+  const value = { penColor, setPenColor, backgroundColour, setBackgroundColour, isDebugMode,
+      setIsDebugMode };
 
   return (
       <MindmapDrawingContext.Provider value={value}>

@@ -16,13 +16,6 @@
     --card-settings-background: rgba(0, 0, 0, 0.11);
     --card-settings-colour-hover: #{colours.$purple_primary_dark};
     --card-settings-background-hover: rgba(0, 0, 0, 0.1);
-    
-    //New Card
-    --new-card-border: #{colours.$new_card_border_light};
-    --new-card-border-hover: #{colours.$new_card_border_hover_light};
-    --new-card-background-colour: #{colours.$new_card_background_light};
-    --new-card-text: #{colours.$new_card_text_light};
-    --new-card-text-hover: #{colours.$new_card_text_hover_light};
 
     //Inputs
     --input-background: #{colours.$input_bg_light};
@@ -30,13 +23,26 @@
     --input-placeholder-text: #{colours.$input_placeholder_text_light};
 
     //Font
-    --font-color: #{colours.$text-color-light};
-
+    --font-color: #{colours.$text_color_light};
+      --tag-hover: #{colours.$tag_hover_light};
     //Vortex
-    --vortex-background-colour: #fff;
+    --vortex-background-colour: rgba(255, 255, 255, 0.84);
     --vortex-border-colour: #2A003B;
     --vortex-border-colour-hover: #{colours.$accent_colour};
+      
+      //Filtering Section Home
+    --filtering_section_options: #{colours.$filtering_section_options_light};
+      --active_filter_bg: #{colours.$active_filter_bg_light};
+      --active_filter_text: #{colours.$active_filter_text_light};
+      --inactive_filter_text: #{colours.$inactive_filter_text_light};
+      --inactive_filter_bg: #{colours.$inactive_filter_hover_bg_light};
+      --filter_result_text: #{colours.$results_of_filter_text_light};
 
+      //Side Panel
+      --mindmap_side_panel_bg: #{colours.$mindmap_side_panel_colour_light};
+
+      //Tags
+      --tag_arrow_bg: #{colours.$tag_arrow_bg_light};
   }
 
   body {

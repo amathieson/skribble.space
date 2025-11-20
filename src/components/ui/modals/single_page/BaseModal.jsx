@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {Activity, useEffect} from 'react';
 import Cross from '~icons/ph/x-bold';
 import '@scss/ui/modals/_baseModal.scss';
 
@@ -9,7 +9,7 @@ import '@scss/ui/modals/_baseModal.scss';
  * @returns {React.JSX.Element}
  */
 export const BaseModal = (props) => {
-    const {isOpen, title, content, closeModal} = props;
+    const { isOpen, title, content, closeModal, onSubmit, submitLabel } = props;
 
     // Makes you able to escape out of the modal
     useEffect(() => {
@@ -42,6 +42,17 @@ export const BaseModal = (props) => {
                 <div className="modal_body">
                     {content}
                 </div>
+                <Activity mode={onSubmit === undefined ? undefined : onSubmit}>
+                    <div className="modal_footer">
+                        <button
+                            type="button"
+                            className="submit_button"
+                            onClick={onSubmit}
+                        >
+                            {submitLabel || 'Submit'}
+                        </button>
+                    </div>
+                </Activity>
             </div>
         </div>
     );

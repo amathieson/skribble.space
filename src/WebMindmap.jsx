@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {Activity, useEffect, useRef, useState} from 'react';
 import '@scss/_style.scss';
 import GridOverlay, {useGridOverlay} from "@ctx/GridOverlay.jsx";
 import { useColourSettings } from "@ctx/MindmapDrawingContext.jsx";
 
-const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour, initialSVG = "" }) => {
+const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour, initialSVG = "", debugMode}) => {
     const canvasRef = useRef(null);
     const svgRef = useRef(null);
     const svgBackRef = useRef(null);
@@ -12,7 +12,6 @@ const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour, initialSVG
     const [viewPort, setViewPort] = useState([0,0,0,0]);
     const { gridEnabled } = useGridOverlay();
     const { penColor } = useColourSettings();
-    
     const [debug, setDebug] = useState({
         penSupport: false,
         penDown: false,
@@ -301,20 +300,23 @@ const WebMindMap = ({ actionDone, onViewPortChange, backgroundColour, initialSVG
     
     return (
         <div className="canvas">
-            <div id="debug">
-                {Object.entries(debug).map(([key, value]) => (
-                    <label key={key}>
-                        {key.charAt(0).toUpperCase() + key.slice(1)}:{' '}
-                        <code>
-                            {Array.isArray(value)
-                                ? value.join(', ')
-                                : typeof value === 'boolean'
-                                    ? String(value)
-                                    : value}
-                        </code>
-                    </label>
-                ))}
-            </div>
+            <Activity mode={debugMode ? "visible" : "hidden"}>
+                <div id="debug">
+                    {Object.entries(debug).map(([key, value]) => (
+                        <label key={key}>
+                            {key.charAt(0).toUpperCase() + key.slice(1)}:{' '}
+                            <code>
+                                {Array.isArray(value)
+                                    ? value.join(', ')
+                                    : typeof value === 'boolean'
+                                        ? String(value)
+                                        : value}
+                            </code>
+                        </label>
+                    ))}
+                </div>
+            </Activity>
+         
             {/*todo: change to use user set colour upon mindmap creation*/}
             <canvas
                 id="canvas"

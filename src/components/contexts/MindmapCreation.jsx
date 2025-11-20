@@ -93,14 +93,31 @@ export function MindmapCreationProvider({ children }) {
         setMindmaps(prev =>
             prev.map(m =>
                 m.id === id
-                    ? { id, name: updated.name, description: updated.description, date_modified: updated.date_modified, tags: updated.tags || ["[no tags]"] }
+                    ? { id, name: updated.name, description: updated.description, date_modified: updated.date_modified, tags: updated.tags || [] }
                     : m
             )
         );
     }
 
+    /**
+     * Deletes a mindmap from IndexedDB
+     * @param id
+     * @returns {Promise<void>}
+     */
+    async function deleteMindmap(id) {
+        if (!id) return; 
+
+        try {
+            await idb.DeleteMindmap(id);
+            setMindmaps(prev => prev.filter(mindmap => mindmap.id !== id));
+
+        } catch (err) {
+            console.error(`Failed to delete mindmap with id: ${id}`, err);
+        }
+    }
+
     return (
-        <MindmapCreationContext.Provider value={{ mindmaps, setMindmaps, createMindmap, updateMindmap }}>
+        <MindmapCreationContext.Provider value={{ mindmaps, setMindmaps, createMindmap, updateMindmap, deleteMindmap }}>
             {children}
         </MindmapCreationContext.Provider>
     );

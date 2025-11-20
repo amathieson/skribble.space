@@ -73,5 +73,9 @@
         "name": "Add Mindmap Tags",
         "placeholder": "Enter your mindmap tags here (optional). Press enter to submit a tag."
       }
-    }
+    },
+  "deletion_modal": {
+    "title": "Confirm Deletion",
+    "description": "Are you sure you want to delete this mindmap?"
+  }
 }

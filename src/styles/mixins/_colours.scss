@@ -11,13 +11,14 @@ $purple_secondary_dark: #3d245a;
 $purple_tertiary_dark: #4A2277;
 $border_dark: #2A003B;
 $accent_colour: hsla(355, 100%, 60%, 0.95);
+
 /**
 * ---------------------------------------
 * Background Colours
 * ---------------------------------------
 */
 $background_dark: #1e1a20;
-$background_light: #e2dde7;         
+$background_light: #F7F5FA;
 
 
 /**
@@ -28,6 +29,25 @@ $background_light: #e2dde7;
 
 //Colour of the FAB Tool Circle Icons
 $circle_colour: #F4B3FF;
+
+/**
+* ---------------------------------------
+* Filtering Section
+* ---------------------------------------
+*/
+$filtering_section_options_dark: transparent;
+$active_filter_bg_dark: #7f5af0;
+$active_filter_text_dark: #ffffff;
+$inactive_filter_text_dark: #bebebe;
+$inactive_filter_hover_bg_dark: #3a3a52;
+$results_of_filter_text_dark: #ffffff;
+
+$filtering_section_options_light: #ab8de8;
+$active_filter_bg_light: #3b2e6b;
+$active_filter_text_light: #ffffff;
+$inactive_filter_text_light: #1a1818;
+$inactive_filter_hover_bg_light: #9967ff;
+$results_of_filter_text_light: #362567;
 
 /**
 * ---------------------------------------
@@ -47,19 +67,16 @@ $card_border_dark: #4a2f5d;
 $card_border_hover_dark: #8a5299;  
 $card_text_dark: #e8e4ed;         
 $card_text_hover_dark: #b67dd4;
-
-$new_card_background_dark: #532d6d;
-$new_card_border_dark: #8a4bb2;    
-$new_card_border_hover_dark: #8a5299;
-$new_card_text_dark: #E8E4ED;
-$new_card_text_hover_dark: #F0E6FF; 
+$mindmap_side_panel_colour_dark: rgba(30, 30, 30, 0.4);
 
 //Light
-$card_background_light: #ffffff;      
+$card_background_light: #c797d0;      
 $card_border_light: #e0d5ee;         
 $card_border_hover_light: #9b6cc3;    
 $card_text_light: #452760;           
 $card_text_hover_light: #5c2f84;    
+
+$mindmap_side_panel_colour_light: rgba(30, 30, 30, 0.63);
 
 /**
 * ---------------------------------------
@@ -71,29 +88,24 @@ $card_text_hover_light: #5c2f84;
 $input_bg_dark: #2b2b40;
 $input_text_dark: #ffffff;
 $input_placeholder_text_dark: #bebebe;
-
+$text_color_dark: #E0E0E0;
+$tag_hover_dark: rgba(206, 147, 241, 0.57);
 //Light
-$input_placeholder_text_light: #504949;
+$input_placeholder_text_light: #2f2b2b;
 $input_bg_light: #ecdef5;
 $input_text_light: #131313;
+$text_color_light: #000000;
+$tag_hover_light: rgba(48, 19, 93, 0.84);
 
 
-
-//togothrough
-$new_card_background_light: #e2ccff;  
-$new_card_border_light: #b184dd;      
-$new_card_border_hover_light: #9b6cc3; 
-$new_card_text_light: #452760;        
-$new_card_text_hover_light: #5c2f84;
-
-
-$text-color: #E0E0E0;
-$text-color-light: #B0B0B0;
+/**
+Taf
+ */
+$tag_arrow_bg_dark: rgba(80, 80, 80, 0.5);
+$tag_arrow_bg_light: rgba(77, 32, 126, 0.84);
 
 $primary-accent: #7f5af0; 
 $border-color: #41415c;
-$active-filter-bg: $primary-accent;
-$active-filter-text: #ffffff;
-$inactive-filter-hover-bg: #3a3a52;
+
 
 

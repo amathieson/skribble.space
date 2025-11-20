@@ -5,6 +5,7 @@ import idb from "@util/indexed_db.js";
 import LZString from 'lz-string';
 import {useParams} from "react-router-dom";
 import { useAppContext } from "@ctx/AppContext.jsx";
+import {useColourSettings} from "@ctx/MindmapDrawingContext.jsx";
 
 function minifyXML(xmlString) {
     return xmlString
@@ -18,9 +19,12 @@ function Mindmap() {
     const [mindmapData, setMindmapData] = useState(null);
     const { setCurrentMindmap } = useAppContext();
 
-    // fallback or initial values
-    const [penColor] = useState('#000000');
-    const [backgroundColour, setBackgroundColour] = useState(mindmapData?.background_colour || "#ffffff");
+    const {
+        penColor,
+        backgroundColour,
+        setBackgroundColour,
+        isDebugMode
+    } = useColourSettings();
 
     useEffect(() => {
         if (!id) return;
@@ -57,6 +61,7 @@ function Mindmap() {
     return (
         <>
             <WebMindMap
+                debugMode={isDebugMode}
                 penColor={penColor}
                 backgroundColour={backgroundColour}
                 actionDone={handleMinMapAction}

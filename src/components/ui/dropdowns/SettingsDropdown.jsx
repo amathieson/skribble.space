@@ -14,11 +14,13 @@ import '@scss/ui/dropdowns/_settingsDropdown.scss';
  * @constructor
  */
 //TODO: fix the flickery dropdown when the settings button is pressed twice- once to close, once to open
-const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, closeDropdown }) => {
+const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, closeDropdown,isDebugEnabled,onDebugToggle      }) => {
     const { t } = useTranslation("common");
     
     // Modal States. Etc
     const [modalOpen, setModalOpen] = useState(false);
+    const [debug, setDebugValue] = useState(false);
+
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
 
@@ -29,13 +31,12 @@ const SettingsDropdown = ({ backgroundColour, setBackgroundColour, isOpen, close
                 <h4 id="page-settings">{t('settings_dropdown.skribble_settings.title')}</h4>
                 <ul>
                     <li onClick={()=>{document.getElementById('debugoverlaycheck').click()}}>
-                        <label htmlFor="background-color-picker">Debug Overlay</label>
+                        <label htmlFor="debugoverlaycheck">Debug Overlay</label>
                         <input
                             id="debugoverlaycheck"
                             type="checkbox"
-                            value={backgroundColour}
-                            onChange={(e) => setBackgroundColour(e.target.value)}
-                            aria-label="Background Colour Picker"
+                            value={isDebugEnabled}
+                            onChange={(e) => onDebugToggle(e.target.checked)}
                         />
                     </li>
                 </ul>

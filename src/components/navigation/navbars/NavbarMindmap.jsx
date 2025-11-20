@@ -17,7 +17,8 @@ import {useTranslation} from 'react-i18next';
  * @constructor
  */
 const NavbarMindmap = () => {
-    const { penColor, setPenColor, backgroundColour, setBackgroundColour } = useColourSettings();
+    const { penColor, setPenColor, backgroundColour, setBackgroundColour,  isDebugMode,
+        setIsDebugMode } = useColourSettings();
     const { currentMindmap } = useAppContext();
     const { t } = useTranslation("common");
 
@@ -49,6 +50,8 @@ const NavbarMindmap = () => {
                                     setBackgroundColour={setBackgroundColour}
                                     isOpen={dropdownOpen}
                                     closeDropdown={closeDropdown}
+                                    isDebugEnabled={isDebugMode}
+                                    onDebugToggle={setIsDebugMode}
                                 />
                             </div>
                     </div>

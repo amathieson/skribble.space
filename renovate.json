@@ -5,7 +5,9 @@
   ],
   "branchPrefix": "renovate/",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-
+  "repositories": [
+    "amathieson/skribble.space"
+  ],
   // A safe limit on the number of open PRs to prevent being overwhelmed.
   "prConcurrentLimit": 5,
 

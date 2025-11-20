@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.renovate.json/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":disableDependencyDashboard"
   ],
   "branchPrefix": "renovate/",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
@@ -9,6 +10,9 @@
     "amathieson/skribble.space"
   ],
   "prConcurrentLimit": 5,
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
   "packageRules": [
     {
       "matchUpdateTypes": [

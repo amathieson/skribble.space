@@ -32,3 +32,6 @@ jobs:
           DEFAULT_BRANCH: "master"
           USE_NPM_INSTALL: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSL_CERT_SECRET: ${{ secrets.ROOT_CA }}
+

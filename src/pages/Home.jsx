@@ -224,6 +224,8 @@ const StarfieldMindmapDisplay = ({  openCreationModal, openDeletionModal }) => {
 
     const hasMindmaps = mindmaps.length > 0;
 
+    const isEmpty = mindmaps.length === 0;
+
     return (
         <div className="starfield_display_area">
             <div ref={containerRef} className={`starfield_action_area ${hasMindmaps ? '' : 'no-mindmaps'}`}>

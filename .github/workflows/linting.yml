@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Install ESLint GitHub formatter
-        run: npm install --save-dev @eslint/github-action-formatter
+        run: npm install --save-dev eslint-formatter-github
 
       - name: Detect changed JS/TS files
         id: changed
@@ -58,7 +58,7 @@ jobs:
           npx eslint ${{ steps.changed.outputs.files }} \
             --cache \
             --cache-location .eslintcache \
-            --format @eslint/github-action-formatter
+            --format eslint-formatter-github
 
   stylelint:
     name: Stylelint (changed files)

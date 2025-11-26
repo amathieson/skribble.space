@@ -65,7 +65,7 @@ jobs:
           npx eslint ${{ steps.changed.outputs.files }} \
             --cache \
             --cache-location .eslintcache \
-            --format eslint-formatter-github
+            --format eslint-formatter-github || exit $?
 
   stylelint:
     name: Stylelint (changed files)

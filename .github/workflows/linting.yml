@@ -55,6 +55,8 @@ jobs:
 
       - name: Run ESLint with annotations
         if: steps.changed.outputs.files != ''
+        env: 
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         run: |
           npx eslint ${{ steps.changed.outputs.files }} \
             --cache \

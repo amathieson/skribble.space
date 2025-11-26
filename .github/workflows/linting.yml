@@ -50,13 +50,17 @@ jobs:
           else
             FILES=$(git ls-files '*.js' '*.jsx')
           fi
+      
+          # Remove Windows line endings and convert newlines to spaces
           FILES=$(echo "$FILES" | tr -d '\r' | tr '\n' ' ')
+      
+          # Save to GitHub Actions output
           echo "files=$FILES" >> $GITHUB_OUTPUT
 
-      - name: Run ESLint with annotations
+      - name: Run ESLint with GitHub annotations
         if: steps.changed.outputs.files != ''
-        env: 
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx eslint ${{ steps.changed.outputs.files }} \
             --cache \

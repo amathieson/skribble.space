@@ -3,7 +3,7 @@ import SettingsDots from '~icons/ph/dots-three-outline-vertical-bold';
 import MagnifyingGlass from '~icons/ph/magnifying-glass-bold';
 import StarEmpty from '~icons/ph/star-bold';
 import StarFull from '~icons/ph/star-fill';
-import MindmapCreationModal from '@ui/modals/single_page/MindmapCreationModal.jsx';
+import MindmapCreationModal from '@ui/modals/tabbed/MindmapCreationModal.jsx';
 import {useTranslation} from 'react-i18next';
 import React, {useMemo, useState, forwardRef, useRef, useEffect} from 'react';
 import {useMindmapCreation} from "@ctx/MindmapCreation.jsx";

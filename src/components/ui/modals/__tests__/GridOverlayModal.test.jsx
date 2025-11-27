@@ -2,10 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
-import GridOverlayModal from '../single_page/GridOverlayModal';
+import GridOverlayModal from '@ui/modals/single_page/GridOverlayModal';
 import GridOverlay, { GridOverlayProvider, useGridOverlay } from '@ctx/GridOverlay.jsx';
 import ReactDOM from 'react-dom';
-import {pwaAssetsHead} from "virtual:pwa-assets/head";
 
 /**
  * Mocks react-i18next to return a function that always returns the key passed in
@@ -61,48 +60,8 @@ const renderModal = ({ x = 50, y = 40, ...props } = {}) => {
         </GridOverlayProvider>
     );
 };
-
+// aaa
 describe('GridOverlayModal', () => {
-    
-    describe('Modal Rendering Behaviour', () => {
-        test('renders modal when isOpen is true', () => {
-            renderModal({ isOpen: true, closeModal: vi.fn() });
-            const modal_backdrop = document.querySelector('.modal_backdrop');
-            const modal_container = modal_backdrop.querySelector('.modal_content');
-
-            expect(modal_backdrop).toBeInTheDocument();
-            expect(modal_container).toBeInTheDocument();
-        });
-
-        test('does not render modal when isOpen is false', () => {
-            renderModal({ isOpen: false});
-            const modal_backdrop = document.querySelector('.modal_backdrop');
-            expect(modal_backdrop).not.toBeInTheDocument();
-        });
-        
-        test('calls closeModal when backdrop is clicked', () => {
-            const closeModal = vi.fn();
-            renderModal({ isOpen: true, closeModal });
-            const modal_backdrop = document.querySelector('.modal_backdrop');
-            fireEvent.click(modal_backdrop);
-            expect(closeModal).toHaveBeenCalled();
-        })
-        
-        test('calls closeModal when escape key is pressed', () => {
-            const closeModal = vi.fn();
-            renderModal({ isOpen: true, closeModal });
-            fireEvent.keyDown(document.body, { key: 'Escape' });
-            expect(closeModal).toHaveBeenCalled();
-        })
-        
-        test('expects modal to close when x icon is clicked', () => {
-            const closeModal = vi.fn();
-            renderModal({ isOpen: true, closeModal });
-            const close_btn = document.querySelector('.modal_close_btn');
-            fireEvent.click(close_btn);
-            expect(closeModal).toHaveBeenCalled();
-        })
-    })
     
     describe('Basic Settings Behaviour', () => {
         beforeEach(

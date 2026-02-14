@@ -56,7 +56,7 @@ jobs:
         uses: reviewdog/action-stylelint@dd2b435cc6a7c82705307a9dee740c9bbaa10411 # v1.30.2
         with:
           reporter: github-pr-review # Change reporter.
-          stylelint_input: '**/*.scss,**/*.css'
+          stylelint_input: 'src/**/*.{css,scss}'
           stylelint_flags: '--config stylelint.config.js'
           fail_level: "error"
           filter_mode: diff_context

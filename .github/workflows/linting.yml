@@ -2,19 +2,17 @@ name: Lint Code Base
 on:
   pull_request:
     branches: [ "master" ]
-
   workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch to lint (manual trigger)"
-        required: true
-        default: "master"
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
 
 jobs:
   eslint:
-    name: ESLint (changed files)
+    name: Eslint
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,40 +26,17 @@ jobs:
           node-version: 23
           cache: 'npm'
 
-      - name: Cache ESLint cache
-        uses: actions/cache@v4
+      - run: npm ci
+      - uses: reviewdog/action-eslint@2fee6dd72a5419ff4113f694e2068d2a03bb35dd # v1.33.2
         with:
-          path: .eslintcache
-          key: eslint-${{ runner.os }}-${{ hashFiles('**/*.{js,jsx') }}
-          restore-keys: eslint-${{ runner.os }}-
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install ESLint GitHub formatter
-        run: npm install --save-dev @eslint/github-action-formatter
-
-      - name: Detect changed JS/TS files
-        id: changed
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.base_ref }} --depth=1
-            FILES=$(git diff --name-only origin/${{ github.base_ref }} | grep -E '\.(js|jsx)$' || true)
-          else
-            FILES=$(git ls-files '*.js' '*.jsx')
-          fi
-          echo "files=$FILES" >> $GITHUB_OUTPUT
-
-      - name: Run ESLint with annotations
-        if: steps.changed.outputs.files != ''
-        run: |
-          npx eslint ${{ steps.changed.outputs.files }} \
-            --cache \
-            --cache-location .eslintcache \
-            --format @eslint/github-action-formatter
+          reporter: github-pr-review
+          eslint_flags: "--ext .js,.jsx --config eslint.config.js src/"
+          fail_level: "error"
+          filter_mode: diff_context
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   stylelint:
-    name: Stylelint (changed files)
+    name: Stylelint
     runs-on: ubuntu-latest
 
     steps:
@@ -77,34 +52,12 @@ jobs:
           node-version: 23
           cache: 'npm'
 
-      - name: Cache Stylelint cache
-        uses: actions/cache@v4
+      - name: stylelint
+        uses: reviewdog/action-stylelint@dd2b435cc6a7c82705307a9dee740c9bbaa10411 # v1.30.2
         with:
-          path: .stylelintcache
-          key: stylelint-${{ runner.os }}-${{ hashFiles('**/*.{css,scss}') }}
-          restore-keys: stylelint-${{ runner.os }}-
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Stylelint GitHub formatter
-        run: npm install --save-dev @csstools/stylelint-formatter-github
-
-      - name: Detect changed CSS/SCSS files
-        id: changed
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.base_ref }} --depth=1
-            FILES=$(git diff --name-only origin/${{ github.base_ref }} | grep -E '\.(css|scss)$' || true)
-          else
-            FILES=$(git ls-files '*.css' '*.scss')
-          fi
-          echo "files=$FILES" >> $GITHUB_OUTPUT
-
-      - name: Run Stylelint with annotations
-        if: steps.changed.outputs.files != ''
-        run: |
-          npx stylelint ${{ steps.changed.outputs.files }} \
-            --cache \
-            --cache-location .stylelintcache \
-            --custom-formatter @csstools/stylelint-formatter-github
+          reporter: github-pr-review # Change reporter.
+          stylelint_input: '**/*.scss,**/*.css'
+          stylelint_flags: '--config stylelint.config.js'
+          fail_level: "error"
+          filter_mode: diff_context
+          github_token: ${{ secrets.GITHUB_TOKEN }}

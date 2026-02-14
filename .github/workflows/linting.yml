@@ -30,7 +30,7 @@ jobs:
       - uses: reviewdog/action-eslint@2fee6dd72a5419ff4113f694e2068d2a03bb35dd # v1.33.2
         with:
           reporter: github-pr-review
-          eslint_flags: "src/"
+          eslint_flags: "--ext .js,.jsx --config eslint.config.js src/"
           fail_level: "error"
           filter_mode: diff_context
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -56,7 +56,8 @@ jobs:
         uses: reviewdog/action-stylelint@dd2b435cc6a7c82705307a9dee740c9bbaa10411 # v1.30.2
         with:
           reporter: github-pr-review # Change reporter.
-          stylelint_input: '**/*.scss'
+          stylelint_input: '**/*.scss,**/*.css'
+          stylelint_flags: '--config stylelint.config.js'
           fail_level: "error"
           filter_mode: diff_context
           github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -2,7 +2,6 @@ name: Lint Code Base
 on:
   pull_request:
     branches: [ "master" ]
-
   workflow_dispatch:
     inputs:
       branch:
@@ -10,17 +9,22 @@ on:
         required: true
         default: "master"
 
+# This block is crucial for allowing the Action to create annotations
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
 jobs:
   eslint:
     name: ESLint (changed files)
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.inputs.branch || null }}
+          ref: ${{ github.event.inputs.branch || github.event.pull_request.head.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -28,55 +32,43 @@ jobs:
           node-version: 23
           cache: 'npm'
 
-      - name: Cache ESLint cache
-        uses: actions/cache@v4
-        with:
-          path: .eslintcache
-          key: eslint-${{ runner.os }}-${{ hashFiles('**/*.{js,jsx') }}
-          restore-keys: eslint-${{ runner.os }}-
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Install ESLint GitHub formatter
-        run: npm install --save-dev eslint-formatter-github
 
       - name: Detect changed JS/TS files
         id: changed
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             git fetch origin ${{ github.base_ref }} --depth=1
-            FILES=$(git diff --name-only origin/${{ github.base_ref }} | grep -E '\.(js|jsx)$' || true)
+            FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(js|jsx|ts|tsx)$' || true)
           else
-            FILES=$(git ls-files '*.js' '*.jsx')
+            FILES=$(git ls-files '*.js' '*.jsx' '*.ts' '*.tsx')
           fi
-      
-          # Remove Windows line endings and convert newlines to spaces
           FILES=$(echo "$FILES" | tr -d '\r' | tr '\n' ' ')
-      
-          # Save to GitHub Actions output
           echo "files=$FILES" >> $GITHUB_OUTPUT
 
-      - name: Run ESLint with GitHub annotations
+      - name: Run ESLint
         if: steps.changed.outputs.files != ''
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Using the built-in 'stylish' or standard formatter with a GitHub Action
+        # often works best when combined with a dedicated Action like 'reviewdog' 
+        # or simply using the problem matcher.
         run: |
           npx eslint ${{ steps.changed.outputs.files }} \
+            --format stylish \
             --cache \
-            --cache-location .eslintcache \
-            --format eslint-formatter-github || exit $?
+            --cache-location .eslintcache
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   stylelint:
     name: Stylelint (changed files)
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.inputs.branch || null }}
+          ref: ${{ github.event.inputs.branch || github.event.pull_request.head.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -84,34 +76,24 @@ jobs:
           node-version: 23
           cache: 'npm'
 
-      - name: Cache Stylelint cache
-        uses: actions/cache@v4
-        with:
-          path: .stylelintcache
-          key: stylelint-${{ runner.os }}-${{ hashFiles('**/*.{css,scss}') }}
-          restore-keys: stylelint-${{ runner.os }}-
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Install Stylelint GitHub formatter
-        run: npm install --save-dev @csstools/stylelint-formatter-github
 
       - name: Detect changed CSS/SCSS files
         id: changed
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             git fetch origin ${{ github.base_ref }} --depth=1
-            FILES=$(git diff --name-only origin/${{ github.base_ref }} | grep -E '\.(css|scss)$' || true)
+            FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(css|scss)$' || true)
           else
             FILES=$(git ls-files '*.css' '*.scss')
           fi
+          FILES=$(echo "$FILES" | tr -d '\r' | tr '\n' ' ')
           echo "files=$FILES" >> $GITHUB_OUTPUT
 
-      - name: Run Stylelint with annotations
+      - name: Run Stylelint
         if: steps.changed.outputs.files != ''
         run: |
           npx stylelint ${{ steps.changed.outputs.files }} \
             --cache \
-            --cache-location .stylelintcache \
-            --custom-formatter @csstools/stylelint-formatter-github
+            --cache-location .stylelintcache

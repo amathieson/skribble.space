@@ -10,7 +10,7 @@ permissions:
   checks: write
 
 jobs:
- eslint:
+  eslint:
     name: Eslint
     runs-on: ubuntu-latest
     steps:

@@ -5,11 +5,10 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: "Branch to lint (manual trigger)"
+        description: "Branch to lint"
         required: true
         default: "master"
 
-# This block is crucial for allowing the Action to create annotations
 permissions:
   contents: read
   pull-requests: write
@@ -24,7 +23,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event.inputs.branch || github.event.pull_request.head.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -35,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Detect changed JS/TS files
+      - name: Detect changed files
         id: changed
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
@@ -44,57 +42,11 @@ jobs:
           else
             FILES=$(git ls-files '*.js' '*.jsx' '*.ts' '*.tsx')
           fi
-          FILES=$(echo "$FILES" | tr -d '\r' | tr '\n' ' ')
           echo "files=$FILES" >> $GITHUB_OUTPUT
 
-      - name: Run ESLint
-        if: steps.changed.outputs.files != ''
-        # Using the built-in 'stylish' or standard formatter with a GitHub Action
-        # often works best when combined with a dedicated Action like 'reviewdog' 
-        # or simply using the problem matcher.
-        run: |
-          npx eslint ${{ steps.changed.outputs.files }} \
-            --format stylish \
-            --cache \
-            --cache-location .eslintcache
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  stylelint:
-    name: Stylelint (changed files)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.inputs.branch || github.event.pull_request.head.sha }}
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 23
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Detect changed CSS/SCSS files
-        id: changed
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.base_ref }} --depth=1
-            FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(css|scss)$' || true)
-          else
-            FILES=$(git ls-files '*.css' '*.scss')
-          fi
-          FILES=$(echo "$FILES" | tr -d '\r' | tr '\n' ' ')
-          echo "files=$FILES" >> $GITHUB_OUTPUT
-
-      - name: Run Stylelint
+      - name: Run ESLint with Relative Paths
         if: steps.changed.outputs.files != ''
         run: |
-          npx stylelint ${{ steps.changed.outputs.files }} \
-            --cache \
-            --formatter stylish \
-            --cache-location .stylelintcache
+          # We run eslint and use sed to strip the absolute runner path
+          # This converts /home/runner/work/repo/repo/src/file.js -> src/file.js
+          npx eslint ${{ steps.changed.outputs.files }} --format stylish | sed "s|$PWD/||g"

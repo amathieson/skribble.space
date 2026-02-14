@@ -5,12 +5,10 @@ import ReactDOM from 'react-dom';
 import { BaseTabbedModal } from '@ui/modals/tabbed/BaseTabbedModal.jsx';
 import '@testing-library/jest-dom';
 
-// Mock the Cross icon
 vi.mock('~icons/ph/x-bold', () => ({
     default: () => <span data-testid="cross-icon">×</span>
 }));
 
-// Mock ReactDOM.createPortal (if needed for your setup)
 beforeAll(() => {
     vi.spyOn(ReactDOM, 'createPortal').mockImplementation((el) => el);
 });

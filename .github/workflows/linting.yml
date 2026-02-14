@@ -3,11 +3,6 @@ on:
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch to lint"
-        required: true
-        default: "master"
 
 permissions:
   contents: read
@@ -16,7 +11,7 @@ permissions:
 
 jobs:
   eslint:
-    name: ESLint (changed files)
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,20 +28,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Detect changed files
-        id: changed
+      # This built-in command tells GitHub how to read ESLint 'stylish' output
+      - name: Setup ESLint Annotations
+        run: echo "::add-matcher::.github/eslint-matcher.json"
+
+      - name: Run ESLint
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             git fetch origin ${{ github.base_ref }} --depth=1
-            FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(js|jsx|ts|tsx)$' || true)
+            FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(js|jsx|ts|tsx)$' | xargs)
           else
-            FILES=$(git ls-files '*.js' '*.jsx' '*.ts' '*.tsx')
+            FILES="."
           fi
-          echo "files=$FILES" >> $GITHUB_OUTPUT
 
-      - name: Run ESLint with Relative Paths
-        if: steps.changed.outputs.files != ''
-        run: |
-          # We run eslint and use sed to strip the absolute runner path
-          # This converts /home/runner/work/repo/repo/src/file.js -> src/file.js
-          npx eslint ${{ steps.changed.outputs.files }} --format stylish | sed "s|$PWD/||g"
+          if [ -n "$FILES" ]; then
+            npx eslint $FILES --format stylish | sed "s|$PWD/||g"
+          else
+            echo "No files to lint."
+          fi

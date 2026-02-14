@@ -10,14 +10,15 @@ permissions:
   checks: write
 
 jobs:
-  eslint:
-    name: ESLint
+ eslint:
+    name: Eslint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.inputs.branch || null }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -25,24 +26,35 @@ jobs:
           node-version: 23
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
+      - uses: reviewdog/action-eslint@2fee6dd72a5419ff4113f694e2068d2a03bb35dd # v1.33.2
+        with:
+          reporter: github-pr-review
+          eslint_flags: "src/"
+          fail_level: "error"
+          filter_mode: diff_context
 
-      # This built-in command tells GitHub how to read ESLint 'stylish' output
-      - name: Setup ESLint Annotations
-        run: echo "::add-matcher::.github/eslint-matcher.json"
+  stylelint:
+    name: Stylelint
+    runs-on: ubuntu-latest
 
-      - name: Run ESLint
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.base_ref }} --depth=1
-            FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(js|jsx|ts|tsx)$' | xargs)
-          else
-            FILES="."
-          fi
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.branch || null }}
 
-          if [ -n "$FILES" ]; then
-            npx eslint $FILES --format stylish | sed "s|$PWD/||g"
-          else
-            echo "No files to lint."
-          fi
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23
+          cache: 'npm'
+
+      - name: stylelint
+        uses: reviewdog/action-stylelint@dd2b435cc6a7c82705307a9dee740c9bbaa10411 # v1.30.2
+        with:
+          reporter: github-pr-review # Change reporter.
+          stylelint_input: '**/*.scss'
+          fail_level: "error"
+          filter_mode: diff_context

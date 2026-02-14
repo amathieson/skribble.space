@@ -11,7 +11,7 @@ export default [
     //Not Tests
     {
         files: ['**/*.{js,jsx}'],
-        ignores: ['**/*.test.js', '**/*.test.jsx'],
+        ignores: ['**/*.test.js', '**/*.test.jsx', "**/__tests__/"],
         languageOptions: {
             ecmaVersion: 2020,
             globals: {
@@ -49,9 +49,15 @@ export default [
             ...vitest.configs.recommended.rules,
         },
         languageOptions: {
+            ecmaVersion: 'latest',
+            sourceType: 'module',
+            parserOptions: {
+                ecmaFeatures: {jsx: true},
+            },
             globals: {
+                ...globals.browser,
                 ...vitest.environments.env.globals,
-            }
+            },
         }
     },
 ];

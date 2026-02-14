@@ -4,7 +4,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 import '@scss/_style.scss';
 import App from './App.jsx';
-import {initI18n} from "./components/utilities/i18n.js";
+import {initI18n} from "@util/i18n.js";
 import idb from "@util/indexed_db.js";
 
 // Initialise i18next with the default language

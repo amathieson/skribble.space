@@ -42,7 +42,7 @@ export const BaseModal = (props) => {
                 <div className="modal_body">
                     {content}
                 </div>
-                <Activity mode={onSubmit === undefined ? undefined : onSubmit}>
+                <Activity mode={onSubmit ? 'visible' : 'hidden'}>
                     <div className="modal_footer">
                         <button
                             type="button"

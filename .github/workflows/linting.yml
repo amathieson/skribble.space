@@ -33,6 +33,7 @@ jobs:
           eslint_flags: "src/"
           fail_level: "error"
           filter_mode: diff_context
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   stylelint:
     name: Stylelint
@@ -58,3 +59,4 @@ jobs:
           stylelint_input: '**/*.scss'
           fail_level: "error"
           filter_mode: diff_context
+          github_token: ${{ secrets.GITHUB_TOKEN }}

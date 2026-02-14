@@ -96,4 +96,5 @@ jobs:
         run: |
           npx stylelint ${{ steps.changed.outputs.files }} \
             --cache \
+            --formatter stylish \
             --cache-location .stylelintcache

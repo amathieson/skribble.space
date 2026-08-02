@@ -53,7 +53,7 @@ jobs:
           cache: 'npm'
 
       - name: stylelint
-        uses: reviewdog/action-stylelint@dd2b435cc6a7c82705307a9dee740c9bbaa10411 # v1.30.2
+        uses: reviewdog/action-stylelint@086959bc5cd70db1b4954f45d8d396d9e3786bbb # v1.31.0
         with:
           reporter: github-pr-review # Change reporter.
           stylelint_input: 'src/**/*.{css,scss}'
